@@ -31,6 +31,15 @@ Oriented::Segment segment(float angle,float length)
 	return s;
 }
 
+Oriented::Segment LineToSegment(Line line)
+{
+	// ...
+}
+Line SegmentToLine(Oriented::Segment segment)
+{
+	// ...
+}
+
 Interval_Member interval_member(float value,bool excluded = false)
 {
 	Interval_Member m;

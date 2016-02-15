@@ -6,32 +6,23 @@
 #include <vector>
 
 #include "../../structs.hpp"
+#include "../interval.hpp"
 
 namespace Physics{ class Object; } // declaration to avoid conflits
 
+typedef std::vector<Physics::Object*> Objects;
+
 namespace Math
 {
-	class Interval; // declaration to avoid conflits
-
 	class Plan
 	{
-	protected:
-		std::vector<Physics::Object*> _objects;
-		F2::Plan _plan;
 	public:
-		Plan(F2::Plan plan);
-		/* Getters */
-		std::vector<Physics::Object*>* getObjects();
-		F2::Plan getPlan();
-		/* Setters */
-		void setPlan(const F2::Plan& plan);
-		/* Adders */
-		void addObject(const Physics::Object& object);
-		void addObject(const Physics::Object* object);
-		/* Methods */
-		
 		/* Static Methods */
-		
+		static bool inYRange(F2::Line line,Math::Interval Yrange); // checks if a line goes through some Y coordinates
+		static bool inXRange(F2::Line line,Math::Interval Xrange); // checks if a line goes through some X coordinates
+		static bool aligned(F2::Line line,F2::Position start,Physics::Object object); 
+		static F2::Point intersection(F2::Line f1,F2::Line f2);
+		static float distance(F2::Point a,F2::Point b);
 	};
 }
 
