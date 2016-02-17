@@ -16,7 +16,11 @@ namespace Math
 {
 	class Plan
 	{
+	protected:
+		F2::Plan _plan;
+		Objects _objects;
 	public:
+		/* Methods */
 		/* Static Methods */
 		static bool inYRange(F2::Line line,Math::Interval Yrange); // checks if a line goes through some Y coordinates
 		static bool inXRange(F2::Line line,Math::Interval Xrange); // checks if a line goes through some X coordinates

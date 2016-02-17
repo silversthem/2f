@@ -33,7 +33,70 @@ namespace F2
 	struct Interval_Member // a member of an interval
 	{
 		float Value;
-		float Excluded;
+		bool Excluded;
+		/* Operators */
+			/* Binary operators */
+				/* between intervals */
+		friend bool operator==(const Interval_Member& i1,const Interval_Member& i2)
+		{
+			return (i1.Value == i2.Value);
+		}
+		friend bool operator!=(const Interval_Member& i1,const Interval_Member& i2)
+		{
+			return !(i1 == i2);
+		}
+		friend bool operator<(const Interval_Member& i1,const Interval_Member& i2)
+		{
+			return (i1.Value < i2.Value);
+		}
+		friend bool operator>(const Interval_Member& i1,const Interval_Member& i2)
+		{
+			return i2 < i1;
+		}
+		friend bool operator<=(const Interval_Member& i1,const Interval_Member& i2)
+		{
+			return !(i1 > i2);
+		}
+		friend bool operator>=(const Interval_Member& i1,const Interval_Member& i2)
+		{
+			return !(i1 < i2);
+		}
+				/* between interval and float */
+		friend bool operator==(const Interval_Member& i,const float& f)
+		{
+			return (i.Value == f);
+		}
+		friend bool operator!=(const Interval_Member& i,const float& f)
+		{
+			return !(i == f);
+		}
+		friend bool operator<(const Interval_Member& i,const float& f)
+		{
+			return (i.Value < f);
+		}
+		friend bool operator>(const Interval_Member& i,const float& f)
+		{
+			return i.Value > f;
+		}
+		friend bool operator<=(const Interval_Member& i,const float& f)
+		{
+			return !(i > f);
+		}
+		friend bool operator>=(const Interval_Member& i,const float& f)
+		{
+			return !(i < f);
+		}
+			/* Assigment */
+		Interval_Member& operator=(const float& value) // sets interval value
+		{
+			Value = value;
+			return *this;
+		}
+		Interval_Member& operator=(const Interval_Member& i) // copy
+		{
+			Value = i.Value;
+			return *this;
+		}
 	};
 
 	struct Interval // an interval

@@ -2,10 +2,15 @@
 
 using namespace Math;
 
+Interval::Interval()
+{
+	clear();
+}
+
 Interval::Interval(float number)
 {
 	_interval.Start.Excluded = _interval.End.Excluded = false;
-	_interval.Start.Value = _interval.End.Value = false;
+	_interval.Start = _interval.End = 0;
 }
 
 Interval::Interval(F2::Interval interval)
@@ -42,8 +47,8 @@ F2::Interval Interval::getUnion(unsigned int id)
 		return _unions[id];
 	}
 	F2::Interval i;
-	i.Start.Value = 0;
-	i.End.Value = -1;
+	i.Start = 0;
+	i.End = -1;
 	return i;
 }
 
@@ -62,6 +67,11 @@ void Interval::setEnd(F2::Interval_Member member)
 void Interval::setInterval(F2::Interval interval)
 {
 	_interval = interval;
+}
+
+void Interval::setUnions(std::vector<F2::Interval> unions)
+{
+	_unions = unions;
 }
 
 /* Pointers */
@@ -94,6 +104,15 @@ void Interval::addUnion(Math::Interval interval)
 
 /* Methods */
 
+void Interval::clear()
+{
+	F2::Interval i;
+	i.Start = i.End = 0;
+	i.Start.Excluded = i.End.Excluded = true;
+	_interval = i;
+	_unions.clear();
+}
+
 bool Interval::isUnique()
 {
 	if(isEmpty())
@@ -108,7 +127,7 @@ bool Interval::isUnique()
 	{
 		if(Interval::isUnique(_unions[i]))
 		{
-			if(_interval.Start.Value != _unions[i].Start.Value)
+			if(_interval.Start != _unions[i].Start) // not same value : not unique
 			{
 				return false;
 			}
@@ -135,6 +154,11 @@ bool Interval::isEmpty()
 		}
 	}
 	return true;
+}
+
+bool Interval::isContinous()
+{
+	
 }
 
 bool Interval::contains(float number)
@@ -185,26 +209,21 @@ bool Interval::contains(Math::Interval interval)
 	return true;
 }
 
-F2::Interval Interval::intersect(F2::Interval interval)
+Interval Interval::intersect(F2::Interval interval)
 {
-	Interval intersection(0);
+	Interval intersection;
 	
 	return intersection.getInterval();
 }
 
-F2::Interval Interval::intersect(Math::Interval interval)
+Interval Interval::intersect(Math::Interval interval)
 {
-	Interval intersection(0);
+	Interval intersection;
 	
 	return intersection.getInterval();
 }
 
-F2::Interval Interval::fuse(F2::Interval interval)
-{
-	
-}
-
-Interval Interval::fuse(Interval interval)
+void Interval::fuse()
 {
 	
 }
@@ -219,7 +238,7 @@ bool Interval::isUnique(F2::Interval interval)
 	}
 	if(!interval.Start.Excluded && !interval.End.Excluded)
 	{
-		if(interval.Start.Value == interval.End.Value)
+		if(interval.Start == interval.End)
 		{
 			return true;
 		}
@@ -231,14 +250,14 @@ bool Interval::isEmpty(F2::Interval interval)
 {
 	if(interval.Start.Excluded || interval.End.Excluded) // one excluded
 	{
-		if(interval.Start.Value >= interval.End.Value) // start superior or equal to end = empty
+		if(interval.Start >= interval.End) // start superior or equal to end = empty
 		{
 			return false;
 		}
 	}
 	else
 	{
-		if(interval.Start.Value > interval.End.Value) // start superior to end = empty
+		if(interval.Start > interval.End) // start superior to end = empty
 		{
 			return false;
 		}
@@ -246,32 +265,58 @@ bool Interval::isEmpty(F2::Interval interval)
 	return true;
 }
 
-bool Interval::contains(F2::Interval interval,float number)
+bool Interval::isContinous(F2::Interval i1,F2::Interval i2)
 {
-	if(interval.Start.Excluded) // don't count start
+	if(i1.End >= i2.Start)
 	{
-		if(interval.Start.Value >= number) // below or equal to start
+		if(i1.End <= i2.Start)
+		{
+			return true;
+		}
+		else
 		{
 			return false;
 		}
 	}
 	else
 	{
-		if(interval.Start.Value > number) // below to start
+		if(i2.End <= i1.Start)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+}
+
+bool Interval::contains(F2::Interval interval,float number)
+{
+	if(interval.Start.Excluded) // don't count start
+	{
+		if(interval.Start >= number) // below or equal to start
+		{
+			return false;
+		}
+	}
+	else
+	{
+		if(interval.Start > number) // below to start
 		{
 			return false;
 		}
 	}
 	if(interval.End.Excluded) // don't count end
 	{
-		if(interval.End.Value <= number) // superior or equal to end
+		if(interval.End <= number) // superior or equal to end
 		{
 			return false;
 		}
 	}
 	else
 	{
-		if(interval.End.Value < number) // superior to end
+		if(interval.End < number) // superior to end
 		{
 			return false;
 		}
@@ -281,9 +326,9 @@ bool Interval::contains(F2::Interval interval,float number)
 
 bool Interval::contains(F2::Interval container,F2::Interval test)
 {
-	if(container.Start.Value <= test.Start.Value)
+	if(container.Start <= test.Start)
 	{
-		if(container.End.Value >= test.End.Value)
+		if(container.End >= test.End)
 		{
 			return true;
 		}
@@ -291,20 +336,44 @@ bool Interval::contains(F2::Interval container,F2::Interval test)
 	return false;
 }
 
-F2::Interval Interval::fuse(F2::Interval i1,F2::Interval i2)
+Interval Interval::fuse(F2::Interval i1,F2::Interval i2)
 {
-	
+	Interval i;
+	if(Interval::isContinous(i1,i2)) // they are fusable
+	{
+		if(i1.Start > i2.Start)
+		{
+			i.setStart(i2.Start);
+		}
+		else
+		{
+			i.setStart(i1.Start);
+		}
+		if(i1.End > i2.End)
+		{
+			i.setEnd(i1.End);
+		}
+		else
+		{
+			i.setStart(i2.End);
+		}
+	}
+	else
+	{
+		i.clear(); // empty interval
+	}
+	return i;
 }
 
 F2::Interval Interval::intersect(F2::Interval i1,F2::Interval i2)
 {
 	F2::Interval i3;
-	if(i1.Start.Value >= i2.Start.Value) // intersection [i1.Start;?]
+	if(i1.Start >= i2.Start) // intersection [i1.Start;?]
 	{
-		if(i1.Start.Value <= i2.End.Value)
+		if(i1.Start <= i2.End)
 		{
 			i3.Start = i1.Start;
-			if(i1.End.Value >= i2.End.Value) // intersection [i1.Start;i2.End]
+			if(i1.End >= i2.End) // intersection [i1.Start;i2.End]
 			{
 				i3.End = i2.End;
 			}
@@ -315,16 +384,16 @@ F2::Interval Interval::intersect(F2::Interval i1,F2::Interval i2)
 		}
 		else // empty intersection, the start of one is bigger than the end of the other
 		{
-			i3.Start.Value = i3.End.Value = 0; // creating empty interval then
+			i3.Start = i3.End = 0; // creating empty interval then
 			i3.Start.Excluded = i3.End.Excluded = true;
 		}
 	}
 	else
 	{
-		if(i2.Start.Value <= i1.End.Value) // intersection [i2.Start;?]
+		if(i2.Start <= i1.End) // intersection [i2.Start;?]
 		{
 			i3.Start = i2.Start;
-			if(i2.End.Value >= i1.End.Value) // intersection [i2.Start;i1.End]
+			if(i2.End >= i1.End) // intersection [i2.Start;i1.End]
 			{
 				i3.End = i1.End;
 			}
@@ -335,9 +404,10 @@ F2::Interval Interval::intersect(F2::Interval i1,F2::Interval i2)
 		}
 		else // empty intersection
 		{
-			i3.Start.Value = i3.End.Value = 0; // creating empty interval then
+			i3.Start = i3.End = 0; // creating empty interval then
 			i3.Start.Excluded = i3.End.Excluded = true;
 		}
 	}
 	return i3;
 }
+// end file
