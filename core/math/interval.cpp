@@ -1,5 +1,4 @@
 #include "interval.hpp"
-#include <iostream>
 
 using namespace Math;
 

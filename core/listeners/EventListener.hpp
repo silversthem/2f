@@ -5,6 +5,8 @@
 
 /* User events method */
 
+enum Click {LeftClick,RightClick};
+
 namespace Listeners
 {
 	class EventListener : Listeners::Listener

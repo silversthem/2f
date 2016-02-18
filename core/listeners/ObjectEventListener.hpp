@@ -5,6 +5,8 @@
 
 namespace Physics { class MovingObject; } // declaration to avoid conflit
 
+enum Border {Left,Top,Bottom,Right};
+
 namespace Listeners
 {
 	class ObjectEventListener : Listeners::EventListener
@@ -12,7 +14,9 @@ namespace Listeners
 		public:
 			/* Events */
 			void onHit(Physics::MovingObject &object); // when hitted by another object
-			void onClicked(int click); // when clicked
+			void onBorderHit(Border border); // when touching a border
+			void onBorderDisappearance(Border border); // when the object is gone through a border
+			void onClicked(Click click); // when clicked, telling left from right click
 	};
 }
 

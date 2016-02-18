@@ -17,12 +17,7 @@ namespace F2
 	typedef Coords Speed;
 	typedef Coords Direction;
 	typedef Coords Plan;
-
-	struct Line // A line equation : y = a*x + b
-	{
-		float a;
-		float b;
-	};
+	typedef Coords Line;
 
 	struct Size // a rectangle object size
 	{
