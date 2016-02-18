@@ -1,4 +1,5 @@
 #include "interval.hpp"
+#include <iostream>
 
 using namespace Math;
 
@@ -25,21 +26,6 @@ F2::Interval Interval::getInterval()
 	return _interval;
 }
 
-F2::Interval_Member Interval::getStart()
-{
-	return _interval.Start;
-}
-
-F2::Interval_Member Interval::getEnd()
-{
-	return _interval.End;
-}
-
-std::vector<F2::Interval> Interval::getUnions()
-{
-	return _unions;
-}
-
 F2::Interval Interval::getUnion(unsigned int id)
 {
 	if(id < _unions.size())
@@ -50,6 +36,63 @@ F2::Interval Interval::getUnion(unsigned int id)
 	i.Start = 0;
 	i.End = -1;
 	return i;
+}
+
+F2::Interval_Member Interval::getStart()
+{
+	return _interval.Start;
+}
+
+F2::Interval_Member Interval::getEnd()
+{
+	return _interval.End;
+}
+
+F2::Interval_Member Interval::getMinimum()
+{
+	F2::Interval_Member minimum;
+	if(!Interval::isEmpty(_interval))
+	{
+		minimum = _interval.Start;
+	}
+	else
+	{
+		minimum = _unions[0].Start;
+	}
+	for(unsigned int i = 0;i < _unions.size();i++)
+	{
+		if(minimum > _unions[i].Start)
+		{
+			minimum = _unions[i].Start;
+		}
+	}
+	return minimum;
+}
+
+F2::Interval_Member Interval::getMaximum()
+{
+	F2::Interval_Member maximum;
+	if(!Interval::isEmpty(_interval))
+	{
+		maximum = _interval.End;
+	}
+	else
+	{
+		maximum = _unions[0].End;
+	}
+	for(unsigned int i = 0;i < _unions.size();i++)
+	{
+		if(maximum < _unions[i].End)
+		{
+			maximum = _unions[i].End;
+		}
+	}
+	return maximum;
+}
+
+std::vector<F2::Interval> Interval::getUnions()
+{
+	return _unions;
 }
 
 /* Setters */
@@ -158,7 +201,36 @@ bool Interval::isEmpty()
 
 bool Interval::isContinous()
 {
-	
+	if(_unions.size() == 0)
+	{
+		return true;
+	}
+	if(!Interval::isContinous(_interval,_unions[0]))
+	{
+		if(!Interval::contains(_interval,_unions[0]))
+		{
+			if(!Interval::contains(_unions[0],_interval))
+			{
+				return false;
+			}
+		}
+	}
+	int j = 0;
+	for(unsigned int i = 1;i < _unions.size();i++)
+	{
+		if(!Interval::isContinous(_unions[j],_unions[i]))
+		{
+			if(!Interval::contains(_unions[i],_unions[j]))
+			{
+				if(!Interval::contains(_unions[j],_unions[i]))
+				{
+					return false;
+				}
+			}
+		}
+		j++;
+	}
+	return true;
 }
 
 bool Interval::contains(float number)
@@ -212,20 +284,70 @@ bool Interval::contains(Math::Interval interval)
 Interval Interval::intersect(F2::Interval interval)
 {
 	Interval intersection;
-	
-	return intersection.getInterval();
+	intersection.setInterval(Interval::intersect(_interval,interval));
+	for(unsigned int i = 0;i < _unions.size();i++)
+	{
+		intersection.addUnion(Interval::intersect(interval,_unions[i]));
+	}
+	intersection.fuse();
+	return intersection;
 }
 
 Interval Interval::intersect(Math::Interval interval)
 {
 	Interval intersection;
-	
-	return intersection.getInterval();
+	intersection.addUnion(interval.intersect(_interval));
+	for(unsigned int i = 0;i < _unions.size();i++)
+	{
+		intersection.addUnion(interval.intersect(_unions[i]));
+	}
+	intersection.fuse();
+	return intersection;
 }
 
 void Interval::fuse()
 {
-	
+	std::vector<F2::Interval>::iterator it;
+	std::vector<F2::Interval>::iterator it2;
+	std::vector<F2::Interval> flow;
+	Interval temp;
+	flow.push_back(_interval);
+	for(unsigned int i = 0;i < _unions.size();i++) // filling the array
+	{
+		flow.push_back(_unions[i]);
+	}
+	for(it = flow.begin();it != flow.end();++it) // fusing flows together
+	{
+		for(it2 = flow.begin();it2 != flow.end();++it2) // trying to fuse each elements with all others
+		{
+			if(*it2 != *it) // we're not working on same intervals
+			{
+				if(Interval::isContinous(*it2,*it)) // if the union can be fused
+				{
+					flow.push_back(Interval::fuse(*it2,*it).getInterval());
+					flow.erase(it); // deleting previous intervals, now unified
+					flow.erase(it2);
+				}
+				else if(Interval::contains(*it2,*it)) // if one contains the other
+				{
+					flow.erase(it); // delete the one contained it the other
+				}
+				else if(Interval::contains(*it,*it2)) // same
+				{
+					flow.erase(it2);
+				}
+			}
+		}
+	}
+	if(flow.size() > 0)
+	{
+		clear(); // refilling the interval
+		_interval = flow[0];
+		for(unsigned int i = 1;i < flow.size();i++)
+		{
+			addUnion(flow[i]);
+		}
+	}
 }
 
 /* Static methods */
@@ -252,43 +374,30 @@ bool Interval::isEmpty(F2::Interval interval)
 	{
 		if(interval.Start >= interval.End) // start superior or equal to end = empty
 		{
-			return false;
+			return true;
 		}
 	}
 	else
 	{
 		if(interval.Start > interval.End) // start superior to end = empty
 		{
-			return false;
+			return true;
 		}
 	}
-	return true;
+	return false;
 }
 
 bool Interval::isContinous(F2::Interval i1,F2::Interval i2)
 {
-	if(i1.End >= i2.Start)
+	if(Interval::contains(i1,i2.End.Value))
 	{
-		if(i1.End <= i2.Start)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return true;
 	}
-	else
+	else if(Interval::contains(i2,i1.End.Value))
 	{
-		if(i2.End <= i1.Start)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return true;
 	}
+	return false;
 }
 
 bool Interval::contains(F2::Interval interval,float number)
@@ -358,9 +467,10 @@ Interval Interval::fuse(F2::Interval i1,F2::Interval i2)
 			i.setStart(i2.End);
 		}
 	}
-	else
+	else // not continous, an union then
 	{
-		i.clear(); // empty interval
+		i.setInterval(i1);
+		i.addUnion(i2);
 	}
 	return i;
 }

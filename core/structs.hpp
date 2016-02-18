@@ -95,6 +95,7 @@ namespace F2
 		Interval_Member& operator=(const Interval_Member& i) // copy
 		{
 			Value = i.Value;
+			Excluded = i.Excluded;
 			return *this;
 		}
 	};
@@ -103,6 +104,22 @@ namespace F2
 	{
 		Interval_Member Start;
 		Interval_Member End;
+		/* Operators */
+		friend bool operator==(const Interval& i1,const Interval& i2)
+		{
+			if(i1.Start == i2.Start)
+			{
+				if(i1.End == i2.End)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		friend bool operator!=(const Interval& i1,const Interval& i2)
+		{
+			return !(i1 == i2);
+		}
 	};
 
 	namespace Oriented

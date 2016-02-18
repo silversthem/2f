@@ -15,17 +15,19 @@ namespace Math
 	{
 	protected:
 		F2::Interval _interval; // Intervals
-		std::vector<F2::Interval> _unions; // Unions
+		Intervals _unions; // Unions
 	public:
 		Interval(); // Creates an empty interval
 		Interval(float number); // creates an interval with only one number
 		Interval(F2::Interval interval); // creates an interval object from an interval structure
 		/* Getters */
 		F2::Interval getInterval(); // returns the interval
+		F2::Interval getUnion(unsigned int id); // get a specific union
 		F2::Interval_Member getStart(); // get the first interval member
 		F2::Interval_Member getEnd(); // get the end
+		F2::Interval_Member getMinimum(); // get smallest number across all unions
+		F2::Interval_Member getMaximum(); // same but with maximum
 		Intervals getUnions(); // returns the vector containing unions
-		F2::Interval getUnion(unsigned int id); // get a specific union
 		/* Setters */
 		void setStart(F2::Interval_Member member); // sets interval start
 		void setEnd(F2::Interval_Member member); // sets interval end
@@ -58,5 +60,4 @@ namespace Math
 		static F2::Interval intersect(F2::Interval i1,F2::Interval i2); // Intersects two intervals
 	};
 }
-
 #endif

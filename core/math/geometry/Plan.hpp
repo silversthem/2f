@@ -20,6 +20,9 @@ namespace Math
 		F2::Plan _plan;
 		Objects _objects;
 	public:
+		/* Getters */
+		/* Setters */
+		/* Adders */
 		/* Methods */
 		/* Static Methods */
 		static bool inYRange(F2::Line line,Math::Interval Yrange); // checks if a line goes through some Y coordinates
