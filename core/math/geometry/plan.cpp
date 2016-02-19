@@ -1,6 +1,17 @@
 #include "Plan.hpp"
 #include "../Interval.hpp"
-#include "../../physics/objects/Object.hpp"
+
+using namespace Math;
+
+Plan::Plan()
+{
+	
+}
+
+Plan::Plan(F2::Plan plan)
+{
+	_plan = plan;
+}
 
 /* Getters */
 
@@ -9,5 +20,3 @@
 /* Setters */
 
 /* Methods */
-
-/* Static Methods */

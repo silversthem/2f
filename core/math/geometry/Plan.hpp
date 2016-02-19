@@ -4,11 +4,11 @@
 /* A plan in which there are objects, also used for geometry calculations */
 
 #include <vector>
+#include <cmath>
 
 #include "../../structs.hpp"
 #include "../interval.hpp"
-
-namespace Physics{ class Object; } // declaration to avoid conflits
+#include "../../physics/objects/Object.hpp"
 
 typedef std::vector<Physics::Object*> Objects;
 
@@ -37,12 +37,6 @@ namespace Math
 		/* Methods */
 		Objects inLine(F2::Point start,F2::Line line); // returns objects aligned
 		Objects inZone(F2::Point topLeft,F2::Point bottomRight); // returns objects in a zone
-		/* Static Methods */
-		static bool inYRange(F2::Line line,Math::Interval Yrange); // checks if a line goes through some Y coordinates
-		static bool inXRange(F2::Line line,Math::Interval Xrange); // checks if a line goes through some X coordinates
-		static bool aligned(F2::Line line,F2::Position start,Physics::Object object); // checks if object is aligned with a line
-		static F2::Point intersection(F2::Line f1,F2::Line f2); // gets the points if two lines are crossing each other, if they do
-		static float distance(F2::Point a,F2::Point b); // get distance between two points
 	};
 }
 
