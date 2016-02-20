@@ -33,7 +33,7 @@ namespace Math
 		/* Setters */
 		void setPlan(F2::Plan plan); // sets the plan
 		/* Adders */
-		void addObject(Physics::Object const& object); // adds a object in the plan
+		void addObject(Physics::Object &object); // adds a object in the plan
 		/* Methods */
 		Objects inLine(F2::Point start,F2::Line line); // returns objects aligned
 		Objects inZone(F2::Point topLeft,F2::Point bottomRight); // returns objects in a zone

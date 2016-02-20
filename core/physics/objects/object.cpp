@@ -1,7 +1,7 @@
 #include <cmath>
 #include "Object.hpp"
 
-float distance(F2::Point a,F2::Point b) // distance between two points
+inline float distance(F2::Point a,F2::Point b) // distance between two points
 {
 	return std::sqrt((a.x - b.x)*(a.x - b.x) + (a.y - b.y)*(a.y - b.y));
 }
