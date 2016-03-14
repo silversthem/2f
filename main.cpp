@@ -1,30 +1,26 @@
 #include <iostream>
 
-#include "2f.hpp"
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 
-/* Interval test */
+/* Framework classes */
+#include "Core/Core.hpp"
+
+/* Test classes */
+#include "App/TestRectangle.hpp"
 
 int main()
 {
-	Math::Interval i1(F2::interval(1,10)); // [1,10]
-	Math::Interval i2(F2::interval(2,3)); // [2,3]
-	Math::Interval i3(F2::interval(2,14)); // [6,14]
-
-	i3.addUnion(F2::interval(0,4)); // union [0,4]u[2,14]
-
-	Math::Interval intersection = i1.intersect(i2); // intersection [1,10]n[2,3]
-
-	if(!intersection.isEmpty())
-	{
-		std::cout << "i1 et i2 on des nombres en commun" << std::endl;
-		std::cout << "L'intersection donne l'intervalle : " << "["
-		<< intersection.getMinimum().Value << "," <<
-		intersection.getMaximum().Value << "]" << std::endl;
-	}
-	if(i3.isContinous()) // if interval [0,4]u[2,14] can be written as one
-	{
-		std::cout << "i3 est continue entre : " << i3.getMinimum().Value
-		<< " et " << i3.getMaximum().Value << std::endl;
-	}
+	/* -- Example code --
+	* Creating a red test rectangle *
+	TestRectangle r1;
+	r1.setPosition(sf::Vector2f(20,20));
+	r1.setSize(sf::Vector2f(20,20));
+	r1.setFillColor(sf::Color::Red);
+	* Creating a window and adding it inside *
+	Frame win(500,500,"Test rectangle");
+	win.addRectangle(r1);
+	win.run(); // Running the window
+	*/
 	return 0;
 }
