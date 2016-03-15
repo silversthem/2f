@@ -3,12 +3,12 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../Object.hpp"
+#include "../MovingObject.hpp"
 #include "../../Listeners/Listener.hpp"
 
 /* Rectangle */
 
-class Rectangle : public sf::RectangleShape, public Object
+class Rectangle : public sf::RectangleShape, public MovingObject
 {
 protected:
 	// Size and position

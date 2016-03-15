@@ -11,8 +11,9 @@ class Listener
 {
 public: // events
 	void onEvent(sf::Event const &event); // basic event
-	void onMouseClicked(sf::Mouse const &mouse); // on click
-	void onMouseReleased(sf::Mouse const &mouse); // on click
+	void onMouseClicked(); // on click
+	void onMouseReleased(); // on release
+	void onMouseMoved(); // on movement
 	void onKeyPressed(sf::Keyboard const &keyPressed); // on key pressed
 	void onKeyReleased(sf::Keyboard const &keyPressed); // on key released
 };

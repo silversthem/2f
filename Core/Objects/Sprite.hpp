@@ -8,7 +8,7 @@
 
 #include "../structs.hpp"
 
-class Sprite : public sf::Sprite, public Object
+class Sprite : public sf::Sprite, public Box
 {
 protected:
 	// frames of animation

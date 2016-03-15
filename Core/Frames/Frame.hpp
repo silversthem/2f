@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
@@ -14,19 +15,15 @@
 
 /* SFML window with event handling */
 
-struct Element // Structure containing a pointer to all the things handled by the frame
-{
-	sf::Drawable *drawable;
-	Object *object;
-	Listener *listener;
-};
-
 class Frame : public sf::RenderWindow
 {
 protected:
 	sf::Event _event; // Event listener
 	Timer _timer; // a timer
-	std::vector<Element*> _elements; // elements in plan
+	std::map<sf::Drawable*,Object*> _elements; // elements in plan
+	bool _changed; // If there's need to re-draw things
+	/* Adders */
+	void addToPile(sf::Drawable& draw,Object& o); // adds something to the pile of things
 public:
 	Frame(float const &width,float const &height,std::string const &title); // creates a frame
 	~Frame(); // Deletes all elements structures in the frame
@@ -34,11 +31,13 @@ public:
 	void addSprite();
 	/* Adders for shapes */
 	void addShape();
-	void addRectangle(Rectangle const& rect); // adds a rectangle
+	void addRectangle(Rectangle &rect); // adds a rectangle
 	/* Calculations */
 	/* Testers */
 	/* Methods */
 	void run(); // runs window
+	/* Events */
+	void onClose(); // What to do when closing the window
 };
 
 #endif
