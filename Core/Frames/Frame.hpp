@@ -9,6 +9,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "../Objects/Object.hpp"
+#include "../Objects/Structure.hpp"
 #include "../Objects/Shapes/Rectangle.hpp"
 #include "../Time/Timer.hpp"
 #include "../Listeners/ObjectListener.hpp"
@@ -20,10 +21,12 @@ class Frame : public sf::RenderWindow
 protected:
 	sf::Event _event; // Event listener
 	Timer _timer; // a timer
-	std::map<sf::Drawable*,Object*> _elements; // elements in plan
+	std::map<sf::Drawable*,Object*> _objects; // Objects in plan
 	bool _changed; // If there's need to re-draw things
-	/* Adders */
-	void addToPile(sf::Drawable& draw,Object& o); // adds something to the pile of things
+	/* Protected methods */
+	void add_to_pile(sf::Drawable &d,Object &o); // Adding to the object pile
+	void eventHandling(); // Handling events by calling listeners
+	void displayAll(); // Display all things
 public:
 	Frame(float const &width,float const &height,std::string const &title); // creates a frame
 	~Frame(); // Deletes all elements structures in the frame
@@ -37,7 +40,7 @@ public:
 	/* Methods */
 	void run(); // runs window
 	/* Events */
-	void onClose(); // What to do when closing the window
+	virtual void onClose(); // What to do when closing the window
 };
 
 #endif

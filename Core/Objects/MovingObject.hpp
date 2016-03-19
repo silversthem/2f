@@ -13,7 +13,6 @@ class MovingObject : public Object
 	sf::Vector2f _force; // Force applied to the moving object
 	sf::Vector2f _maxSpeed; // Maximal object speed
 public:
-	virtual void abstract() const = 0; // no moving object instance
 	/* Setters */
 	/* Movements */
 	// Along a line => Dot product on the line, then see

@@ -13,21 +13,14 @@ class Frame; // declaration to avoid conflicts
 
 class Object : public ObjectListener
 {
+protected:
+	Frame* _Frame; // Object's frame
 public:
-	virtual void abstract() const = 0; // no object instance
+	void connect(Frame *frame); // Connects the object to its frame
 	/* Tests */
 	bool intersect(Line const& line); // if a line intersects the object
 	bool isIn(sf::Vector2f const& point); // if a point is inside an object
 	bool collision(Object const& object); // if two objects collides with each other
-	/* Static calculation */
-	/* With boxes */
-	// Is point in box
-	// Do boxes touch each other
-	// Is box aligned with line and point/box/shape
-	/* With convex shapes */
-	// Is point in shape
-	// Do shapes touch each other
-	// Is shape aligned with line and point/box/shape
 };
 
 #endif

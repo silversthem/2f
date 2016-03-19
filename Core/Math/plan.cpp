@@ -18,6 +18,14 @@ float Plan::angle(float const& coefficient)
 
 /* Points */
 
+sf::Vector2f Plan::vector2i2f(sf::Vector2i v)
+{
+	sf::Vector2f vec;
+	vec.x = (float) v.x;
+	vec.y = (float) v.y;
+	return vec;
+}
+
 float Plan::distance(sf::Vector2f const& point1,sf::Vector2f const& point2)
 {
 	return std::sqrt(std::pow(point1.x - point2.x,2) + std::pow(point1.y - point2.y,2));
@@ -57,7 +65,16 @@ Line Plan::getLine(sf::Vector2f const& point1,sf::Vector2f const& point2)
 		else // we need to calculate angle
 		{
 			float a = (point2.y - point1.y)/(point2.x - point1.x); // linear coefficient
-			line.angle = Plan::angle(a); // angle formed by line and linear coefficient
+			line.angle = Plan::angle(hypot(1,a));
+			if(point1.x > point2.x)
+			{
+				line.angle = 180 - line.angle;
+			}
+			if(point1.y < point2.y)
+			{
+				line.angle = 180 - line.angle + 180;
+			}
+			line.angle = 360 - line.angle; // Inverting the angle to adapt to sfml plan
 			line.length = Plan::distance(point1,point2);
 		}
 	}
@@ -69,7 +86,7 @@ Line Plan::getLine(sf::Vector2f const& point1,sf::Vector2f const& point2)
 sf::Vector2f Plan::crossLines(Line const& line1,Line const& line2)
 {
 	sf::Vector2f intersection;
-	
+	// ...
 	return intersection;
 }
 
@@ -80,3 +97,13 @@ sf::Vector2f Plan::applyLine(Line const& line,float const& number)
 	coords.y = std::sin(RAD(line.angle)) * number; // sin(angle) opp/hypot <=> opp = sin(angle)*hypot
 	return coords;
 }
+
+/* Boxes */
+
+sf::FloatRect Plan::getBox(sf::Vector2f const& min,sf::Vector2f const& max)
+{
+	sf::FloatRect rect(min,max);
+	return rect;
+}
+
+/* Convexe shapes */

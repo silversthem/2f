@@ -5,17 +5,15 @@
 
 #include <SFML/Window/Event.hpp>
 
-enum ClickType {Left,Right,MouseWheel};
-
 class Listener
 {
 public: // events
-	void onEvent(sf::Event const &event); // basic event
-	void onMouseClicked(); // on click
-	void onMouseReleased(); // on release
-	void onMouseMoved(); // on movement
-	void onKeyPressed(sf::Keyboard const &keyPressed); // on key pressed
-	void onKeyReleased(sf::Keyboard const &keyPressed); // on key released
+	virtual void ticked(float tick); // Called by a ticker when it's time to be updated
+	virtual void onMouseClicked(sf::Event::MouseButtonEvent const& mouse); // on click
+	virtual void onMouseReleased(sf::Event::MouseButtonEvent const& mouse); // on release
+	virtual void onMouseMoved(sf::Event::MouseMoveEvent const& mouse); // on movement
+	virtual void onKeyPressed(sf::Event::KeyEvent const &key); // on key pressed
+	virtual void onKeyReleased(sf::Event::KeyEvent const &key); // on key released
 };
 
 #endif
