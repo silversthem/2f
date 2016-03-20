@@ -33,7 +33,7 @@ public:
 			setSpeed(defaultspeed);
 		}
 	}
-	void onMouseMoved(sf::Event::MouseMoveEvent const& mouse) // Rotating the following rectangle towards the rectangle it's following
+	void display() // Rotating the following rectangle towards the rectangle it's following
 	{
 		setRotation(Plan::getLine(getPosition(),following.getPoint()).angle);
 	}

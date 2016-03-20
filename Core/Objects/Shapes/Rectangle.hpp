@@ -13,6 +13,7 @@ class Rectangle : public sf::RectangleShape, public MovingObject
 public:
 	/* Events */
 	void onInit();
+	virtual void display(); // When displaying
 	void onDisplay();
 	/* Collisions */
 };
