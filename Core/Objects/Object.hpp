@@ -17,6 +17,8 @@ protected:
 	Frame* _Frame; // Object's frame
 public:
 	void connect(Frame *frame); // Connects the object to its frame
+	/* Getters */
+	Frame* frame(); // Returns a pointer to the frame
 	/* Tests */
 	bool intersect(Line const& line); // if a line intersects the object
 	bool isIn(sf::Vector2f const& point); // if a point is inside an object

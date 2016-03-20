@@ -1,5 +1,10 @@
 #include "Listener.hpp"
 
+void Listener::onInit()
+{
+	
+}
+
 /* Events */
 
 void Listener::onMouseClicked(sf::Event::MouseButtonEvent const& mouse)

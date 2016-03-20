@@ -23,13 +23,16 @@ protected:
 	Timer _timer; // a timer
 	std::map<sf::Drawable*,Object*> _objects; // Objects in plan
 	bool _changed; // If there's need to re-draw things
+	sf::Vector2f _mouse; // Mouse position
 	/* Protected methods */
 	void add_to_pile(sf::Drawable &d,Object &o); // Adding to the object pile
 	void eventHandling(); // Handling events by calling listeners
 	void displayAll(); // Display all things
+	void calculate_mouse_pos(); // Calculates mouse position in frame
 public:
 	Frame(float const &width,float const &height,std::string const &title); // creates a frame
-	~Frame(); // Deletes all elements structures in the frame
+	/* Getters */
+	const sf::Vector2f& mouse() const; // Returns mouse position
 	/* Adders */
 	void addSprite();
 	/* Adders for shapes */

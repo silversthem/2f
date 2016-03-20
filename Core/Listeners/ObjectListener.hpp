@@ -14,7 +14,8 @@ public:
 	virtual void onClicked(sf::Mouse const& mouse); // when clicked
 	virtual void onClickedReleased(sf::Mouse const& mouse); // when click released
 	virtual void onMouseTouch(sf::Mouse const& mouse); // when the mouse touches the object
-	virtual void onMouseLeft(sf::Mouse const& mouse); // when the mouse leaves the object 
+	virtual void onMouseLeft(sf::Mouse const& mouse); // when the mouse leaves the object
+	virtual void onHit(Object const& object); // When hit by other object
 };
 
 #endif

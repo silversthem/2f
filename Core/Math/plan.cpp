@@ -98,12 +98,12 @@ sf::Vector2f Plan::applyLine(Line const& line,float const& number)
 	return coords;
 }
 
-/* Boxes */
-
-sf::FloatRect Plan::getBox(sf::Vector2f const& min,sf::Vector2f const& max)
+Line Plan::RotateLine(Line line,float const& angle)
 {
-	sf::FloatRect rect(min,max);
-	return rect;
+	int absangle = (int) line.angle + angle;
+	line.angle = ABS_DEG(absangle);
+	return line;
 }
 
 /* Convexe shapes */
+

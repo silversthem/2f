@@ -26,3 +26,8 @@ void ObjectListener::onDisplay()
 {
 	
 }
+
+void ObjectListener::onHit(Object const& object)
+{
+	
+}

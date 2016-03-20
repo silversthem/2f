@@ -10,10 +10,11 @@
 
 class Rectangle : public sf::RectangleShape, public MovingObject
 {
-protected:
-	// Size and position
 public:
-	// virtual init and methods because rectangle has size, not scale
+	/* Events */
+	void onInit();
+	void onDisplay();
+	/* Collisions */
 };
 
 #endif

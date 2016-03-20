@@ -19,6 +19,14 @@
 #include "Objects/Shapes/Shape.hpp"
 #include "Objects/Shapes/Rectangle.hpp"
 
+/* Movements */
+
+#include "Objects/Movements/Movement.hpp"
+#include "Objects/Movements/Along.hpp"
+#include "Objects/Movements/Toward.hpp"
+#include "Objects/Movements/Offset.hpp"
+#include "Objects/Movements/Force.hpp"
+
 /* Frames */
 
 #include "Frames/Frame.hpp"

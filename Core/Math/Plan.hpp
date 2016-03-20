@@ -3,7 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <cmath>
-#include <iostream>
 
 #include "../structs.hpp"
 #include "Interval.hpp"
@@ -27,8 +26,7 @@ public:
 	static sf::Vector2f crossLines(Line const& line1,Line const& line2); // returns the point at which lines crosses eachother, if they do
 	static sf::Vector2f applyLine(Line const& line,float const& number); // calculates the coordinates from 0 to a point following a line
 	static bool isAligned(Line const& line,sf::Vector2f const& point); // If a point is aligned with the line
-	/* Calculations with boxes (floatRect) */
-	static sf::FloatRect getBox(sf::Vector2f const& min,sf::Vector2f const& max); // Returns a box made from two points
+	static Line RotateLine(Line line,float const& angle); // Rotates a line 
 	/* Calculations with convexes shapes */
 	// In
 	// Touching

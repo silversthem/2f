@@ -4,11 +4,14 @@ Frame::Frame(float const &width,float const &height,std::string const &title)
 {
 	_changed = true;
 	create(sf::VideoMode(width,height),title);
+	calculate_mouse_pos();
 }
 
-Frame::~Frame()
+/* Getters */
+
+const sf::Vector2f& Frame::mouse() const
 {
-	
+	return _mouse;
 }
 
 /* Public : Adders */
@@ -26,6 +29,7 @@ void Frame::run()
 	while(isOpen())
 	{
 		clear();
+		calculate_mouse_pos();
 		while(pollEvent(_event))
 		{
 			eventHandling();
@@ -41,9 +45,15 @@ void Frame::onClose()
 
 /* Protected methods */
 
+void Frame::calculate_mouse_pos()
+{
+	_mouse.x = sf::Mouse::getPosition(*this).x;
+	_mouse.y = sf::Mouse::getPosition(*this).y;
+}
+
 void Frame::add_to_pile(sf::Drawable &d,Object &o)
 {
-	o.connect(this);
+	o.onInit();
 	_objects[&d] = &o;
 }
 

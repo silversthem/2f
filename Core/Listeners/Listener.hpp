@@ -8,6 +8,7 @@
 class Listener
 {
 public: // events
+	virtual void onInit(); // when added in the frame
 	virtual void ticked(float tick); // Called by a ticker when it's time to be updated
 	virtual void onMouseClicked(sf::Event::MouseButtonEvent const& mouse); // on click
 	virtual void onMouseReleased(sf::Event::MouseButtonEvent const& mouse); // on release

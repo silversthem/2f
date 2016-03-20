@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
@@ -8,18 +6,24 @@
 
 /* Test classes */
 #include "App/TestRectangle.hpp"
+#include "App/FollowingRectangle.hpp"
 
 int main()
 {
-	/* -- Example code -- */
-	/* Creating a red test rectangle */
-	TestRectangle r1;
+	Frame win(800,800,"Test rectangle"); // Creating a frame
+	/* Test rectangle to add to the frame */
+	TestRectangle r1(win);
 	r1.setPosition(sf::Vector2f(100,100));
 	r1.setSize(sf::Vector2f(40,20));
 	r1.setFillColor(sf::Color::Red);
-	/* Creating a window and adding it inside */
-	Frame win(1000,1000,"Test rectangle");
+	/* Rectangles following the first one */
+	FollowingRectangle r2(win,r1);
+	r2.setPosition(sf::Vector2f(700,700));
+	r2.setSize(sf::Vector2f(40,20));
+	r2.setFillColor(sf::Color::Blue);
+	/* Adding rectangles */
 	win.addRectangle(r1);
-	win.run(); // Running the window
+	win.addRectangle(r2);
+	win.run();
 	return 0;
 }
