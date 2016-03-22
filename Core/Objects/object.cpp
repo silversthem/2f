@@ -10,3 +10,18 @@ Frame* Object::frame()
 {
 	return _Frame;
 }
+
+bool Object::intersect(Line const& line)
+{
+	return false;
+}
+
+bool Object::isIn(sf::Vector2f const& point)
+{
+	return false;
+}
+
+bool Object::collision(Object* object,bool const& reversetest)
+{
+	return false;
+}

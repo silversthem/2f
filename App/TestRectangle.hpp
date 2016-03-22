@@ -15,25 +15,9 @@ public:
 		towardMouse.toward(frame()->mouse());
 		bind(sf::Keyboard::Z,towardMouse);
 	}
-	void onMouseClicked(sf::Event::MouseButtonEvent const& mouse) // on mouse click
+	void onMouseClicked(sf::Event::MouseButtonEvent const& mouse) // When mouse click
 	{
-		if(mouse.button == sf::Mouse::Right) // Teleporting when pressing right button
-		{
-			setPosition(mouse.x,mouse.y);
-		}
-		else if(mouse.button == sf::Mouse::Left) // Changing to green and going faster
-		{
-			setFillColor(sf::Color::Green); // Changing object to green when other button pressed
-			setSpeed(2);
-		}
-	}
-	void onMouseReleased(sf::Event::MouseButtonEvent const& mouse)
-	{
-		if(mouse.button == sf::Mouse::Left)
-		{
-			setFillColor(sf::Color::Red); // Changing object to red again
-			setSpeed(1);
-		}
+		setPosition(frame()->mouse());
 	}
 	void onMouseMoved(sf::Event::MouseMoveEvent const& mouse) // Rotating object towards the mouse
 	{

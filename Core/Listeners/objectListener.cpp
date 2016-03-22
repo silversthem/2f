@@ -1,26 +1,21 @@
 #include "ObjectListener.hpp"
 
-/* Default : all methods are empty */
-
-void ObjectListener::onClicked(sf::Mouse const& mouse)
+bool ObjectListener::mouseTouches()
 {
-	
+	return _touched;
 }
 
-void ObjectListener::onClickedReleased(sf::Mouse const& mouse)
+void ObjectListener::mouseTouched()
 {
-	
+	_touched = true;
 }
 
-void ObjectListener::onMouseTouch(sf::Mouse const& mouse)
+void ObjectListener::mouseLeft()
 {
-	
+	_touched = false;
 }
 
-void ObjectListener::onMouseLeft(sf::Mouse const& mouse)
-{
-	
-}
+/* Events : all methods are empty */
 
 void ObjectListener::onDisplay()
 {

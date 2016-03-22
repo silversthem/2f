@@ -17,25 +17,24 @@ public:
 		following.toward(rect.getPosition());
 		setMovement(following);
 	}
-	void onMouseClicked(sf::Event::MouseButtonEvent const& mouse) // When clicking
-	{
-		if(mouse.button == sf::Mouse::Middle) // Slowing object down
-		{
-			setFillColor(sf::Color::Yellow);
-			setSpeed(0.1);
-		}
-	}
-	void onMouseReleased(sf::Event::MouseButtonEvent const& mouse) // When unclicking
-	{
-		if(mouse.button == sf::Mouse::Middle) // Normal speed back
-		{
-			setFillColor(sf::Color::Blue);
-			setSpeed(defaultspeed);
-		}
-	}
 	void display() // Rotating the following rectangle towards the rectangle it's following
 	{
 		setRotation(Plan::getLine(getPosition(),following.getPoint()).angle);
+		std::vector<Object*> touched = frame()->objectsTouching(this);
+		following.setApply(true);
+		if(touched.size() > 1) // Touching too much stuff
+		{
+			following.setApply(false);
+		}
+		if(touched.size() > 0) // Touching stuff
+		{
+			following.setAngle( // Chaning angle to avoid superposition
+				(Plan::getLine(following.getPoint(),getPosition()).angle) - (Plan::getLine(touched[0]->getObjectPosition(),getPosition()).angle));
+		}
+		else // Not touching stuff
+		{
+			following.setAngle(0);
+		}
 	}
 };
 

@@ -19,10 +19,12 @@ public:
 	void connect(Frame *frame); // Connects the object to its frame
 	/* Getters */
 	Frame* frame(); // Returns a pointer to the frame
+	virtual sf::Vector2f getObjectPosition() = 0; // Returns object position
 	/* Tests */
-	bool intersect(Line const& line); // if a line intersects the object
-	bool isIn(sf::Vector2f const& point); // if a point is inside an object
-	bool collision(Object const& object); // if two objects collides with each other
+	virtual bool intersect(Line const& line); // if a line intersects the object
+	virtual bool isIn(sf::Vector2f const& point); // if a point is inside an object
+	virtual bool collision(Object* object,bool const &reversetest = false); // if two objects collides with each other
+	virtual sf::FloatRect getBounds() = 0; // Returns global bounds of object
 };
 
 #endif

@@ -15,7 +15,10 @@ protected:
 public:
 	Along();
 	Along(Line const &line,float const& angle = 0); // Creates a movement along a line
+	/* Getters */
 	sf::Vector2f getMovement(sf::Vector2f const& position,float const& speed); // Returns movement along a line
+	/* Setters */
+	void setAngle(float const& angle); // Sets angle
 };
 
 #endif

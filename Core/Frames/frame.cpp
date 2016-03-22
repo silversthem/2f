@@ -2,9 +2,44 @@
 
 Frame::Frame(float const &width,float const &height,std::string const &title)
 {
-	_changed = true;
 	create(sf::VideoMode(width,height),title);
 	calculate_mouse_pos();
+}
+
+Frame::~Frame()
+{
+	
+}
+
+/* Pile methods */
+
+void Frame::drawAll()
+{
+	clear(sf::Color::Black);
+	std::vector<sf::Drawable*>::iterator it = _drawables.begin();
+	for(;it != _drawables.end();it++)
+	{
+		draw(*(*it));
+	}
+	display();
+}
+
+void Frame::calculateAll()
+{
+	std::vector<Object*>::iterator it = _objects.begin();
+	for(;it != _objects.end();it++)
+	{
+		/* Object Events */
+		if((*it)->isIn(mouse())) // Mouse touches object
+		{
+			(*it)->mouseTouched();
+		}
+		else if((*it)->mouseTouches()) // Mouse touched object, but doesn't anymore
+		{
+			(*it)->mouseLeft();
+		}
+		(*it)->onDisplay();
+	}
 }
 
 /* Getters */
@@ -16,26 +51,82 @@ const sf::Vector2f& Frame::mouse() const
 
 /* Public : Adders */
 
+void Frame::addDrawable(sf::Drawable *drawable)
+{
+	_drawables.push_back(drawable);
+}
+
+void Frame::addListener(Listener *listener)
+{
+	_listeners.push_back(listener);
+}
+
+void Frame::addObject(Object *object)
+{
+	object->onInit();
+	_objects.push_back(object);
+}
+
 void Frame::addRectangle(Rectangle& rect)
 {
-	add_to_pile(rect,rect);
+	addDrawable(&rect);
+	addListener(&rect);
+	addObject(&rect);
+}
+
+/* Public : Calculations */
+
+std::vector<Object*> Frame::objectsInBounds(sf::FloatRect const &rect,Object* self)
+{
+	std::vector<Object*> stack; // Objects in bound
+	std::vector<Object*>::iterator it = _objects.begin();
+	for(;it != _objects.end();it++)
+	{
+		if((*it)->getBounds().intersects(rect)) // Object intersects rectangle
+		{
+			if(*it != self && *it != NULL)
+			{
+				stack.push_back(*it); // Adding object to stack of object in bound
+			}
+		}
+		// Handling other cases, with inverse transform and all...
+	}
+	return stack;
+}
+
+std::vector<Object*> Frame::objectsTouching(Object* object)
+{
+	std::vector<Object*> stack = objectsInBounds(object->getBounds(),object); // Reducing the size of the stack to test
+	std::vector<Object*>::iterator it = stack.begin();
+	for(;it != stack.end();) // Trimming the stack of elements not touching
+	{
+		if((*it)->collision(object))
+		{
+			stack.erase(it);
+		}
+		else
+		{
+			it++;
+		}
+	}
+	return stack;
 }
 
 /* Running method */
 
 void Frame::run()
 {
-	/* Note to self : Separate methods for handling pauses and later, only "exec" when needing to refresh content */
 	while(isOpen())
 	{
-		clear();
 		calculate_mouse_pos();
 		while(pollEvent(_event))
 		{
 			eventHandling();
 		}
-		displayAll();
+		calculateAll();
+		drawAll();
 	}
+	onClose();
 }
 
 void Frame::onClose()
@@ -51,61 +142,43 @@ void Frame::calculate_mouse_pos()
 	_mouse.y = sf::Mouse::getPosition(*this).y;
 }
 
-void Frame::add_to_pile(sf::Drawable &d,Object &o)
-{
-	o.onInit();
-	_objects[&d] = &o;
-}
-
 void Frame::eventHandling()
 {
-	std::map<sf::Drawable*,Object*>::iterator it = _objects.begin();
-	if(_event.type == sf::Event::Closed)
+	if(_event.type == sf::Event::Closed) // Closing the window
 	{
 		close();
 	}
 	else
 	{
-		for(;it != _objects.end();it++)
+		std::vector<Listener*>::iterator it = _listeners.begin();
+		for(;it != _listeners.end();it++) // Parcouring each listener
 		{
-			if(it->second != NULL)
-			{
-				switch(_event.type)
-				{
-					case sf::Event::MouseButtonPressed:
-						it->second->onMouseClicked(_event.mouseButton);
-					break;
-					case sf::Event::MouseButtonReleased:
-						it->second->onMouseReleased(_event.mouseButton);
-					break;
-					case sf::Event::MouseMoved:
-						it->second->onMouseMoved(_event.mouseMove);
-					break;
-					case sf::Event::KeyPressed:
-						it->second->onKeyPressed(_event.key);
-					break;
-					case sf::Event::KeyReleased:
-						it->second->onKeyReleased(_event.key);
-					break;
-					default:
-						// Unhandled event, todo : add a listener method to handle this case
-					break;
-				}
-			}
+			call(*it);
 		}
 	}
 }
 
-void Frame::displayAll()
+void Frame::call(Listener* listener)
 {
-	std::map<sf::Drawable*,Object*>::iterator it = _objects.begin();
-	for(;it != _objects.end();it++)
+	switch(_event.type)
 	{
-		if(it->second != NULL) // We're drawing an object
-		{
-			it->second->onDisplay(); // Calling onDisplay method
-		}
-		draw(*it->first);
+		case sf::Event::MouseButtonPressed: // Mouse click
+			listener->onMouseClicked(_event.mouseButton);
+		break;
+		case sf::Event::MouseButtonReleased: // Mouse released
+			listener->onMouseReleased(_event.mouseButton);
+		break;
+		case sf::Event::MouseMoved: // Mouse move
+			listener->onMouseMoved(_event.mouseMove);
+		break;
+		case sf::Event::KeyPressed: // Key pressed
+			listener->onKeyPressed(_event.key);
+		break;
+		case sf::Event::KeyReleased: // Key released
+			listener->onKeyReleased(_event.key);
+		break;
+		default:
+		// Unhandled event, TODO : add a listener method to handle this case
+		break;
 	}
-	display();
 }

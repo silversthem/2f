@@ -8,13 +8,13 @@ class Object;
 class ObjectListener : public Listener
 {
 protected:
-	bool touched; // If the mouse touches the object
+	bool _touched; // If the mouse touches the object
 public:
+	bool mouseTouches(); // If the mouse touches the object
+	void mouseTouched(); // When the mouse touches the object
+	void mouseLeft(); // When the mouse leaves the object
+	/* Events */
 	virtual void onDisplay(); // Called at every loop
-	virtual void onClicked(sf::Mouse const& mouse); // when clicked
-	virtual void onClickedReleased(sf::Mouse const& mouse); // when click released
-	virtual void onMouseTouch(sf::Mouse const& mouse); // when the mouse touches the object
-	virtual void onMouseLeft(sf::Mouse const& mouse); // when the mouse leaves the object
 	virtual void onHit(Object const& object); // When hit by other object
 };
 

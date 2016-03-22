@@ -24,6 +24,13 @@ void MovingObject::onKeyReleased(sf::Event::KeyEvent const& key)
 	}
 }
 
+/* Getters */
+
+sf::Vector2f MovingObject::getObjectPosition()
+{
+	return *_position;
+}
+
 /* Setters */
 
 void MovingObject::setObjectPosition(sf::Vector2f const& position)

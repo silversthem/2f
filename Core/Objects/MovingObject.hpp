@@ -1,7 +1,6 @@
 #ifndef BOX_HPP
 #define BOX_HPP
 
-#include <iostream>
 #include <map>
 #include <SFML/Graphics.hpp>
 
@@ -25,6 +24,8 @@ public:
 	/* Events */
 	virtual void onKeyPressed(sf::Event::KeyEvent const& key); // When a key is pressed
 	virtual void onKeyReleased(sf::Event::KeyEvent const& key); // When a key is released
+	/* Getters */
+	sf::Vector2f getObjectPosition(); // Returns object position
 	/* Setters */
 	void setObjectPosition(sf::Vector2f const& position); // Sets object position [initialization]
 	void setSpeed(float const& speed); // Sets object speed

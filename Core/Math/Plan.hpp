@@ -1,6 +1,7 @@
 #ifndef PLAN_HPP_INCLUDED
 #define PLAN_HPP_INCLUDED
 
+#include <iostream>
 #include <SFML/Graphics.hpp>
 #include <cmath>
 
