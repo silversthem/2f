@@ -13,9 +13,9 @@
 class MovingObject : public Object
 {
 protected:
-	bool _hasMaxOffset; // If the object has a max offset
+	bool _hasMaxSpeed; // If the object has a max speed
 	float _speed; // Object speed
-	sf::Vector2f _maxOffset; // Max offset by which the object can be moved
+	float _maxSpeed; // Object max speed
 	const sf::Vector2f* _position; // Object's position
 	std::map<sf::Keyboard::Key,Movement*> _key_movements; // Movements to do when a key is pressed
 	Movement *_movement; // Movement
@@ -25,11 +25,12 @@ public:
 	virtual void onKeyPressed(sf::Event::KeyEvent const& key); // When a key is pressed
 	virtual void onKeyReleased(sf::Event::KeyEvent const& key); // When a key is released
 	/* Getters */
+	float getSpeed(); // Returns speed
 	sf::Vector2f getObjectPosition(); // Returns object position
 	/* Setters */
 	void setObjectPosition(sf::Vector2f const& position); // Sets object position [initialization]
 	void setSpeed(float const& speed); // Sets object speed
-	void setMaxOffset(sf::Vector2f const& offset); // Sets max offset
+	void setMaximalSpeed(float const& max); // Sets max speed
 	void setMovement(Movement& movement); // Sets object movement, independant of event
 	/* Accessors */
 	// To key bindings

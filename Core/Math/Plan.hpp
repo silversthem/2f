@@ -27,7 +27,10 @@ public:
 	static sf::Vector2f crossLines(Line const& line1,Line const& line2); // returns the point at which lines crosses eachother, if they do
 	static sf::Vector2f applyLine(Line const& line,float const& number); // calculates the coordinates from 0 to a point following a line
 	static bool isAligned(Line const& line,sf::Vector2f const& point); // If a point is aligned with the line
-	static Line RotateLine(Line line,float const& angle); // Rotates a line 
+	static Line RotateLine(Line line,float const& angle); // Rotates a line
+	/* Calculations with box */
+	static bool inBounds(sf::FloatRect const& rect1,sf::FloatRect const& rect2,bool reversed = false); // if a box interacts with another
+	static bool inside(sf::FloatRect const& container,sf::FloatRect const& containee); // If the box is fully inside the other
 	/* Calculations with convexes shapes */
 	// In
 	// Touching

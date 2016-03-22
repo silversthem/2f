@@ -1,5 +1,11 @@
 #include "Offset.hpp"
 
+Offset::Offset()
+{
+	_offset.x = 0;
+	_offset.y = 0;
+}
+
 Offset::Offset(float const& x,float const& y)
 {
 	setOffset(x,y);

@@ -3,7 +3,7 @@
 MovingObject::MovingObject()
 {
 	_movement = NULL;
-	_hasMaxOffset = false;
+	_hasMaxSpeed = false;
 }
 
 /* Events */
@@ -26,6 +26,11 @@ void MovingObject::onKeyReleased(sf::Event::KeyEvent const& key)
 
 /* Getters */
 
+float MovingObject::getSpeed()
+{
+	return _speed;
+}
+
 sf::Vector2f MovingObject::getObjectPosition()
 {
 	return *_position;
@@ -43,10 +48,10 @@ void MovingObject::setSpeed(float const& speed)
 	_speed = speed;
 }
 
-void MovingObject::setMaxOffset(sf::Vector2f const& offset)
+void MovingObject::setMaximalSpeed(float const& max)
 {
-	_hasMaxOffset = true;
-	_maxOffset = offset;
+	_maxSpeed = max;
+	_hasMaxSpeed = true;
 }
 
 void MovingObject::setMovement(Movement& movement)
@@ -85,23 +90,12 @@ sf::Vector2f MovingObject::getMovement()
 		sum.x += current.x;
 		sum.y += current.y;
 	}
-	if(_hasMaxOffset) // Checking if abs(x) < max.x && abs(y) < max.y
+	if(_hasMaxSpeed) // Checking if abs(x) < max.x && abs(y) < max.y
 	{
-		if(sum.x > _maxOffset.x)
+		if(std::abs(std::sqrt(std::pow(sum.x,2) + std::pow(sum.y,2))) > _maxSpeed)
 		{
-			sum.x = _maxOffset.x;
-		}
-		else if(sum.x < -1*_maxOffset.x)
-		{
-			sum.x = -1*_maxOffset.x;
-		}
-		if(sum.y > _maxOffset.y)
-		{
-			sum.y = _maxOffset.y;
-		}
-		else if(sum.y < -1*_maxOffset.y)
-		{
-			sum.y = -1*_maxOffset.y;
+			sum.x = sum.x/std::sqrt(_maxSpeed);
+			sum.y = sum.y/std::sqrt(_maxSpeed);
 		}
 	}
 	return sum;

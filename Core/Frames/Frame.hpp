@@ -26,6 +26,9 @@ protected:
 	std::vector<Object*> _objects; // Objects for physics
 	std::vector<Listener*> _listeners; // listeners to events
 	// Structures vector
+	// Projectile vector
+	// Shader vector ?
+	// Widget vector
 	/* Window info */
 	sf::Vector2f _mouse; // Mouse position
 	/* Protected methods */
@@ -54,6 +57,8 @@ public:
 	/* Adders for shapes */
 	void addShape();
 	void addRectangle(Rectangle &rect); // adds a rectangle
+	/* Deleters */
+	// ...
 	/* Calculations with objects */
 	std::vector<Object*> objectsInBounds(sf::FloatRect const &rect,Object* self = NULL); // returns objects in bounds
 	std::vector<Object*> objectsTouching(Object* object); // Returns objects touching an object
@@ -61,6 +66,7 @@ public:
 	/* Calculations with structures */
 	// ...
 	/* Testers */
+	bool isInBounds(Object* object,sf::Vector2f const &projected = sf::Vector2f(0,0)); // If the object is in windows bounds
 	/* Methods */
 	void run(); // runs window
 	/* Events */

@@ -1,4 +1,5 @@
 #include "Rectangle.hpp"
+#include "../../Frames/Frame.hpp"
 
 /* Getters */
 
@@ -22,7 +23,11 @@ void Rectangle::display()
 void Rectangle::onDisplay()
 {
 	display();
-	move(getMovement());
+	sf::Vector2f mov = getMovement();
+	if(frame()->isInBounds(this,mov)) // If the movement doesn't throw us out of screen, TODO : Check for structures too
+	{
+		move(mov);
+	}
 }
 
 /* Collisions */

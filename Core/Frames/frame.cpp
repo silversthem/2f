@@ -74,7 +74,7 @@ void Frame::addRectangle(Rectangle& rect)
 	addObject(&rect);
 }
 
-/* Public : Calculations */
+/* Calculations */
 
 std::vector<Object*> Frame::objectsInBounds(sf::FloatRect const &rect,Object* self)
 {
@@ -110,6 +110,17 @@ std::vector<Object*> Frame::objectsTouching(Object* object)
 		}
 	}
 	return stack;
+}
+
+/* Testers */
+
+bool Frame::isInBounds(Object* object,sf::Vector2f const &projected)
+{
+	sf::FloatRect rect(sf::Vector2f(0,0),sf::Vector2f(getSize().x,getSize().y));
+	sf::FloatRect rect2 = object->getBounds();
+	rect2.left += projected.x;
+	rect2.top += projected.y;
+	return Plan::inside(rect,rect2);
 }
 
 /* Running method */

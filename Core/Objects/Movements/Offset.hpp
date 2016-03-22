@@ -10,6 +10,7 @@ class Offset : public Movement
 protected:
 	sf::Vector2f _offset; // Offset by which to move
 public:
+	Offset(); // Creates an offset
 	Offset(float const& x,float const& y); // Creates an offset movement
 	void setOffset(float const& x,float const& y); // Sets offset
 	sf::Vector2f getMovement(sf::Vector2f const& position,float const& speed); // Gets offset
