@@ -5,7 +5,6 @@
 #include <SFML/Graphics.hpp>
 
 #include "Object.hpp"
-#include "../Math/Plan.hpp"
 #include "Movements/Movement.hpp"
 
 /* An object that can move */

@@ -6,15 +6,17 @@
 class TestRectangle : public Rectangle
 {
 protected:
-	Offset up,left,right,down;
+	Offset left,right;
+	Toward up,down;
 public:
 	TestRectangle(Frame &f) // creates the rectangle
 	{
 		connect(&f);
-		setSpeed(3);
-		setMaximalSpeed(3);
-		up.setOffset(0,-getSpeed());
-		down.setOffset(0,getSpeed());
+		setSpeed(5);
+		setMaximalSpeed(5);
+		up.toward(frame()->mouse());
+		down.toward(frame()->mouse());
+		down.setAngle(180);
 		left.setOffset(-getSpeed(),0);
 		right.setOffset(getSpeed(),0);
 		bind(sf::Keyboard::Z,up);
@@ -28,7 +30,7 @@ public:
 	}
 	void display() // When displayed
 	{
-		setRotation(Plan::getLine(getPosition(),frame()->mouse()).angle);
+		setRotation(Line(getPosition(),frame()->mouse()).angle());
 	}
 };
 

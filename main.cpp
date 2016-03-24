@@ -13,7 +13,7 @@ int main()
 	/* Test */
 
 	Frame win(800,800,"Test rectangle"); // Creating a window
-	win.setFramerateLimit(250); // "Slow" framerate to show what's going on
+	win.setFramerateLimit(100); // "Slow" framerate to show what's going on
 
 	TestRectangle r1(win); // Creating a controlable rectangle
 	r1.setPosition(sf::Vector2f(100,100));

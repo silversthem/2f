@@ -12,7 +12,7 @@ protected:
 	const sf::Vector2f* _point; // The point
 public:
 	Toward();
-	Toward(sf::Vector2f const& point,float const& angle = 0); // Creates a "toward" movement
+	Toward(sf::Vector2f const& point); // Creates a "toward" movement
 	/* Setters */
 	void toward(sf::Vector2f const& point); // Sets point
 	/* Getters */

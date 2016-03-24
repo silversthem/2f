@@ -1,5 +1,7 @@
 #include "ObjectListener.hpp"
 
+/* Mouse event track */
+
 bool ObjectListener::mouseTouches()
 {
 	return _touched;
@@ -15,7 +17,7 @@ void ObjectListener::mouseLeft()
 	_touched = false;
 }
 
-/* Events : all methods are empty */
+/* Physics Events : all methods are empty */
 
 void ObjectListener::onDisplay()
 {

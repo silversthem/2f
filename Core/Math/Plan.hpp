@@ -5,33 +5,44 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
 
-#include "../structs.hpp"
 #include "Interval.hpp"
+#include "Geometry/Line.hpp"
 
-/* Static class used for linear calculations */
+/* A plan in which there's objects */
 
-#define VERTICALLY_ALIGNED -1
+class Object; // Declaration to avoid conflicts
+
+typedef std::vector<Object*> Objects; // Array of objects
 
 class Plan
 {
+protected:
+	Objects _objects; // Objects in plan
+	// Structures
+	// Projectiles
+	// Timer
+	int _width,_height; // Plan bounds, starts at (0,0)
 public:
-	virtual void abstract() const = 0; // no plan instance
-	/* Calculations */
-	static float coefficient(int const& angle); // calculates linear function coefficient associated with degree angle
-	static float angle(float const& coefficient); // calculates degree angle associated with linear function cofficient
-	/* Point calculations */
-	static sf::Vector2f vector2i2f(sf::Vector2i v); // Converts an integer vector into a float vector
-	static float distance(sf::Vector2f const& point1,sf::Vector2f const& point2); // get distances between two points
-	static Line getLine(sf::Vector2f const& point1,sf::Vector2f const& point2); // returns a line made from two points
-	/* Calculations with line */ 
-	static sf::Vector2f crossLines(Line const& line1,Line const& line2); // returns the point at which lines crosses eachother, if they do
-	static sf::Vector2f applyLine(Line const& line,float const& number); // calculates the coordinates from 0 to a point following a line
-	static bool isAligned(Line const& line,sf::Vector2f const& point); // If a point is aligned with the line
-	static Line RotateLine(Line line,float const& angle); // Rotates a line
-	/* Calculations with box */
+	Plan(); // Creates a plan
+	Plan(int width, int height); // Creates a boundede plan
+	/* Getters */
+	Objects objectsInBounds(sf::FloatRect const& rect,Object *self = NULL); // Get objects in a rectangle
+	Objects objectsTouching(Object const& object); // Gets objects touching an object
+	// Structures
+	/* Setters */
+	void setBounds(int width,int height); // Sets bounds
+	/* Methods */
+	// do calculations for objects, projectiles & structures
+	// Shoot a projectile
+	// Delete an object from the plan
+	// Pathfind through structures
+	/* Time related */
+	// Tick items (objects and else)
+	// Tick forces
+	/* Static Calculations with box */
 	static bool inBounds(sf::FloatRect const& rect1,sf::FloatRect const& rect2,bool reversed = false); // if a box interacts with another
 	static bool inside(sf::FloatRect const& container,sf::FloatRect const& containee); // If the box is fully inside the other
-	/* Calculations with convexes shapes */
+	/* Static Calculations with convexes shapes */
 	// In
 	// Touching
 };

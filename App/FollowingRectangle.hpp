@@ -19,17 +19,17 @@ public:
 	}
 	void display() // Rotating the following rectangle towards the rectangle it's following
 	{
-		setRotation(Plan::getLine(getPosition(),following.getPoint()).angle);
+		setRotation(Line(getPosition(),following.getPoint()).angle());
 		std::vector<Object*> touched = frame()->objectsTouching(this);
 		following.setApply(true);
 		if(touched.size() > 1) // Touching too much stuff
 		{
 			following.setApply(false);
 		}
-		if(touched.size() > 0) // Touching stuff
+		else if(touched.size() > 0) // Touching stuff
 		{
 			following.setAngle( // Chaning angle to avoid superposition
-				(Plan::getLine(following.getPoint(),getPosition()).angle) - (Plan::getLine(touched[0]->getObjectPosition(),getPosition()).angle));
+				Line(following.getPoint(),getPosition()).angle() - Line(touched[0]->getObjectPosition(),getPosition()).angle());
 		}
 		else // Not touching stuff
 		{

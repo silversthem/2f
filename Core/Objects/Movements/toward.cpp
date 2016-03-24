@@ -2,13 +2,12 @@
 
 Toward::Toward()
 {
-	_angle = 0;
+	
 }
 
-Toward::Toward(sf::Vector2f const& point,float const& angle)
+Toward::Toward(sf::Vector2f const& point)
 {
 	_point = &point;
-	_angle = angle;
 }
 
 /* Setters */
@@ -27,9 +26,13 @@ sf::Vector2f Toward::getPoint()
 
 sf::Vector2f Toward::getMovement(sf::Vector2f const& position,float const& speed)
 {
-	if(_angle == 0)
+	Line line(position,*_point);
+	if(_angle != 0)
 	{
-		return Plan::applyLine(Plan::getLine(position,*_point),speed);
+		Line angleLine;
+		angleLine.copy(line);
+		angleLine.rotate(_angle);
+		return angleLine.applyLine(speed);
 	}
-	return Plan::applyLine(Plan::RotateLine(Plan::getLine(position,*_point),_angle),speed); 
+	return line.applyLine(speed);
 }

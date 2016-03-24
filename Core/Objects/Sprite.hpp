@@ -7,7 +7,6 @@
 #include <SFML/Window.hpp>
 
 #include "MovingObject.hpp"
-#include "../structs.hpp"
 
 class Sprite : public sf::Sprite, public MovingObject
 {

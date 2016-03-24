@@ -1,111 +1,25 @@
 #include "Plan.hpp"
+#include "../Objects/Object.hpp"
 
-/* Calculations */
 
-float Plan::coefficient(int const& angle)
-{
-	if(ABS_DEG(angle) == 90 || ABS_DEG(angle) == 270) // vertical angle : no linear function
-	{
-		throw VERTICALLY_ALIGNED;
-	}
-	return 1/std::cos(RAD(angle)); // applies the formula : cos(ANGLE) = ADJACENT/HYPOTENUSE <=> HYPOTENUSE = ADJACENT/cos(ANGLE)
-}
 
-float Plan::angle(float const& coefficient)
-{
-	return DEG(std::acos(1/coefficient)); // applies the formula : cos(ANGLE) = ADJACENT/HYPOTENUSE <=> ANGLE = acos(ADJACENT/HYPOTENUSE)
-}
+/* Getters */
 
-/* Points */
 
-sf::Vector2f Plan::vector2i2f(sf::Vector2i v)
-{
-	sf::Vector2f vec;
-	vec.x = (float) v.x;
-	vec.y = (float) v.y;
-	return vec;
-}
 
-float Plan::distance(sf::Vector2f const& point1,sf::Vector2f const& point2)
-{
-	return std::sqrt(std::pow(point1.x - point2.x,2) + std::pow(point1.y - point2.y,2));
-}
+/* Setters */
 
-Line Plan::getLine(sf::Vector2f const& point1,sf::Vector2f const& point2)
-{
-	Line line;
-	if(point1.x == point2.x) // vertically aligned
-	{
-		if(point2.y > point1.y) // point 2 is higher
-		{
-			line.angle = 90;
-			line.length = point2.y - point1.y;
-		}
-		else // point 1 is higher
-		{
-			line.angle = 270;
-			line.length = point1.y - point2.y;
-		}
-	}
-	else
-	{
-		if(point1.y == point2.y) // horizontally aligned
-		{
-			if(point2.x > point1.x) // point 2 further
-			{
-				line.angle = 0;
-				line.length = point2.x - point1.x;
-			}
-			else // point 1 further
-			{
-				line.angle = 360;
-				line.length = point1.x - point2.x;
-			}
-		}
-		else // we need to calculate angle
-		{
-			float a = (point2.y - point1.y)/(point2.x - point1.x); // linear coefficient
-			line.angle = Plan::angle(hypot(1,a));
-			if(point1.x > point2.x)
-			{
-				line.angle = 180 - line.angle;
-			}
-			if(point1.y < point2.y)
-			{
-				line.angle = 180 - line.angle + 180;
-			}
-			line.angle = 360 - line.angle; // Inverting the angle to adapt to sfml plan
-			line.length = Plan::distance(point1,point2);
-		}
-	}
-	return line;
-}
 
-/* Lines */
 
-sf::Vector2f Plan::crossLines(Line const& line1,Line const& line2)
-{
-	sf::Vector2f intersection;
-	// ...
-	return intersection;
-}
+/* Methods */
 
-sf::Vector2f Plan::applyLine(Line const& line,float const& number)
-{
-	sf::Vector2f coords;
-	coords.x = std::cos(RAD(line.angle)) * number; // cos(angle) = adj/hypot <=> adj = cos(angle)*hypot
-	coords.y = std::sin(RAD(line.angle)) * number; // sin(angle) opp/hypot <=> opp = sin(angle)*hypot
-	return coords;
-}
 
-Line Plan::RotateLine(Line line,float const& angle)
-{
-	int absangle = (int) line.angle + angle;
-	line.angle = ABS_DEG(absangle);
-	return line;
-}
 
-/* Boxes */
+/* Time related */
+
+
+
+/* Static Calculations With Boxes */
 
 bool Plan::inBounds(sf::FloatRect const& rect1,sf::FloatRect const& rect2,bool reversed)
 {
@@ -151,5 +65,4 @@ bool Plan::inside(sf::FloatRect const& container,sf::FloatRect const& containee)
 	return false;
 }
 
-/* Convexe shapes */
-
+/* Static Calculations With Convexes shapes */

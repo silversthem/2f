@@ -2,24 +2,24 @@
 
 Along::Along()
 {
-	
+	_angle = 0;
 }
 
-Along::Along(Line const &line,float const& angle)
+Along::Along(Line const& line)
 {
-	_line = &line;
-	_angle = angle;
+	_line = line;
+	_angle = 0;
 }
 
 /* Getters */
 
 sf::Vector2f Along::getMovement(sf::Vector2f const& position,float const& speed)
 {
-	if(_angle == 0)
+	if(_angle != 0)
 	{
-		return Plan::applyLine(*_line,speed);
+		_line.rotate(_angle);
 	}
-	return Plan::applyLine(Plan::RotateLine(*_line,_angle),speed);
+	return _line.applyLine(speed);
 }
 
 /* Setters */

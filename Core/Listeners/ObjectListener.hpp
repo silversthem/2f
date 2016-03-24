@@ -10,12 +10,16 @@ class ObjectListener : public Listener
 protected:
 	bool _touched; // If the mouse touches the object
 public:
+	/* Mouse Events */
 	bool mouseTouches(); // If the mouse touches the object
 	void mouseTouched(); // When the mouse touches the object
 	void mouseLeft(); // When the mouse leaves the object
-	/* Events */
+	/* Physics Events */
 	virtual void onDisplay(); // Called at every loop
 	virtual void onHit(Object const& object); // When hit by other object
+	// Hit by a projectile
+	// Hit a bound
+	// Structure related
 };
 
 #endif

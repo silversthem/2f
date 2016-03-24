@@ -1,11 +1,13 @@
 /* Includes all core files */
 
-#include "structs.hpp"
-
 /* Math */
 
 #include "Math/Interval.hpp"
 #include "Math/Plan.hpp"
+
+/* Geometry */
+
+#include "Math/Geometry/Line.hpp"
 
 /* Objects */
 

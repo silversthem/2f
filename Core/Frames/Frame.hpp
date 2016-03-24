@@ -31,9 +31,11 @@ protected:
 	// Widget vector
 	/* Window info */
 	sf::Vector2f _mouse; // Mouse position
+	sf::Vector2f _bounds; // Window bounds
 	/* Protected methods */
 	void eventHandling(); // Handling events by calling listeners
 	void displayAll(); // Display all things
+	void calculate_bounds(); // Calculates window bounds
 	void calculate_mouse_pos(); // Calculates mouse position in frame
 	/* Event methods */
 	void call(Listener* listener); // Calls appropriate events on a listener
@@ -46,6 +48,7 @@ public:
 	// AI (Pathfinding)
 	// Structures drawing, events and else
 	/* Getters */
+	const sf::Vector2f& bounds() const; // Frame bounds
 	const sf::Vector2f& mouse() const; // Returns mouse position
 	/* Adders */
 	void addDrawable(sf::Drawable *drawable); // Adds something to draw

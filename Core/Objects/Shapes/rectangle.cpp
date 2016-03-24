@@ -24,9 +24,16 @@ void Rectangle::onDisplay()
 {
 	display();
 	sf::Vector2f mov = getMovement();
-	if(frame()->isInBounds(this,mov)) // If the movement doesn't throw us out of screen, TODO : Check for structures too
+	if(frame()->isInBounds(this,mov))
 	{
 		move(mov);
+	}
+	else
+	{
+		// Testing if x/y is <= 0 and x+length/y+length > 0 => we're on the top/left border
+		// Testing if x+length/y+length is >= winsize and x/y < winsize => bottom/right border
+		// We kill right coordinate accordingly and we proceed
+		// Determining where we are in bounds, and reducing the x or y coordinates accordingly
 	}
 }
 

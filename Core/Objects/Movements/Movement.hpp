@@ -14,6 +14,8 @@ class Movement
 protected:
 	bool _apply; // If the movement applies
 	Apply _when; // Applying on pressing or releasing
+	// Custom speed => Ignoring speed given by getMovement()
+	// Custom position => Ignoring position given by getMovement()
 public:
 	Movement(); // Creating a movement
 	void pressing(); // When pressing a key

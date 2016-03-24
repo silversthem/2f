@@ -3,6 +3,8 @@
 Frame::Frame(float const &width,float const &height,std::string const &title)
 {
 	create(sf::VideoMode(width,height),title);
+	_bounds.x = width;
+	_bounds.y = height;
 	calculate_mouse_pos();
 }
 
@@ -43,6 +45,11 @@ void Frame::calculateAll()
 }
 
 /* Getters */
+
+const sf::Vector2f& Frame::bounds() const
+{
+	return _bounds;
+}
 
 const sf::Vector2f& Frame::mouse() const
 {
@@ -116,7 +123,7 @@ std::vector<Object*> Frame::objectsTouching(Object* object)
 
 bool Frame::isInBounds(Object* object,sf::Vector2f const &projected)
 {
-	sf::FloatRect rect(sf::Vector2f(0,0),sf::Vector2f(getSize().x,getSize().y));
+	sf::FloatRect rect(sf::Vector2f(0,0),bounds());
 	sf::FloatRect rect2 = object->getBounds();
 	rect2.left += projected.x;
 	rect2.top += projected.y;
@@ -129,6 +136,7 @@ void Frame::run()
 {
 	while(isOpen())
 	{
+		calculate_bounds();
 		calculate_mouse_pos();
 		while(pollEvent(_event))
 		{
@@ -146,6 +154,12 @@ void Frame::onClose()
 }
 
 /* Protected methods */
+
+void Frame::calculate_bounds()
+{
+	_bounds.x = getSize().x;
+	_bounds.y = getSize().y;
+}
 
 void Frame::calculate_mouse_pos()
 {
