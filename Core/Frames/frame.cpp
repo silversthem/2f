@@ -107,7 +107,7 @@ std::vector<Object*> Frame::objectsTouching(Object* object)
 	std::vector<Object*>::iterator it = stack.begin();
 	for(;it != stack.end();) // Trimming the stack of elements not touching
 	{
-		if((*it)->collision(object))
+		if(!(*it)->collision(object))
 		{
 			stack.erase(it);
 		}

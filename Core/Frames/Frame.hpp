@@ -8,6 +8,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
+#include "../Math/Plan.hpp"
 #include "../Objects/Object.hpp"
 #include "../Objects/Structure.hpp"
 #include "../Objects/Shapes/Rectangle.hpp"
@@ -16,7 +17,7 @@
 
 /* SFML window with event handling */
 
-class Frame : public sf::RenderWindow
+class Frame : public sf::RenderWindow, public Plan
 {
 protected:
 	sf::Event _event; // Event listener

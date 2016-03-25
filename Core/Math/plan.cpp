@@ -1,19 +1,83 @@
 #include "Plan.hpp"
 #include "../Objects/Object.hpp"
 
+Plan::Plan()
+{
+	_width = 0;
+	_height = 0;
+}
 
+Plan::Plan(int width, int height) : _width(width),_height(height)
+{
+	
+}
+
+/* Adders */
+
+void Plan::addObject(Object *o)
+{
+	o->onInit();
+	_objects.push_back(o);
+}
 
 /* Getters */
 
+Objects Plan::objectsInBounds(sf::FloatRect const& rect,Object *self)
+{
+	Objects inBounds;
+	Objects::iterator it = _objects.begin();
+	for(;it != _objects.end();it++)
+	{
+		if(Plan::inside(rect,(*it)->getBounds()))
+		{
+			if(*it != self)
+			{
+				inBounds.push_back(*it);
+			}
+		}
+	}
+	return inBounds;
+}
 
+Objects Plan::objectsTouching(Object& object,sf::Vector2f const& projection)
+{
+	Objects touching = objectsInBounds(Plan::projectRectangle(object.getBounds(),projection));
+	Objects::iterator it = touching.begin();
+	for(;it != touching.end();)
+	{
+		if(!(*it)->collision(&object))
+		{
+			touching.erase(it);
+		}
+		else
+		{
+			it++;
+		}
+	}
+	return touching;
+}
 
 /* Setters */
 
+void Plan::setBounds(int width,int height)
+{
+	_width = width;
+	_height = height;
+}
 
+/* Testers */
+
+bool Plan::isInBounds(Object* object,sf::Vector2f const& projected)
+{
+	return Plan::inBounds(Plan::projectRectangle(object->getBounds(),projected),sf::FloatRect(sf::Vector2f(0,0),sf::Vector2f(_width,_height)));
+}
 
 /* Methods */
 
-
+void Plan::calculateAll() // Does calculations for every object
+{
+	
+}
 
 /* Time related */
 
@@ -65,4 +129,12 @@ bool Plan::inside(sf::FloatRect const& container,sf::FloatRect const& containee)
 	return false;
 }
 
+sf::FloatRect Plan::projectRectangle(sf::FloatRect rect,sf::Vector2f const& project)
+{
+	rect.top += project.y;
+	rect.left += project.x;
+	return rect;
+}
+
 /* Static Calculations With Convexes shapes */
+

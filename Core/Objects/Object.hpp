@@ -3,7 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../Math/Plan.hpp"
 #include "../Math/Geometry/Line.hpp"
 #include "../Listeners/ObjectListener.hpp"
 
