@@ -81,55 +81,6 @@ void Frame::addRectangle(Rectangle& rect)
 	addObject(&rect);
 }
 
-/* Calculations */
-
-std::vector<Object*> Frame::objectsInBounds(sf::FloatRect const &rect,Object* self)
-{
-	std::vector<Object*> stack; // Objects in bound
-	std::vector<Object*>::iterator it = _objects.begin();
-	for(;it != _objects.end();it++)
-	{
-		if((*it)->getBounds().intersects(rect)) // Object intersects rectangle
-		{
-			if(*it != self && *it != NULL)
-			{
-				stack.push_back(*it); // Adding object to stack of object in bound
-			}
-		}
-		// Handling other cases, with inverse transform and all...
-	}
-	return stack;
-}
-
-std::vector<Object*> Frame::objectsTouching(Object* object)
-{
-	std::vector<Object*> stack = objectsInBounds(object->getBounds(),object); // Reducing the size of the stack to test
-	std::vector<Object*>::iterator it = stack.begin();
-	for(;it != stack.end();) // Trimming the stack of elements not touching
-	{
-		if(!(*it)->collision(object))
-		{
-			stack.erase(it);
-		}
-		else
-		{
-			it++;
-		}
-	}
-	return stack;
-}
-
-/* Testers */
-
-bool Frame::isInBounds(Object* object,sf::Vector2f const &projected)
-{
-	sf::FloatRect rect(sf::Vector2f(0,0),bounds());
-	sf::FloatRect rect2 = object->getBounds();
-	rect2.left += projected.x;
-	rect2.top += projected.y;
-	return Plan::inside(rect,rect2);
-}
-
 /* Running method */
 
 void Frame::run()

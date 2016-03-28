@@ -22,7 +22,8 @@ public:
 	/* Tests */
 	virtual bool intersect(Line const& line); // if a line intersects the object
 	virtual bool isIn(sf::Vector2f const& point); // if a point is inside an object
-	virtual bool collision(Object* object,bool const &reversetest = false); // if two objects collides with each other
+	virtual bool collision(Object* object,sf::Vector2f const& projection = sf::Vector2f(0,0));
+	// if two objects collides with each other
 	virtual bool inBounds(sf::FloatRect const& rect); // If the object is inside a rectangle
 	virtual sf::FloatRect getBounds() = 0; // Returns global bounds of object
 };

@@ -26,7 +26,7 @@ bool Object::isIn(sf::Vector2f const& point)
 	return false;
 }
 
-bool Object::collision(Object* object,bool const& reversetest)
+bool Object::collision(Object* object,sf::Vector2f const& projection)
 {
 	return false;
 }

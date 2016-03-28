@@ -16,7 +16,7 @@ public:
 	void mouseLeft(); // When the mouse leaves the object
 	/* Physics Events */
 	virtual void onDisplay(); // Called at every loop
-	virtual void onHit(Object const& object); // When hit by other object
+	virtual void onHit(Object *object); // When hit by other object
 	// Hit by a projectile
 	// Hit a bound
 	// Structure related

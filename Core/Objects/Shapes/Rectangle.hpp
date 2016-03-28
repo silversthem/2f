@@ -14,13 +14,15 @@ public:
 	/* Getters */
 	sf::FloatRect getBounds(); // Returns bounds of the rectangle
 	/* Events */
-	void onInit();
+	virtual void onInit();
+	virtual void onDisplay();
+	/* Events called by their onX counterpart */
 	virtual void display(); // When displaying
-	void onDisplay();
 	/* Collisions */
 	virtual bool isIn(sf::Vector2f const& point); // If a point is in the rectangle
 	virtual bool intersect(Line const& line); // If a line intersects the rectangle
-	virtual bool collision(Object* object,bool const &reversetest = false); // If an object touches this one
+	virtual bool collision(Object* object,sf::Vector2f const& projection = sf::Vector2f(0,0));
+	// If an object touches this one
 };
 
 #endif

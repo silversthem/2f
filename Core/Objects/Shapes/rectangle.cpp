@@ -23,25 +23,15 @@ void Rectangle::display()
 void Rectangle::onDisplay()
 {
 	display();
-	sf::Vector2f mov = getMovement();
-	if(frame()->isInBounds(this,mov))
-	{
-		move(mov);
-	}
-	else
-	{
-		// Testing if x/y is <= 0 and x+length/y+length > 0 => we're on the top/left border
-		// Testing if x+length/y+length is >= winsize and x/y < winsize => bottom/right border
-		// We kill right coordinate accordingly and we proceed
-		// Determining where we are in bounds, and reducing the x or y coordinates accordingly
-	}
+	move(getMovement());
+	
 }
 
 /* Collisions */
 
 bool Rectangle::isIn(sf::Vector2f const& point)
 {
-	return getGlobalBounds().contains(getInverseTransform().transformPoint(point)); // If the rectangle bound contains the object
+	return getGlobalBounds().contains(point);
 }
 
 bool Rectangle::intersect(Line const& line)
@@ -50,19 +40,17 @@ bool Rectangle::intersect(Line const& line)
 	return false;
 }
 
-bool Rectangle::collision(Object* object,bool const& reversetest)
+bool Rectangle::collision(Object* object,sf::Vector2f const& projection)
 {
-	for(unsigned int i = 0;i < getPointCount();i++) // Testing for every point of the rectangle
+	move(projection);
+	for(unsigned int i = 0;i < getPointCount();i++)
 	{
-		if((*object).isIn(getPoint(i))) // If one point is in the object
+		if(object->isIn(getTransform().transformPoint(getPoint(i))))
 		{
-			return true; // We're good
+			onHit(object);
+			return true;
 		}
 	}
-	if(!reversetest) // This object is the first to be tested
-	{
-		return object->collision(this,true); // Testing if one of the object's point is in the rectangle
-		// Since we've already tested the other way around, reversetest = true
-	}
+	move(-projection);
 	return false;
 }

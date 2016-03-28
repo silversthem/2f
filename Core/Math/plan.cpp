@@ -28,9 +28,9 @@ Objects Plan::objectsInBounds(sf::FloatRect const& rect,Object *self)
 	Objects::iterator it = _objects.begin();
 	for(;it != _objects.end();it++)
 	{
-		if(Plan::inside(rect,(*it)->getBounds()))
+		if((*it)->getBounds().intersects(rect))
 		{
-			if(*it != self)
+			if(*it != NULL && *it != self)
 			{
 				inBounds.push_back(*it);
 			}
@@ -39,13 +39,13 @@ Objects Plan::objectsInBounds(sf::FloatRect const& rect,Object *self)
 	return inBounds;
 }
 
-Objects Plan::objectsTouching(Object& object,sf::Vector2f const& projection)
+Objects Plan::objectsTouching(Object* object,sf::Vector2f const& projection)
 {
-	Objects touching = objectsInBounds(Plan::projectRectangle(object.getBounds(),projection));
+	Objects touching = objectsInBounds(Plan::projectRectangle(object->getBounds(),projection),object);
 	Objects::iterator it = touching.begin();
 	for(;it != touching.end();)
 	{
-		if(!(*it)->collision(&object))
+		if(!(*it)->collision(object,projection))
 		{
 			touching.erase(it);
 		}
@@ -55,6 +55,24 @@ Objects Plan::objectsTouching(Object& object,sf::Vector2f const& projection)
 		}
 	}
 	return touching;
+}
+
+Objects Plan::projectionTouching(Object* object,sf::Vector2f const& projection)
+{
+	Objects willTouch = objectsTouching(object,projection);
+	Objects::iterator it = willTouch.begin();
+	for(;it != willTouch.end();)
+	{
+		if((*it)->collision(object)) // Objects being touched, we don't care about them
+		{
+			willTouch.erase(it);
+		}
+		else
+		{
+			it++;
+		}
+	}
+	return willTouch;
 }
 
 /* Setters */

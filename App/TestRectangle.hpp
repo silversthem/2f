@@ -28,8 +28,13 @@ public:
 	{
 		setPosition(frame()->mouse());
 	}
+	void onHit(Object* object)
+	{
+		setFillColor(sf::Color::Yellow);
+	}
 	void display() // When displayed
 	{
+		setFillColor(sf::Color::Red);
 		setRotation(Line(getPosition(),frame()->mouse()).angle());
 	}
 };

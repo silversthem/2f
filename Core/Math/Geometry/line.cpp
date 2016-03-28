@@ -143,8 +143,11 @@ void Line::rotate(float const& angle)
 
 sf::Vector2f Line::applyLine(float const& number)
 {
+	if(length() < 1)
+	{
+		return sf::Vector2f(0,0);
+	}
 	sf::Vector2f coords;
-	absolute();
 	coords.x = std::cos(RAD(_angle)) * number; // cos(angle) = adj/hypot <=> adj = cos(angle)*hypot
 	coords.y = std::sin(RAD(_angle)) * number; // sin(angle) opp/hypot <=> opp = sin(angle)*hypot
 	return coords;

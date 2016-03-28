@@ -29,7 +29,8 @@ public:
 	void addObject(Object *o); // Adds an object to the plan
 	/* Getters */
 	Objects objectsInBounds(sf::FloatRect const& rect,Object *self = NULL); // Get objects in a rectangle
-	Objects objectsTouching(Object& object,sf::Vector2f const& projection = sf::Vector2f(0,0)); // Gets objects touching an object
+	Objects objectsTouching(Object* object,sf::Vector2f const& projection = sf::Vector2f(0,0)); // Gets objects touching an object
+	Objects projectionTouching(Object* object,sf::Vector2f const& projection); // Gets objects only touching the projection not the actual object
 	// Structures
 	/* Setters */
 	void setBounds(int width,int height); // Sets bounds

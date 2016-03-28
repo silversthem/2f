@@ -24,7 +24,6 @@ protected:
 	Timer _timer; // a timer
 	/* Piles */
 	std::vector<sf::Drawable*> _drawables; // Things to be drawn
-	std::vector<Object*> _objects; // Objects for physics
 	std::vector<Listener*> _listeners; // listeners to events
 	// Structures vector
 	// Projectile vector
@@ -46,8 +45,7 @@ public:
 	/* Pile methods */
 	void drawAll(); // Drawing (sf::Drawable)
 	void calculateAll(); // Physics (collisions & movements & forces)
-	// AI (Pathfinding)
-	// Structures drawing, events and else
+	// Structures drawing, events
 	/* Getters */
 	const sf::Vector2f& bounds() const; // Frame bounds
 	const sf::Vector2f& mouse() const; // Returns mouse position
@@ -61,16 +59,6 @@ public:
 	/* Adders for shapes */
 	void addShape();
 	void addRectangle(Rectangle &rect); // adds a rectangle
-	/* Deleters */
-	// ...
-	/* Calculations with objects */
-	std::vector<Object*> objectsInBounds(sf::FloatRect const &rect,Object* self = NULL); // returns objects in bounds
-	std::vector<Object*> objectsTouching(Object* object); // Returns objects touching an object
-	// Testing aligment
-	/* Calculations with structures */
-	// ...
-	/* Testers */
-	bool isInBounds(Object* object,sf::Vector2f const &projected = sf::Vector2f(0,0)); // If the object is in windows bounds
 	/* Methods */
 	void run(); // runs window
 	/* Events */

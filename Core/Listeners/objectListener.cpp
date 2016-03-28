@@ -24,7 +24,7 @@ void ObjectListener::onDisplay()
 	
 }
 
-void ObjectListener::onHit(Object const& object)
+void ObjectListener::onHit(Object *object)
 {
 	
 }
