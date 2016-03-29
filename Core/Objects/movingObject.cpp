@@ -10,6 +10,7 @@ MovingObject::MovingObject()
 
 void MovingObject::onKeyPressed(sf::Event::KeyEvent const& key)
 {
+	keyPressed(key);
 	if(_key_movements.find(key.code) != _key_movements.end())
 	{
 		_key_movements[key.code]->pressing();
@@ -18,6 +19,7 @@ void MovingObject::onKeyPressed(sf::Event::KeyEvent const& key)
 
 void MovingObject::onKeyReleased(sf::Event::KeyEvent const& key)
 {
+	keyReleased(key);
 	if(_key_movements.find(key.code) != _key_movements.end())
 	{
 		_key_movements[key.code]->releasing();

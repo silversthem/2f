@@ -3,12 +3,15 @@
 
 #include "Listener.hpp"
 
-class Object;
+class Frame; // Declaration to avoid conflicts
 
 class ObjectListener : public Listener
 {
 protected:
 	bool _touched; // If the mouse touches the object
+	/* Overridable events -> are called by their equivalent onX event, when base class handles it fine */
+	virtual void display(); // Called in the beginning of the OnDisplay method
+	virtual void init(); // Called by the onInit method
 public:
 	/* Mouse Events */
 	bool mouseTouches(); // If the mouse touches the object
@@ -16,10 +19,6 @@ public:
 	void mouseLeft(); // When the mouse leaves the object
 	/* Physics Events */
 	virtual void onDisplay(); // Called at every loop
-	virtual void onHit(Object *object); // When hit by other object
-	// Hit by a projectile
-	// Hit a bound
-	// Structure related
 };
 
 #endif

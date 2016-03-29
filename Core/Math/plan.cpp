@@ -3,76 +3,20 @@
 
 Plan::Plan()
 {
-	_width = 0;
-	_height = 0;
+	setBounds(0,0);
 }
 
-Plan::Plan(int width, int height) : _width(width),_height(height)
+Plan::Plan(int width, int height)
 {
-	
+	setBounds(width,height);
 }
 
 /* Adders */
 
-void Plan::addObject(Object *o)
+void Plan::addObject(Object *object)
 {
-	o->onInit();
-	_objects.push_back(o);
-}
-
-/* Getters */
-
-Objects Plan::objectsInBounds(sf::FloatRect const& rect,Object *self)
-{
-	Objects inBounds;
-	Objects::iterator it = _objects.begin();
-	for(;it != _objects.end();it++)
-	{
-		if((*it)->getBounds().intersects(rect))
-		{
-			if(*it != NULL && *it != self)
-			{
-				inBounds.push_back(*it);
-			}
-		}
-	}
-	return inBounds;
-}
-
-Objects Plan::objectsTouching(Object* object,sf::Vector2f const& projection)
-{
-	Objects touching = objectsInBounds(Plan::projectRectangle(object->getBounds(),projection),object);
-	Objects::iterator it = touching.begin();
-	for(;it != touching.end();)
-	{
-		if(!(*it)->collision(object,projection))
-		{
-			touching.erase(it);
-		}
-		else
-		{
-			it++;
-		}
-	}
-	return touching;
-}
-
-Objects Plan::projectionTouching(Object* object,sf::Vector2f const& projection)
-{
-	Objects willTouch = objectsTouching(object,projection);
-	Objects::iterator it = willTouch.begin();
-	for(;it != willTouch.end();)
-	{
-		if((*it)->collision(object)) // Objects being touched, we don't care about them
-		{
-			willTouch.erase(it);
-		}
-		else
-		{
-			it++;
-		}
-	}
-	return willTouch;
+	object->onInit();
+	_objects.push_back(object);
 }
 
 /* Setters */
@@ -81,20 +25,6 @@ void Plan::setBounds(int width,int height)
 {
 	_width = width;
 	_height = height;
-}
-
-/* Testers */
-
-bool Plan::isInBounds(Object* object,sf::Vector2f const& projected)
-{
-	return Plan::inBounds(Plan::projectRectangle(object->getBounds(),projected),sf::FloatRect(sf::Vector2f(0,0),sf::Vector2f(_width,_height)));
-}
-
-/* Methods */
-
-void Plan::calculateAll() // Does calculations for every object
-{
-	
 }
 
 /* Time related */
@@ -156,3 +86,20 @@ sf::FloatRect Plan::projectRectangle(sf::FloatRect rect,sf::Vector2f const& proj
 
 /* Static Calculations With Convexes shapes */
 
+
+
+/* Protected Methods */
+
+Objects Plan::objectsInBounds(sf::FloatRect const& rect)
+{
+	Objects pile;
+	Objects::iterator it = _objects.begin();
+	for(;it != _objects.end();it++)
+	{
+		if((*it)->inBounds(rect))
+		{
+			pile.push_back(*it);
+		}
+	}
+	return pile;
+}

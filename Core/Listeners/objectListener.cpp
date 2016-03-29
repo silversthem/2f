@@ -1,4 +1,5 @@
 #include "ObjectListener.hpp"
+#include "../Frames/Frame.hpp"
 
 /* Mouse event track */
 
@@ -17,14 +18,21 @@ void ObjectListener::mouseLeft()
 	_touched = false;
 }
 
-/* Physics Events : all methods are empty */
+/* Rendering events */
 
 void ObjectListener::onDisplay()
+{
+	display();
+}
+
+/* Protected : Overridable events */
+
+void ObjectListener::display()
 {
 	
 }
 
-void ObjectListener::onHit(Object *object)
+void ObjectListener::init()
 {
 	
 }

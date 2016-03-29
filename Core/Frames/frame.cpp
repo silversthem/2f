@@ -1,7 +1,20 @@
 #include "Frame.hpp"
 
+Frame::Frame()
+{
+	_bounds.x = 0;
+	_bounds.y = 0;
+	calculate_mouse_pos();
+}
+
 Frame::Frame(float const &width,float const &height,std::string const &title)
 {
+	makeFrame(width,height,title);
+}
+
+void Frame::makeFrame(float const &width,float const &height,std::string const &title)
+{
+	setBounds(width,height);
 	create(sf::VideoMode(width,height),title);
 	_bounds.x = width;
 	_bounds.y = height;
@@ -13,35 +26,27 @@ Frame::~Frame()
 	
 }
 
+/* Adders */
+
+void Frame::addObject(Object *object)
+{
+	addListener(object);
+	Plan::addObject(object);
+}
+
 /* Pile methods */
 
 void Frame::drawAll()
 {
 	clear(sf::Color::Black);
-	std::vector<sf::Drawable*>::iterator it = _drawables.begin();
-	for(;it != _drawables.end();it++)
+	Objects toDraw = objectsInBounds(sf::FloatRect(sf::Vector2f(0,0),_bounds));
+	Objects::iterator it = toDraw.begin();
+	for(;it != toDraw.end();it++)
 	{
-		draw(*(*it));
+		(*it)->onDisplay();
+		draw(*(*it)->getDrawable());
 	}
 	display();
-}
-
-void Frame::calculateAll()
-{
-	std::vector<Object*>::iterator it = _objects.begin();
-	for(;it != _objects.end();it++)
-	{
-		/* Object Events */
-		if((*it)->isIn(mouse())) // Mouse touches object
-		{
-			(*it)->mouseTouched();
-		}
-		else if((*it)->mouseTouches()) // Mouse touched object, but doesn't anymore
-		{
-			(*it)->mouseLeft();
-		}
-		(*it)->onDisplay();
-	}
 }
 
 /* Getters */
@@ -56,31 +61,6 @@ const sf::Vector2f& Frame::mouse() const
 	return _mouse;
 }
 
-/* Public : Adders */
-
-void Frame::addDrawable(sf::Drawable *drawable)
-{
-	_drawables.push_back(drawable);
-}
-
-void Frame::addListener(Listener *listener)
-{
-	_listeners.push_back(listener);
-}
-
-void Frame::addObject(Object *object)
-{
-	object->onInit();
-	_objects.push_back(object);
-}
-
-void Frame::addRectangle(Rectangle& rect)
-{
-	addDrawable(&rect);
-	addListener(&rect);
-	addObject(&rect);
-}
-
 /* Running method */
 
 void Frame::run()
@@ -93,10 +73,8 @@ void Frame::run()
 		{
 			eventHandling();
 		}
-		calculateAll();
 		drawAll();
 	}
-	onClose();
 }
 
 void Frame::onClose()
@@ -105,6 +83,11 @@ void Frame::onClose()
 }
 
 /* Protected methods */
+
+void Frame::addListener(Listener *listener)
+{
+	_listeners.push_back(listener);
+}
 
 void Frame::calculate_bounds()
 {
@@ -122,6 +105,7 @@ void Frame::eventHandling()
 {
 	if(_event.type == sf::Event::Closed) // Closing the window
 	{
+		onClose();
 		close();
 	}
 	else

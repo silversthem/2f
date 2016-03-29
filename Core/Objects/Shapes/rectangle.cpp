@@ -8,16 +8,24 @@ sf::FloatRect Rectangle::getBounds()
 	return getGlobalBounds();
 }
 
+sf::Drawable* Rectangle::getDrawable()
+{
+	return this;
+}
+
+sf::Vector2f Rectangle::getMiddle()
+{
+	sf::Vector2f middle;
+	// ...
+	return middle;
+}
+
 /* Events */
 
 void Rectangle::onInit()
 {
+	init();
 	setObjectPosition(getPosition());
-}
-
-void Rectangle::display()
-{
-	
 }
 
 void Rectangle::onDisplay()
@@ -28,6 +36,11 @@ void Rectangle::onDisplay()
 }
 
 /* Collisions */
+
+bool Rectangle::inBounds(sf::FloatRect const& rect)
+{
+	return getBounds().intersects(rect);
+}
 
 bool Rectangle::isIn(sf::Vector2f const& point)
 {
@@ -42,15 +55,5 @@ bool Rectangle::intersect(Line const& line)
 
 bool Rectangle::collision(Object* object,sf::Vector2f const& projection)
 {
-	move(projection);
-	for(unsigned int i = 0;i < getPointCount();i++)
-	{
-		if(object->isIn(getTransform().transformPoint(getPoint(i))))
-		{
-			onHit(object);
-			return true;
-		}
-	}
-	move(-projection);
 	return false;
 }

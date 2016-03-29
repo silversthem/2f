@@ -5,31 +5,29 @@
 #include "Core/Core.hpp"
 
 /* Test classes */
-#include "App/TestRectangle.hpp"
-#include "App/FollowingRectangle.hpp"
+#include "App/MyFrame.hpp"
+#include "App/Player.hpp"
+#include "App/Enemy.hpp"
 
 int main()
 {
 	/* Test */
 
-	Frame win(800,800,"Test rectangle"); // Creating a window
-	win.setFramerateLimit(200); // "Slow" framerate to show what's going on
+	Player p(30,30); // Player
 
-	TestRectangle r1(win); // Creating a controlable rectangle
-	r1.setPosition(sf::Vector2f(100,100));
-	r1.setSize(sf::Vector2f(40,20));
-	r1.setFillColor(sf::Color::Red);
+	MyFrame win(800,800,"First test"); // Creating Window
+	win.setFramerateLimit(60);
 
-	FollowingRectangle r2(win,r1); // A blue rectangle following the first one
-	r2.setSpeed(1);
-	r2.setPosition(sf::Vector2f(300,300));
-	r2.setSize(sf::Vector2f(40,20));
-	r2.setFillColor(sf::Color::Blue);
+	win.addSpawnPoint(100,100); // Adding spawnpoints
+	win.addSpawnPoint(500,500);
+	win.addSpawnPoint(200,200);
 
-	win.addRectangle(r1); // Adding rectangles to the window
-	win.addRectangle(r2);
+	win.setPlayer(p);
+	win.addEnemy();
+	win.addEnemy();
+	win.addEnemy();
 
-	win.run(); // Magic ! (^_^)
+	win.run();
 
 	return 0;
 }

@@ -23,10 +23,9 @@ protected:
 	sf::Event _event; // Event listener
 	Timer _timer; // a timer
 	/* Piles */
-	std::vector<sf::Drawable*> _drawables; // Things to be drawn
 	std::vector<Listener*> _listeners; // listeners to events
 	// Structures vector
-	// Projectile vector
+	// Projectile vector (they're both displayed differently)
 	// Shader vector ?
 	// Widget vector
 	/* Window info */
@@ -39,28 +38,23 @@ protected:
 	void calculate_mouse_pos(); // Calculates mouse position in frame
 	/* Event methods */
 	void call(Listener* listener); // Calls appropriate events on a listener
+	/* Adders */
+	void addListener(Listener *listener); // Adds a listener
 public:
+	Frame(); // Creates a frame
 	Frame(float const &width,float const &height,std::string const &title); // creates a frame
+	void makeFrame(float const &width,float const &height,std::string const &title); // Creates the sfml renderwindow
 	~Frame(); // Deleting dynamically allocated threads
+	/* Adders */
+	void addObject(Object *object);
 	/* Pile methods */
 	void drawAll(); // Drawing (sf::Drawable)
-	void calculateAll(); // Physics (collisions & movements & forces)
 	// Structures drawing, events
 	/* Getters */
 	const sf::Vector2f& bounds() const; // Frame bounds
 	const sf::Vector2f& mouse() const; // Returns mouse position
-	/* Adders */
-	void addDrawable(sf::Drawable *drawable); // Adds something to draw
-	void addListener(Listener *listener); // Adds a listener
-	void addObject(Object *object); // Adds an object
-	/* Adders for sprites & structures */
-	void addSprite();
-	void addStructure();
-	/* Adders for shapes */
-	void addShape();
-	void addRectangle(Rectangle &rect); // adds a rectangle
 	/* Methods */
-	void run(); // runs window
+	virtual void run(); // runs window
 	/* Events */
 	virtual void onClose(); // What to do when closing the window
 };
