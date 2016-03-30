@@ -15,17 +15,19 @@ int main()
 
 	Player p(30,30); // Player
 
-	MyFrame win(800,800,"First test"); // Creating Window
+	MyFrame win(1000,1000,"First test"); // Creating Window
 	win.setFramerateLimit(100);
 
 	win.addSpawnPoint(100,100); // Adding spawnpoints
-	win.addSpawnPoint(500,500);
-	win.addSpawnPoint(200,200);
+	win.addSpawnPoint(700,100);
+	win.addSpawnPoint(100,700);
+	win.addSpawnPoint(700,700);
 
 	win.setPlayer(p);
-	win.addEnemy();
-	win.addEnemy();
-	//win.addEnemy();
+	for(int i = 0;i < 25;i++) // Adding enemies
+	{
+		win.addEnemy();
+	}
 
 	win.run();
 

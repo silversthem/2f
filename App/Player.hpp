@@ -22,6 +22,10 @@ public:
 		setSize(sf::Vector2f(30,30));
 		setSpeed(5);
 	}
+	void onMouseClicked(sf::Event::MouseButtonEvent const& mouse)
+	{
+		setPosition(frame()->mouse().x,frame()->mouse().y);
+	}
 	void display() // When displaying the player
 	{
 		setRotation(Line(getPosition(),frame()->mouse()).angle());

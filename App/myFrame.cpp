@@ -48,6 +48,11 @@ void MyFrame::addEnemy() // Adds an enemy in the plan
 	_enemies.push_back(e);
 }
 
+bool MyFrame::isTouchingPlayer(Enemy* e)
+{
+	return _player->collision(e);
+}
+
 VECTOR_OF(Enemy) MyFrame::enemiesTouching(Object *object) // Returns the enemies that touches an object
 {
 	return touching<Enemy,VECTOR_OF(Enemy)::iterator >(object,_enemies.begin(),_enemies.end());

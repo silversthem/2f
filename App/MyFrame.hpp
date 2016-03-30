@@ -24,6 +24,7 @@ public:
 	void setPlayer(Player &player); // Sets the player
 	void addSpawnPoint(int x,int y);
 	void addEnemy(); // Adds an enemy in the plan
+	bool isTouchingPlayer(Enemy* e);
 	VECTOR_OF(Enemy) enemiesTouching(Object *object); // Returns the enemies that touches an object
 	~MyFrame(); // Deleting enemies
 };

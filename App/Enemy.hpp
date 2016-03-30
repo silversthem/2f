@@ -36,12 +36,21 @@ public:
 		setRotation(Line(getPosition(),toward.getPoint()).angle());
 		VECTOR_OF(Enemy) e = frame()->enemiesTouching(this); // Getting enemies touching this one
 		// Handling stuff
-		if(e.size() > 0) // Touching something
+		if(frame()->isTouchingPlayer(this)) // We're touching the player
+		{
+			shouldMove(false);
+		}
+		else if(e.size() > 0) // We're touching other enemies
 		{
 			if(e[0]->distanceToPlayer() > distanceToPlayer()) // The other enemy is closer
 			{
 				shouldMove(true);
 				e[0]->shouldMove(false);
+			}
+			else if(e[0]->distanceToPlayer() == distanceToPlayer()) // Equal distance
+			{
+				shouldMove(true);
+				e[0]->shouldMove(true);
 			}
 			else // This one is closer
 			{
