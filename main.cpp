@@ -16,7 +16,7 @@ int main()
 	Player p(30,30); // Player
 
 	MyFrame win(800,800,"First test"); // Creating Window
-	win.setFramerateLimit(60);
+	win.setFramerateLimit(100);
 
 	win.addSpawnPoint(100,100); // Adding spawnpoints
 	win.addSpawnPoint(500,500);
@@ -25,7 +25,7 @@ int main()
 	win.setPlayer(p);
 	win.addEnemy();
 	win.addEnemy();
-	win.addEnemy();
+	//win.addEnemy();
 
 	win.run();
 

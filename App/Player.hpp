@@ -2,6 +2,7 @@
 #define PLAYER_HPP
 
 #include "../Core/Core.hpp"
+#include "MyFrame.hpp"
 
 class Player : public Rectangle
 {
@@ -13,6 +14,7 @@ protected:
 		bind(sf::Keyboard::Z,up);
 	}
 public:
+	CONNECT(MyFrame); // Connecting player to the frame
 	Player(int x,int y) // Player coordinates
 	{
 		setPosition(sf::Vector2f(x,y));

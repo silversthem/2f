@@ -1,5 +1,7 @@
 #include "Frame.hpp"
 
+/* Constructors */
+
 Frame::Frame()
 {
 	_bounds.x = 0;

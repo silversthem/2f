@@ -20,6 +20,7 @@
 class Frame : public sf::RenderWindow, public Plan
 {
 protected:
+	/* Attributes */
 	sf::Event _event; // Event listener
 	Timer _timer; // a timer
 	/* Piles */
@@ -41,6 +42,7 @@ protected:
 	/* Adders */
 	void addListener(Listener *listener); // Adds a listener
 public:
+	/* Constructors */
 	Frame(); // Creates a frame
 	Frame(float const &width,float const &height,std::string const &title); // creates a frame
 	void makeFrame(float const &width,float const &height,std::string const &title); // Creates the sfml renderwindow

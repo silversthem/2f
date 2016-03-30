@@ -28,7 +28,7 @@ protected:
 		Iter it;
 		for(it = begin;it != end;it++)
 		{
-			if((*it)->collision(object))
+			if((*it)->collision(object) && (*it) != object)
 			{
 				pile.push_back(*it);
 			}

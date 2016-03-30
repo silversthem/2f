@@ -55,5 +55,5 @@ bool Rectangle::intersect(Line const& line)
 
 bool Rectangle::collision(Object* object,sf::Vector2f const& projection)
 {
-	return false;
+	return object->getBounds().intersects(getBounds());
 }

@@ -1,5 +1,9 @@
 /* Includes all core files */
 
+/* Macros */
+
+#include "Macro.hpp"
+
 /* Math */
 
 #include "Math/Interval.hpp"
