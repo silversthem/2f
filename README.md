@@ -5,10 +5,12 @@
   - [ ] Timers and tickers, which call functions or methods when a certain amount of time has passed ( = ticks).
   - [ ] Objects, the stuff you have in your plan, handling collision, events and movements (if needed).
   - [ ] Structures, which are 2D composite objects, like a house or a plateform (Pathfinding is supported natively and can be overwritten to apply contraints to the pathfinding algorithm).
-  - [ ] Most geometrical calculations are included as well, and with movement class and its derivatives, following an object (or the mouse, or else), becomes a matter of a single instruction (even with pathfinding). 
+  - [ ] Most geometrical calculations are included as well, and with movement class and its derivatives, following an object (or the mouse, or else), becomes a matter of a single instruction (even with pathfinding).
+
 ## Getting started
 *Soon*
 ## Roadmap
+
   - [x] Basic object : The rectangle
   - [ ] Collisions
   - [x] Line class
