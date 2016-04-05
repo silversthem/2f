@@ -20,12 +20,12 @@ namespace F2
 	{
 	public:
 		/* Getters */
-		virtual const &sf::Vector2f getObjectPosition() = 0 const; // Gets object position in plan
-		virtual const &sf::FloatRect getObjectBounds()  = 0 const; // Gets object boundaries
-		virtual const &sf::Drawable getDrawable()       = 0 const; // Returns what to draw
+		virtual const sf::Vector2f& getObjectPosition() = 0; // Gets object position in plan
+		virtual sf::FloatRect getObjectBounds()         = 0; // Gets object boundaries
+		virtual const sf::Drawable& getDrawable()       = 0; // Returns what to draw
 		/* Collision */
-		virtual bool isIn(sf::Vector2f const& point); // If a point is in object
-		virtual bool touches(Object const& o);        // If an object touches this one
+		virtual bool isIn(sf::Vector2f const& point)    = 0; // If a point is in object
+		virtual bool touches(Object *o)                 = 0; // If an object touches this one
 	};
 };
 
