@@ -31,6 +31,11 @@ void F2::Listener::onInit()
 	
 }
 
+void F2::Listener::onTicked(float const& tick)
+{
+	
+}
+
 void F2::Listener::onDisplay()
 {
 	

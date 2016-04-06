@@ -9,6 +9,7 @@
 /* F2 */
 #include "EventMachine.hpp"
 #include "Plan.hpp"
+#include "../Time/Timer.hpp"
 
 namespace F2
 {
@@ -16,11 +17,12 @@ namespace F2
 	{
 	protected:
 		sf::FloatRect _segment; // Segment of plan captured
+		Timer _timer;           // Frame timer
 		/* Methods */
 		void frame(int const& width,int const& height,std::string const& name);
-		void render(); // Renders the frame
+		void render();                    // Renders the frame
 		void render(VECTOR_OF(Object) v); // Renders objects in the frame
-		void renderAll(); // Forces the frame to render all things, even out of bounds
+		void renderAll();                 // Forces the frame to render all things, even out of bounds
 	public:
 		/* Constructors */
 		Frame(); // Creates a frame
@@ -31,6 +33,7 @@ namespace F2
 		void setSegmentStart(int const& x,int const& y); // Sets beginning of the captured segment
 		void setSegmentSize(int const& w,int const& h);  // Sets size of the captured segment
 		/* Getters */
+		Timer* timer(); // Returns frame timer
 		/* Methods */
 		void onEvent(); // Frame events
 		void run(); // Runs the frame

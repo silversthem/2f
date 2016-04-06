@@ -16,22 +16,7 @@ public:
 	}
 	void onKeyPressed(sf::Event::KeyEvent const& key)
 	{
-		if(key.code == sf::Keyboard::Z)
-		{
-			move(sf::Vector2f(0,-5));
-		}
-		else if(key.code == sf::Keyboard::S)
-		{
-			move(sf::Vector2f(0,5));
-		}
-		else if(key.code == sf::Keyboard::Q)
-		{
-			move(sf::Vector2f(-5,0));
-		}
-		else if(key.code == sf::Keyboard::D)
-		{
-			move(sf::Vector2f(5,0));
-		}
+		
 	}
 };
 
