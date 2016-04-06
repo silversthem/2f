@@ -21,9 +21,10 @@ namespace F2
 		virtual void onMouseReleased(sf::Event::MouseButtonEvent const& mouse); // When the mouse button is released
 		virtual void onMouseMoved(sf::Event::MouseMoveEvent const& mouse);      // When the mouse moves
 		/* Other events */
-		virtual void onInit();    // Before first interaction
-		virtual void onDisplay(); // When displaying
-		virtual void onClose();   // When display time is over
+		virtual void onInit();                    // Before first interaction
+		virtual void onDisplay();                 // When displaying
+		virtual void onTicked(float const& tick); // Ticked
+		virtual void onClose();                   // When display time is over
 	};
 };
 
