@@ -61,10 +61,7 @@ void F2::Timer::tick()
 	if(_delay > 0 && _loop > 0)
 	{
 		calculate();
-		for(std::map<int,F2::Ticker*>::iterator it = _tickers.begin();it != _tickers.end();it++)
-		{
-			
-		}
+		// ...
 	}
 
 }

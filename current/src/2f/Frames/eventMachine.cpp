@@ -9,6 +9,7 @@ F2::EventMachine::EventMachine()
 
 void F2::EventMachine::addListener(Listener* l)
 {
+	l->connect();
 	_listeners.push_back(l);
 }
 
@@ -17,18 +18,36 @@ void F2::EventMachine::addListener(Listener* l)
 void F2::EventMachine::handle()
 {
 	VECTOR_OF(F2::Listener)::iterator it = _listeners.begin();
-	for(;it != _listeners.end();it++)
+	for(;it != _listeners.end();)
 	{
-		call(*it);
+		if((*it)->isDeleting())
+		{
+			_listeners.erase(it);
+			(*it)->disconnect();
+		}
+		else
+		{
+			call(*it);
+			it++;
+		}
 	}
 }
 
 void F2::EventMachine::close()
 {
 	VECTOR_OF(F2::Listener)::iterator it = _listeners.begin();
-	for(;it != _listeners.end();it++)
+	for(;it != _listeners.end();)
 	{
-		(*it)->onClose();
+		if((*it)->isDeleting())
+		{
+			_listeners.erase(it);
+			(*it)->disconnect();
+		}
+		else
+		{
+			(*it)->onClose();
+			it++;
+		}
 	}
 }
 

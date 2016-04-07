@@ -16,6 +16,7 @@ F2::Plan::Plan(float width,float height)
 
 void F2::Plan::addObject(F2::Object *o)
 {
+	o->connect();
 	_objects.push_back(o);
 }
 
