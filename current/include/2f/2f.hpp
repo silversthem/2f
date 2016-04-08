@@ -34,6 +34,7 @@
 // MovingObject ~> Object implements movements
 #include "Objects/MovingObject.hpp"
 // Projectile ~> Object defined by a movement and easily destroyable by a condition, usually
+#include "Objects/Projectile.hpp"
 
 /* Structures */
 
@@ -52,6 +53,8 @@
 // Rectangle ~> A rectangle with collision support
 #include "Objects/Shapes/Rectangle.hpp"
 // Shape ~> A shape with collision support
+// Circle ~> A circle with collision support
+#include "Objects/Shapes/Circle.hpp"
 
 /* Sprites */
 
@@ -61,9 +64,13 @@
 /* Movements */
 
 // Movement ~> Abstract class to get vector from which to move
+#include "Movements/Movement.hpp"
 // Along ~> A movement along a line
+#include "Movements/Along.hpp"
 // Toward ~> A movement toward a point, fixed or a pointer
+#include "Movements/Toward.hpp"
 // Offset ~> A movement by an (x,y) offset [All movement can have an angle toward their movement]
+#include "Movements/Offset.hpp"
 
 /* Forces */
 
@@ -74,4 +81,6 @@
 /* Time */
 
 // Timer ~> Controls (create/delete) tickers, also defines the "tick"
+#include "Time/Timer.hpp"
 // Ticker ~> Calls a function/method every X ticks
+#include "Time/Ticker.hpp"

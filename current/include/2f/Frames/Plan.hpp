@@ -30,7 +30,7 @@ namespace F2
 			Iter b = begin;
 			for(;b != end;b++)
 			{
-				if(p->touches(*b) && p != *b)
+				if(p->touches(*b) && p != *b && !(*b)->isDeleting())
 				{
 					objects.push_back(*b);
 				}

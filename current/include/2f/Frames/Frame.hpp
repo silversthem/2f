@@ -18,11 +18,16 @@ namespace F2
 	protected:
 		sf::FloatRect _segment; // Segment of plan captured
 		Timer _timer;           // Frame timer
+		sf::Vector2f _mouse;    // Mouse position
+		sf::Vector2f _bounds;   // Frame bounds = window size
 		/* Methods */
 		void frame(int const& width,int const& height,std::string const& name);
 		void render();                    // Renders the frame
 		void render(VECTOR_OF(Object) v); // Renders objects in the frame
 		void renderAll();                 // Forces the frame to render all things, even out of bounds
+		/* Calculations */
+		void calculate_mouse_pos(); // Calculate mouse pos in frame
+		void calculate_bounds();    // Calculate frame bounds
 	public:
 		/* Constructors */
 		Frame(); // Creates a frame

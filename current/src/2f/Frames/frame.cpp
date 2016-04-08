@@ -22,8 +22,11 @@ void F2::Frame::render(VECTOR_OF(F2::Object) v)
 	VECTOR_OF(F2::Object)::iterator it = v.begin();
 	for(;it != v.end();it++)
 	{
-		(*it)->onDisplay();
-		draw((*it)->getDrawable());
+		if(!(*it)->isDeleting())
+		{
+			(*it)->onDisplay();
+			draw((*it)->getDrawable());
+		}
 	}
 	display();
 }

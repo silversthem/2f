@@ -36,14 +36,20 @@ VECTOR_OF(F2::Object) F2::Plan::getInBounds(sf::FloatRect const& rect,F2::Object
 {
 	VECTOR_OF(F2::Object) objects;
 	VECTOR_OF(F2::Object)::iterator it = _objects.begin();
-	for(;it != _objects.end();it++)
+	for(;it != _objects.end();)
 	{
-		if(rect.intersects((*it)->getObjectBounds()))
+		if((*it)->isDeleting())
+		{
+			(*it)->disconnect();
+			_objects.erase(it);
+		}
+		else if(rect.intersects((*it)->getObjectBounds()))
 		{
 			if(self == NULL || self != *it)
 			{
 				objects.push_back(*it);
 			}
+			it++;
 		}
 	}
 	return objects;
