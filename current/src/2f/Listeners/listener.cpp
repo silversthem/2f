@@ -32,7 +32,6 @@ void F2::Listener::disconnect()
 	if(_connections == 0)
 	{
 		onDelete();
-		delete this;
 	}
 }
 

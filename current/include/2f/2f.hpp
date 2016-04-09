@@ -10,6 +10,14 @@
 #include "Math/Line.hpp"
 // Path ~> Bunch of lines that an object can follow succesively, useful in pathfinding
 
+/* Helper classes : Containers */
+
+// Container ~> Handles vectors of pointers with deletion, even with multiple sources
+#include "Containers/Container.hpp"
+// ListenerContainer ~> Containers for listeners
+// ObjectContainer ~> Containers for objects
+// Map ~> A segment of texture, or a color, to be displayed by the frame
+
 /* Frames */
 
 // Plan ~> Where the objects are, also defines boundaries
