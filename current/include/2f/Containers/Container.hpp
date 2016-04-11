@@ -44,7 +44,7 @@ namespace F2
 			return *_vec;
 		}
 		/* Setters */
-		void setUserObject(User* u) // Sets the object using the container
+		void SetUser(User* u) // Sets the object using the container
 		{
 			_user = u;
 		}
@@ -57,11 +57,11 @@ namespace F2
 		{
 			_Action = Action;
 		}
-		void setActionMethdod(void (User::*Deletion)(Contained*))
+		void setActionMethod(void (User::*Deletion)(Contained*))
 		{
 			_Deletion = Deletion;
 		}
-		void setFilterMehod(bool (User::*Filter)(Contained*))
+		void setFilterMethod(bool (User::*Filter)(Contained*))
 		{
 			_Filter = Filter;
 		}
@@ -69,28 +69,53 @@ namespace F2
 		{
 			_Unfiltered = Unfiltered;
 		}
+		/* Virtual Methods -> Overridable by Other containers */
+		virtual bool shouldBeDeleted(Contained *i)
+		{
+			return false;
+		}
+		virtual void onDeletion(Contained *i)
+		{
+			
+		}
+		virtual void onAction(Contained *i)
+		{
+			
+		}
+		virtual bool onFilter(Contained *i)
+		{
+			return false;
+		}
+		virtual void onUnfiltered(Contained *i)
+		{
+			
+		}
 		/* Methods */
 		virtual void go_through() // Goes through each container element
 		{
 			it = _vec.begin();
 			for(;it != _vec.end();)
 			{
-				if(_ShouldBeDeleted != 0 && _user._ShouldBeDeleted(*it)) // If we should delete this element
+				if((_ShouldBeDeleted != 0 && _user._ShouldBeDeleted(*it)) || shouldBeDeleted(*it)) // If we should delete this element
 				{
 					if(_Deletion != 0)
 					{
 						_user._Deletion(*it); // Deleting it
 					}
+					onDeletion(*it);
+					_vec.erase(it);
 				}
 				else
 				{
-					if(_Filter == 0 || _user._Filter(*it)) // If we should execute the action on element
+					if(_Filter == 0 || _user._Filter(*it) || onFilter(*it)) // If we should execute the action on element
 					{
 						_user._Action(*it);
+						onAction(*it);
 					}
 					else if(_Unfiltered != 0) // If we "unfilter" the element
 					{
 						_user._Unfiltered(*it);
+						onUnfiltered(*it);
 					}
 					it++;
 				}
