@@ -12,12 +12,8 @@
 
 /* Helper classes : Containers */
 
-// Container ~> Handles vectors of pointers with deletion, even with multiple sources
-#include "Containers/Container.hpp"
-// ListenerContainer ~> Containers for listeners
-#include "Containers/ListenerContainer.hpp"
-// ObjectContainer ~> Containers for objects
-// Map ~> A segment of texture, or a color, to be displayed by the frame
+// Map ~> Collections of vectors, objects and other maps
+#include "Containers/Map.hpp"
 
 /* Frames */
 
@@ -89,7 +85,5 @@
 
 /* Time */
 
-// Timer ~> Controls (create/delete) tickers, also defines the "tick"
+// Timer ~> Controls time and ticks on objects
 #include "Time/Timer.hpp"
-// Ticker ~> Calls a function/method every X ticks
-#include "Time/Ticker.hpp"

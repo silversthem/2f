@@ -12,17 +12,8 @@ namespace F2
 {
 	class Listener
 	{
-	protected:
-		bool d; // Is the object being deleted
-		unsigned int _connections; // How many connections to vectors the objects has
 	public:
 		Listener(); // Creates a listener
-		virtual ~Listener(); // Deletes a listener
-		/* Deleting related */
-		void deletion();   // Readies the listener to be deleted
-		bool isDeleting(); // When deleted
-		void connect();    // The listener has just been connected to a vector
-		void disconnect(); // When deleting the object
 		/* Key events */
 		virtual void onKeyPressed(sf::Event::KeyEvent const& key); // When a key is pressed
 		virtual void onKeyReleased(sf::Event::KeyEvent const& key); // When a key is pressed
@@ -35,7 +26,6 @@ namespace F2
 		virtual void onDisplay();                 // When displaying
 		virtual void onTicked(float const& tick); // Ticked
 		virtual void onClose();                   // When display time is over
-		virtual void onDelete();                  // When the object is being deleted
 	};
 };
 

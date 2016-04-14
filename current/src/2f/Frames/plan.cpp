@@ -7,22 +7,13 @@ F2::Plan::Plan()
 	setBounds(0,0);
 }
 
-F2::Plan::Plan(float width,float height)
+F2::Plan::Plan(int const& width,int const& height)
 {
 	setBounds(width,height);
 }
-
-/* Adders */
-
-void F2::Plan::addObject(F2::Object *o)
-{
-	o->connect();
-	_objects.push_back(o);
-}
-
 /* Setters */
 
-void F2::Plan::setBounds(float width,float height)
+void F2::Plan::setBounds(int const& width,int const& height)
 {
 	_bounds.top    = 0;
 	_bounds.left   = 0;
@@ -30,27 +21,4 @@ void F2::Plan::setBounds(float width,float height)
 	_bounds.height = height;
 }
 
-/* Getters */
-
-VECTOR_OF(F2::Object) F2::Plan::getInBounds(sf::FloatRect const& rect,F2::Object *self)
-{
-	VECTOR_OF(F2::Object) objects;
-	VECTOR_OF(F2::Object)::iterator it = _objects.begin();
-	for(;it != _objects.end();)
-	{
-		if((*it)->isDeleting())
-		{
-			(*it)->disconnect();
-			_objects.erase(it);
-		}
-		else if(rect.intersects((*it)->getObjectBounds()))
-		{
-			if(self == NULL || self != *it)
-			{
-				objects.push_back(*it);
-			}
-			it++;
-		}
-	}
-	return objects;
-}
+/* Adders */

@@ -23,7 +23,7 @@ namespace F2
 		/* Methods */
 		void frame(int const& width,int const& height,std::string const& name);
 		void render();                    // Renders the frame
-		void render(VECTOR_OF(Object) v); // Renders objects in the frame
+		void render(VECTOR(Object) v); // Renders objects in the frame
 		void renderAll();                 // Forces the frame to render all things, even out of bounds
 		/* Calculations */
 		void calculate_mouse_pos(); // Calculate mouse pos in frame
@@ -37,8 +37,6 @@ namespace F2
 		/* Setters */
 		void setSegmentStart(int const& x,int const& y); // Sets beginning of the captured segment
 		void setSegmentSize(int const& w,int const& h);  // Sets size of the captured segment
-		/* Getters */
-		Timer* timer(); // Returns frame timer
 		/* Methods */
 		void onEvent(); // Frame events
 		void run(); // Runs the frame

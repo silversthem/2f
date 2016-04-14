@@ -12,41 +12,37 @@
 
 #include <vector> // Object and others container
 /* 2f */
+#include "../Containers/Map.hpp"
 #include "../macros.hpp"
 #include "../Math/Line.hpp"
 #include "../Objects/Object.hpp"
 
 namespace F2
 {
+	/* Things in the plan */
+	template <typename T>
+	struct Layer
+	{
+		std::vector<std::vector<T*>*> groups; // Groups of objects in the layer
+		std::vector<T*>  single;              // Single objects in the layer
+	};
+
+	/* Plan class */
 	class Plan
 	{
 	protected:
-		sf::FloatRect _bounds; // Bounds of the plan
-		VECTOR_OF(F2::Object) _objects; // Objects in plan
-		/* Template calculations */
-		template<typename Ob,class Iter> VECTOR_OF(Ob) touching(Object *p,Iter const& begin,Iter const& end)
-		{
-			VECTOR_OF(Ob) objects;
-			Iter b = begin;
-			for(;b != end;b++)
-			{
-				if(p->touches(*b) && p != *b && !(*b)->isDeleting())
-				{
-					objects.push_back(*b);
-				}
-			}
-			return objects;
-		}
+		sf::FloatRect _bounds;  // Plan bounds
+		Map _stuff;             // All things, classed as you wish
+		Layer<Object> _objects; // Objects in plan
 	public:
-		/* Constructors */
 		Plan();
-		Plan(float width,float height); // Creates a bounded plan
+		Plan(int const& width,int const& height);
+		/* setters */
+		void setBounds(int const& width,int const& height); // Sets plan bounds (borders)
 		/* Adders */
-		virtual void addObject(Object *o); // Adds an object in the plan
-		/* Setters */
-		void setBounds(float width,float height); // Sets bounds of plan
+		void addObject(); // Adds an object
 		/* Getters */
-		VECTOR_OF(F2::Object) getInBounds(sf::FloatRect const& rect,F2::Object *self = NULL); // Get objects in a certain rectangle
+		/* Calculations */
 	};
 };
 

@@ -2,37 +2,7 @@
 
 F2::Listener::Listener()
 {
-	d = false;
-	_connections = 0;
-}
-
-F2::Listener::~Listener()
-{
 	
-}
-
-void F2::Listener::deletion()
-{
-	d = true;
-}
-
-bool F2::Listener::isDeleting()
-{
-	return d;
-}
-
-void F2::Listener::connect()
-{
-	_connections++;
-}
-
-void F2::Listener::disconnect()
-{
-	_connections--;
-	if(_connections == 0)
-	{
-		onDelete();
-	}
 }
 
 void F2::Listener::onKeyPressed(sf::Event::KeyEvent const& key)
@@ -77,11 +47,6 @@ void F2::Listener::onDisplay()
 }
 
 void F2::Listener::onClose()
-{
-	
-}
-
-void F2::Listener::onDelete()
 {
 	
 }

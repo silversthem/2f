@@ -7,8 +7,9 @@
 
 /* Organisation macros */
 
-#define USE(x) class x; // Use a class
-#define VECTOR_OF(x) std::vector<x*> // Vector of pointers to stuff
+#define STR std::string
+#define USE(x) class x // Use a class
+#define VECTOR(x) std::vector<x*> // Vector of pointers to stuff
 
 /* Math macros */
 

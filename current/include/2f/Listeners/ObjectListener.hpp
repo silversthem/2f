@@ -14,6 +14,11 @@ namespace F2
 	public:
 		// When hitting a boundary
 		// When hitting a corner
+		// When hitting a projectile
+		/* Structures related */
+		// ...
+		/* Custom events */
+		// ...
 	};
 };
 
