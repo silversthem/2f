@@ -43,10 +43,7 @@ F2::Frame::Frame(int const& width,int const& height,std::string const& name)
 
 /* Adders */
 
-void F2::Frame::addObject(F2::Object* o)
-{
-	
-}
+
 
 /* Setters */
 

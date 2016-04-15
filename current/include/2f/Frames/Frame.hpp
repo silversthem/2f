@@ -32,8 +32,6 @@ namespace F2
 		/* Constructors */
 		Frame(); // Creates a frame
 		Frame(int const& width,int const& height,std::string const& name); // Creates a sized frame
-		/* Adders */
-		void addObject(F2::Object* o); // Adds an object
 		/* Setters */
 		void setSegmentStart(int const& x,int const& y); // Sets beginning of the captured segment
 		void setSegmentSize(int const& w,int const& h);  // Sets size of the captured segment

@@ -21,4 +21,9 @@ void F2::Plan::setBounds(int const& width,int const& height)
 	_bounds.height = height;
 }
 
-/* Adders */
+/* Getters */
+
+F2::Map* F2::Plan::map()
+{
+	return &_stuff;
+}

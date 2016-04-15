@@ -19,29 +19,21 @@
 
 namespace F2
 {
-	/* Things in the plan */
-	template <typename T>
-	struct Layer
-	{
-		std::vector<std::vector<T*>*> groups; // Groups of objects in the layer
-		std::vector<T*>  single;              // Single objects in the layer
-	};
-
 	/* Plan class */
 	class Plan
 	{
 	protected:
-		sf::FloatRect _bounds;  // Plan bounds
-		Map _stuff;             // All things, classed as you wish
-		Layer<Object> _objects; // Objects in plan
+		sf::FloatRect _bounds; // Plan bounds
+		Map _stuff;            // All things, classed as you wish
 	public:
 		Plan();
 		Plan(int const& width,int const& height);
-		/* setters */
-		void setBounds(int const& width,int const& height); // Sets plan bounds (borders)
+		/* Setters */
+		void setBounds(int const& width,int const& height); // Sets plan's bounds
 		/* Adders */
-		void addObject(); // Adds an object
+		/* Deleters */
 		/* Getters */
+		Map* map(); // Returns the map
 		/* Calculations */
 	};
 };

@@ -16,12 +16,22 @@
 
 namespace F2
 {
+	class Frame; // Injection
+	class Map;   // Other injection
+
 	class Object : public ObjectListener
 	{
+	protected:
+		Frame* _frame; // Frame of the object
+		Map*   _map;   // Map of the object
 	public:
+		~Object();  // Deletes object from the map its contained in
+		/* Methods */
+		void connect(Frame *frame,Map *m); // Connects object to its frame
 		/* Getters */
+		Frame* frame(); // Returns the frame the object is in
 		virtual const sf::Vector2f& getObjectPosition() = 0; // Gets object position in plan
-		virtual sf::FloatRect getObjectBounds()         = 0; // Gets object boundaries
+		virtual       sf::FloatRect getObjectBounds()   = 0; // Gets object boundaries
 		virtual const sf::Drawable& getDrawable()       = 0; // Returns what to draw
 		/* Collision */
 		virtual bool isIn(sf::Vector2f const& point)    = 0; // If a point is in object
