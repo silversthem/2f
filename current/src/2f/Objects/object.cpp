@@ -2,17 +2,39 @@
 #include "../../../include/2f/Frames/Frame.hpp"
 #include "../../../include/2f/Containers/Map.hpp"
 
-void F2::Object::connect(F2::Frame* frame,F2::Map *m)
+F2::Object::Object()
+{
+	_frame = 0;
+	_map   = 0;
+	_l     = 0;
+}
+
+/* Connections */
+
+void F2::Object::connect_to_frame(Frame *frame)
 {
 	_frame = frame;
-	_map   = m;
+}
+
+void F2::Object::connect_to_map(Map *map)
+{
+	_map = map;
+}
+
+void F2::Object::connect_to_layer(Layer<Object>* l)
+{
+	_l = l;
 }
 
 F2::Object::~Object()
 {
 	if(_map != 0) // In a map
 	{
-		// Delete from map
+		// ...
+	}
+	if(_l != 0) // In a layer
+	{
+		// ...
 	}
 }
 

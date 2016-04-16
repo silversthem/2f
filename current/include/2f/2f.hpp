@@ -12,8 +12,10 @@
 
 /* Helper classes : Containers */
 
-// Map ~> Collections of vectors, objects and other maps
+// Map ~> Collections of layers, objects and other maps
 #include "Containers/Map.hpp"
+// Layer ~> Collection of objects
+#include "Containers/Layer.hpp"
 
 /* Frames */
 
@@ -80,8 +82,8 @@
 /* Forces */
 
 // Constant ~> A constant force being applied, initial speed and max speed can also be defiend
-// Fluctuating ~> A force that can change depending on stuff
 // Timed ~> A force being controlled by a ticker
+// Lambda ~> A force that takes an object method as a parameter and uses it to calculate the movement
 
 /* Time */
 

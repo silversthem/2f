@@ -18,16 +18,22 @@ namespace F2
 {
 	class Frame; // Injection
 	class Map;   // Other injection
+	template<typename T>
+	class Layer; // Still an injection
 
 	class Object : public ObjectListener
 	{
 	protected:
 		Frame* _frame; // Frame of the object
 		Map*   _map;   // Map of the object
+		Layer<Object>* _l; // Layer of the object
 	public:
-		~Object();  // Deletes object from the map its contained in
-		/* Methods */
-		void connect(Frame *frame,Map *m); // Connects object to its frame
+		Object();  // Creates an object
+		~Object(); // Deletes object from the map its contained in
+		/* Connections */
+		void connect_to_frame(Frame *frame); // Connects object to its frame
+		void connect_to_map(Map *map);       // Connects object to its map
+		void connect_to_layer(Layer<Object>* l); // Connects object to its layer
 		/* Getters */
 		Frame* frame(); // Returns the frame the object is in
 		virtual const sf::Vector2f& getObjectPosition() = 0; // Gets object position in plan
