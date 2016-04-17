@@ -13,6 +13,21 @@ void F2::Frame::render()
 	
 }
 
+void F2::Frame::render_object(Object *o)
+{
+	
+}
+
+void F2::Frame::render_layer(Layer<Object> *l)
+{
+	
+}
+
+void F2::Frame::render_map(Map *m)
+{
+	
+}
+
 /* Constructors */
 
 F2::Frame::Frame()
@@ -38,5 +53,11 @@ void F2::Frame::onEvent()
 
 void F2::Frame::run()
 {
-	
+	while(isOpen())
+	{
+		while(pollEvent(_event))
+		{
+			
+		}
+	}
 }

@@ -30,11 +30,11 @@ F2::Object::~Object()
 {
 	if(_map != 0) // In a map
 	{
-		// ...
+		_map->del(this);
 	}
 	if(_l != 0) // In a layer
 	{
-		// ...
+		_l->del(this);
 	}
 }
 

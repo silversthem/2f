@@ -17,14 +17,15 @@ namespace F2
 	{
 	protected:
 		sf::Event _event; // The event the machine will listen to
+		std::vector<std::pair<void (Listener::*)(const sf::Event&),sf::Event> > _callstack; // List of listeners to call
 		/* Event handling */
-		void call(Listener *l); // Handles an event for a listener
-		virtual void onEvent(); // When facing an unhandled event
+		void init();                  // Boots the event machine
+		virtual void onEvent();       // When facing an unhandled event
+		void applyEvent(Listener *l); // Applies the callstack to an object
+		void handle();                // Creates the callstack
 	public:
 		EventMachine(); // Creates an event machine
-		/* Methods */
-		void handle(); // Handles all events
-		void close(); // Tells all elements that everything is over
+		std::pair<void (Listener::*)(const sf::Event&),sf::Event> createPair(void (Listener::*action)(const sf::Event&),sf::Event const& e);
 	};
 };
 

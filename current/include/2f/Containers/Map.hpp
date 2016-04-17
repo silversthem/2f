@@ -23,12 +23,20 @@ namespace F2
 	class Map // : public Container @TODO
 	{
 	protected:
+		Map* _parent; // If the map has a parent
 		std::map<std::string,void*> _map; // The map
 		std::map<std::string,Type> _type; // Map element type
 	public:
 		Map() // Creating a map
 		{
-			
+			_parent = 0;
+		}
+		~Map() // Deleting a map
+		{
+			if(_parent != 0)
+			{
+				// Deleting it from parent
+			}
 		}
 		/* Adders */
 		template <typename T>
@@ -61,6 +69,7 @@ namespace F2
 		{
 			return get<Layer<T>*>(name);
 		}
+		// Map
 		Type get_type(std::string const& name)
 		{
 			if(_type.find(name) != _type.end())
@@ -83,6 +92,11 @@ namespace F2
 		void del_layer(Layer<T> *l) // Deletes a layer
 		{
 			// ...
+		}
+		/* Methods */
+		void connect(Map* m) // Connecting the map to its parent
+		{
+			_parent = m;
 		}
 		/* Container methods */
 		// ...

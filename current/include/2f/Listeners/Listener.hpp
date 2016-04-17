@@ -15,17 +15,23 @@ namespace F2
 	public:
 		Listener(); // Creates a listener
 		/* Key events */
-		virtual void onKeyPressed(sf::Event::KeyEvent const& key); // When a key is pressed
-		virtual void onKeyReleased(sf::Event::KeyEvent const& key); // When a key is pressed
+		virtual void  onKeyPressed(sf::Event const& e); // When a key is pressed
+		virtual void onKeyReleased(sf::Event const& e); // When a key is pressed
 		/* Mouse events */
-		virtual void onMouseClicked(sf::Event::MouseButtonEvent const& mouse);  // When there's a mouse click
-		virtual void onMouseReleased(sf::Event::MouseButtonEvent const& mouse); // When the mouse button is released
-		virtual void onMouseMoved(sf::Event::MouseMoveEvent const& mouse);      // When the mouse moves
+		virtual void  onMouseClicked(sf::Event const& e); // When there's a mouse click
+		virtual void onMouseReleased(sf::Event const& e); // When the mouse button is released
+		virtual void    onMouseMoved(sf::Event const& e); // When the mouse moves
 		/* Other events */
 		virtual void onInit();                    // Before first interaction
 		virtual void onDisplay();                 // When displaying
 		virtual void onTicked(float const& tick); // Ticked
 		virtual void onClose();                   // When display time is over
+		/* User events (easier to use) */
+		virtual void  keyPressed(sf::Keyboard::Key const& key); // Key pressed
+		virtual void keyReleased(sf::Keyboard::Key const& key); // Key released
+		virtual void mouseClicked(sf::Mouse::Button const& b,sf::Vector2f const& pos); // Mouse clicked
+		virtual void mouseReleased(sf::Mouse::Button const& b,sf::Vector2f const& pos); // Mouse released
+		virtual void mouseMoved(sf::Vector2f const& pos); // Mouse moved
 	};
 };
 

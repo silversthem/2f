@@ -24,13 +24,7 @@ namespace F2
 		{
 			_map != 0;
 		}
-		~Layer() // Removes it from the map
-		{
-			if(_map != 0)
-			{
-				// Deleting it from the map
-			}
-		}
+		~Layer(); // Removes it from the map
 		/* Methods */
 		void add(ObjectType *o) // Adds an object in the layer
 		{
@@ -40,6 +34,14 @@ namespace F2
 		void connect(Map *m) // Connects layer to its map
 		{
 			_map = m;
+		}
+		std::vector<ObjectType*>* vector() // Returns the vector
+		{
+			return &_objects;
+		}
+		void del(ObjectType *o) // Deletes an element
+		{
+			
 		}
 		/* Container methods */
 		// ...

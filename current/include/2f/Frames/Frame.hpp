@@ -23,6 +23,9 @@ namespace F2
 		/* Methods */
 		void frame(int const& width,int const& height,std::string const& name);
 		void render(); // Renders the frame
+		void render_object(Object *o);        // Renders an object
+		void render_layer(Layer<Object> *l);  // Renders a layer
+		void render_map(Map *m);              // Renders a map
 		/* Calculations */
 		void calculate_mouse_pos(); // Calculate mouse pos in frame
 		void calculate_bounds();    // Calculate frame bounds
