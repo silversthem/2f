@@ -10,17 +10,16 @@
 #include <vector>
 #include <string>
 /* 2f */
-#include "Container.hpp"
 #include "Layer.hpp"
 
-enum Type {Container,Lay,Single}; // Element types, useful for iteration
+enum Type {Cont,Lay,Single}; // Element types, useful for iteration
 
 namespace F2
 {
 
 /* Map (container) class */
 
-	class Map // : public Container @TODO
+	class Map
 	{
 	protected:
 		Map* _parent; // If the map has a parent
@@ -99,7 +98,72 @@ namespace F2
 			_parent = m;
 		}
 		/* Container methods */
-		// ...
+		template<class In,typename Cast>
+		void foreach(In *c,void (In::*action)(Cast*)) // Applies a method to every map element
+		{
+			std::map<std::string,void*>::iterator it      =  _map.begin();
+			std::map<std::string,Type>::iterator  it_type = _type.begin();
+			for(;it != _map.end();it++)
+			{
+				switch(it_type->second)
+				{
+					case Single:
+						(c->*action)(static_cast<Cast*>(it->second));
+					break;
+					case Lay:
+						static_cast<Layer<Cast>*>(it->second)->foreach<In>(c,action);
+					break;
+					case Cont:
+						static_cast<Map*>(it->second)->foreach<In,Cast>(c,action);
+					break;
+				}
+				it_type++;
+			}
+		}
+		template<class Cast,typename OtherArg>
+		void apply(void (Cast::*action)(OtherArg*),OtherArg *a) // Uses a method from each object
+		{
+			std::map<std::string,void*>::iterator it      =  _map.begin();
+			std::map<std::string,Type>::iterator  it_type = _type.begin();
+			for(;it != _map.end();it++)
+			{
+				switch(it_type->second)
+				{
+					case Single:
+						(static_cast<Cast*>(it->second)->*action)(a);
+					break;
+					case Lay:
+						static_cast<Layer<Cast>*>(it->second)->foreach<OtherArg>(action,a);
+					break;
+					case Cont:
+						static_cast<Map*>(it->second)->foreach<Cast,OtherArg>(action,a);
+					break;
+				}
+				it_type++;
+			}
+		}
+		template<class Cast>
+		void apply(void (Cast::*action)()) // Uses a method from each object, without argument
+		{
+			std::map<std::string,void*>::iterator it      =  _map.begin();
+			std::map<std::string,Type>::iterator  it_type = _type.begin();
+			for(;it != _map.end();it++)
+			{
+				switch(it_type->second)
+				{
+					case Single:
+						(static_cast<Cast*>(it->second)->*action)();
+					break;
+					case Lay:
+						static_cast<Layer<Cast>*>(it->second)->apply(action);
+					break;
+					case Cont:
+						static_cast<Map*>(it->second)->apply<Cast>(action);
+					break;
+				}
+				it_type++;
+			}
+		}
 	};
 };
 

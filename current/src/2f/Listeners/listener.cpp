@@ -5,30 +5,30 @@ F2::Listener::Listener()
 	
 }
 
-void F2::Listener::onKeyPressed(sf::Event const& e)
+void F2::Listener::onKeyPressed(sf::Event *e)
 {
-	keyPressed(e.key.code);
+	keyPressed(e->key.code);
 }
 
-void F2::Listener::onKeyReleased(sf::Event const& e)
+void F2::Listener::onKeyReleased(sf::Event *e)
 {
-	keyReleased(e.key.code);
+	keyReleased(e->key.code);
 }
 
 
-void F2::Listener::onMouseClicked(sf::Event const& e)
+void F2::Listener::onMouseClicked(sf::Event *e)
 {
-	mouseClicked(e.mouseButton.button,sf::Vector2f(e.mouseButton.x,e.mouseButton.y));
+	mouseClicked(e->mouseButton.button,sf::Vector2f(e->mouseButton.x,e->mouseButton.y));
 }
 
-void F2::Listener::onMouseReleased(sf::Event const& e)
+void F2::Listener::onMouseReleased(sf::Event *e)
 {
-	mouseReleased(e.mouseButton.button,sf::Vector2f(e.mouseButton.x,e.mouseButton.y));
+	mouseReleased(e->mouseButton.button,sf::Vector2f(e->mouseButton.x,e->mouseButton.y));
 }
 
-void F2::Listener::onMouseMoved(sf::Event const& e)
+void F2::Listener::onMouseMoved(sf::Event *e)
 {
-	mouseMoved(sf::Vector2f(e.mouseMove.x,e.mouseMove.y));
+	mouseMoved(sf::Vector2f(e->mouseMove.x,e->mouseMove.y));
 }
 
 void F2::Listener::onInit()
@@ -42,6 +42,11 @@ void F2::Listener::onTicked(float const& tick)
 }
 
 void F2::Listener::onDisplay()
+{
+	
+}
+
+void F2::Listener::onEvent(sf::Event *e)
 {
 	
 }

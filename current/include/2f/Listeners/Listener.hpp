@@ -15,17 +15,18 @@ namespace F2
 	public:
 		Listener(); // Creates a listener
 		/* Key events */
-		virtual void  onKeyPressed(sf::Event const& e); // When a key is pressed
-		virtual void onKeyReleased(sf::Event const& e); // When a key is pressed
+		virtual void  onKeyPressed(sf::Event *e); // When a key is pressed
+		virtual void onKeyReleased(sf::Event *e); // When a key is pressed
 		/* Mouse events */
-		virtual void  onMouseClicked(sf::Event const& e); // When there's a mouse click
-		virtual void onMouseReleased(sf::Event const& e); // When the mouse button is released
-		virtual void    onMouseMoved(sf::Event const& e); // When the mouse moves
+		virtual void  onMouseClicked(sf::Event *e); // When there's a mouse click
+		virtual void onMouseReleased(sf::Event *e); // When the mouse button is released
+		virtual void    onMouseMoved(sf::Event *e); // When the mouse moves
 		/* Other events */
 		virtual void onInit();                    // Before first interaction
 		virtual void onDisplay();                 // When displaying
 		virtual void onTicked(float const& tick); // Ticked
 		virtual void onClose();                   // When display time is over
+		virtual void onEvent(sf::Event *e);       // Other type of event
 		/* User events (easier to use) */
 		virtual void  keyPressed(sf::Keyboard::Key const& key); // Key pressed
 		virtual void keyReleased(sf::Keyboard::Key const& key); // Key released

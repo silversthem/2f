@@ -13,7 +13,7 @@
 
 namespace F2
 {
-	class Frame : public F2::Plan, public F2::EventMachine, public F2::Listener, public sf::RenderWindow
+	class Frame : public F2::Plan, public F2::EventMachine, public sf::RenderWindow
 	{
 	protected:
 		sf::View _segment;      // Segment of window captured
@@ -24,7 +24,6 @@ namespace F2
 		void frame(int const& width,int const& height,std::string const& name);
 		void render(); // Renders the frame
 		void render_object(Object *o);        // Renders an object
-		void render_layer(Layer<Object> *l);  // Renders a layer
 		void render_map(Map *m);              // Renders a map
 		/* Calculations */
 		void calculate_mouse_pos(); // Calculate mouse pos in frame
@@ -33,8 +32,20 @@ namespace F2
 		/* Constructors */
 		Frame(); // Creates a frame
 		Frame(int const& width,int const& height,std::string const& name); // Creates a sized frame
+		/* Adders */
+		template <typename T>
+		void add(std::string const& name,T *o) // Adds an object in the plan
+		{
+			o->connect_to_frame(this);
+			_stuff.add(name,o);
+			o->onInit();
+		}
+		void add_layer(); // ...
+		void add_map(); // ...
+		/* Getters */
+		
 		/* Methods */
-		void onEvent(); // Frame events
+		void onEvent(sf::Event *e); // Frame events
 		void run(); // Runs the frame
 	};
 };

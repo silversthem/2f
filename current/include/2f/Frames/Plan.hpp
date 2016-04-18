@@ -30,11 +30,7 @@ namespace F2
 		Plan(int const& width,int const& height);
 		/* Setters */
 		void setBounds(int const& width,int const& height); // Sets plan's bounds
-		/* Adders */
-		/* Deleters */
-		/* Getters */
 		Map* map(); // Returns the map
-		/* Calculations */
 	};
 };
 

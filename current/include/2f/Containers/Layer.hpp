@@ -44,7 +44,29 @@ namespace F2
 			
 		}
 		/* Container methods */
-		// ...
+		template<class In>
+		void foreach(In *c,void (In::*action)(ObjectType*)) // Applies a method to every layer element
+		{
+			for(unsigned int i = 0;i < _objects.size();i++)
+			{
+				(c->*action)(_objects[i]);
+			}
+		}
+		template<typename OtherArg>
+		void apply(void (ObjectType::*action)(OtherArg),OtherArg *a) // Uses a method from each element
+		{
+			for(unsigned int i = 0;i < _objects.size();i++)
+			{
+				(_objects[i]->*action)(a);
+			}
+		}
+		void apply(void (ObjectType::*action)()) // Uses a method from each object, without argument
+		{
+			for(unsigned int i = 0;i < _objects.size();i++)
+			{
+				(_objects[i]->*action)();
+			}
+		}
 	};
 };
 
