@@ -24,7 +24,7 @@ namespace F2
 		/* Other events */
 		virtual void onInit();                    // Before first interaction
 		virtual void onDisplay();                 // When displaying
-		virtual void onTicked(float const& tick); // Ticked
+		virtual void onTicked(int const& tick); // Ticked
 		virtual void onClose();                   // When display time is over
 		virtual void onEvent(sf::Event *e);       // Other type of event
 		/* User events (easier to use) */
@@ -33,6 +33,7 @@ namespace F2
 		virtual void mouseClicked(sf::Mouse::Button const& b,sf::Vector2f const& pos); // Mouse clicked
 		virtual void mouseReleased(sf::Mouse::Button const& b,sf::Vector2f const& pos); // Mouse released
 		virtual void mouseMoved(sf::Vector2f const& pos); // Mouse moved
+		// @TODO : onClose, onTick, onDisplay, onInit
 	};
 };
 

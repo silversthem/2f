@@ -16,7 +16,7 @@ namespace F2
 	{
 	protected:
 		// Movements
-		// Binded Movements
+		// Binders
 	public:
 		
 	};

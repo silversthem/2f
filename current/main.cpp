@@ -3,27 +3,42 @@
 /* 2f files */
 #include "include/2f/2f.hpp"
 
-class MyRect : public F2::Rectangle // Test class
+class Rect : public F2::Rectangle
 {
-	public:
-	MyRect()
+protected:
+	bool isAllowedToMove;
+public:
+	Rect()
 	{
-		setPosition(20,20);
-		setFillColor(sf::Color::Red);
-		setSize(sf::Vector2f(40,40));
+		setPosition(sf::Vector2f(100,0));
+		setFillColor(sf::Color::Blue);
+		setSize(sf::Vector2f(50,50));
+	}
+	void onTicked(int const& tick)
+	{
+		if(tick > frame()->timer()->get_max_tick()/2)
+		{
+			move(0,-1);
+		}
+		else if(tick < frame()->timer()->get_max_tick()/2)
+		{
+			move(0,1);
+		}
 	}
 };
 
 int main()
 {
-	F2::Frame f(300,300,"Hi !");
-	f.setFramerateLimit(2);
+	F2::Frame f(550,550,"Test window"); // Creating a frame
+	  f.timer()->set_tick_duration(10); // A tick is 10ms
+	     f.timer()->set_max_tick(1000); // Returns to 0 every 1000 ticks
+	            f.render_on_tick(true); // Only display once every tick (events are independant)
 
-	MyRect r;
+	Rect r; // Creates a rectangle
 
-	f.add("my_rectangle",&r);
+	f.add("my_rectangle",&r); // Binds rectangle to the frame (adds it in the map)
 
-	f.run();
+	f.run(); // Runs the frame, your job is done here
 
 	return 0;
 }

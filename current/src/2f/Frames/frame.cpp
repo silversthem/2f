@@ -19,6 +19,10 @@ void F2::Frame::render_object(Object *o)
 {
 	EventMachine::applyEvent(o);
 	o->onDisplay();
+	if(_timer.is_set() && _timer.updated())
+	{
+		o->onTicked(_current_tick);
+	}
 	draw(o->getDrawable());
 }
 
@@ -43,17 +47,34 @@ void F2::Frame::calculate_bounds()
 
 F2::Frame::Frame()
 {
+	_render_on_tick = false;
 	setBounds(0,0);
 }
 
 F2::Frame::Frame(int const& width,int const& height,std::string const& name)
 {
+	_render_on_tick = false;
 	frame(width,height,name);
 }
 
-/* Adders */
+/* Setters */
 
+void F2::Frame::render_on_tick(bool const& state)
+{
+	_render_on_tick = state;
+}
 
+/* Getters */
+
+F2::Timer* F2::Frame::timer()
+{
+	return &_timer;
+}
+
+int F2::Frame::get_current_tick()
+{
+	return _current_tick;
+}
 
 /* Methods */
 
@@ -67,6 +88,7 @@ void F2::Frame::onEvent(sf::Event *e)
 
 void F2::Frame::run()
 {
+	_timer.start();
 	while(isOpen())
 	{
 		calculate_bounds();
@@ -76,7 +98,14 @@ void F2::Frame::run()
 			handle();
 			_stuff.foreach<F2::EventMachine,F2::Listener>(this,&F2::EventMachine::applyEvent);
 		}
-		render();
+		if(_timer.is_set())
+		{
+			_current_tick = _timer.get_tick();
+		}
+		if(!_render_on_tick || _timer.updated()) // If we don't render on tick or the tick count has updated
+		{
+			render();
+		}
 	}
 	_stuff.apply<Listener>(&F2::Listener::onClose); // Closing the frame
 }

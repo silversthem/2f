@@ -21,16 +21,16 @@ void F2::EventMachine::applyEvent(Listener *l)
 			l->onKeyPressed(&_event);
 		break;
 		case sf::Event::KeyReleased: // Key released
-			l->onKeyPressed(&_event);
+			l->onKeyReleased(&_event);
 		break;
 		case sf::Event::MouseButtonPressed: // Mouse click
-			l->onKeyPressed(&_event);
+			l->onMouseClicked(&_event);
 		break;
 		case sf::Event::MouseButtonReleased: // Mouse released
-			l->onKeyPressed(&_event);
+			l->onMouseReleased(&_event);
 		break;
 		case sf::Event::MouseMoved: // Mouse move
-			l->onKeyPressed(&_event);
+			l->onMouseMoved(&_event);
 		break;
 		default:
 			l->onEvent(&_event);

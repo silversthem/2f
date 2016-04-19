@@ -16,10 +16,13 @@ namespace F2
 	class Frame : public F2::Plan, public F2::EventMachine, public sf::RenderWindow
 	{
 	protected:
-		sf::View _segment;      // Segment of window captured
-		Timer _timer;           // Frame timer
-		sf::Vector2f _mouse;    // Mouse position
-		sf::Vector2f _bounds;   // Frame bounds = window size
+		sf::View    _segment; // Segment of window captured
+		Timer         _timer; // Frame timer
+		int    _current_tick; // Copy of the current tick
+		sf::Vector2f  _mouse; // Mouse position
+		sf::Vector2f _bounds; // Frame bounds = window size
+		bool _render_on_tick; // If we have to wait for the timer to update to render
+		// TODO : Events on tick
 		/* Methods */
 		void frame(int const& width,int const& height,std::string const& name);
 		void render(); // Renders the frame
@@ -40,10 +43,13 @@ namespace F2
 			_stuff.add(name,o);
 			o->onInit();
 		}
-		void add_layer(); // ...
-		void add_map(); // ...
+		void add_layer(); // Adds a layer of objects
+		void   add_map(); // Adds a map of layers and objects
+		/* Setters */
+		void render_on_tick(bool const& state); // if we should render on tick 
 		/* Getters */
-		
+		Timer* timer(); // Returns timer
+		int get_current_tick(); // Returns current tick
 		/* Methods */
 		void onEvent(sf::Event *e); // Frame events
 		void run(); // Runs the frame
