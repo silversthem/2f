@@ -17,12 +17,15 @@ enum Type {Cont,Lay,Single}; // Element types, useful for iteration
 namespace F2
 {
 
+	class Frame; // Injection
+
 /* Map (container) class */
 
 	class Map
 	{
 	protected:
 		Map* _parent; // If the map has a parent
+		Frame* _frame; // Map frame, for connection
 		std::map<std::string,void*> _map; // The map
 		std::map<std::string,Type> _type; // Map element type
 	public:
@@ -34,7 +37,7 @@ namespace F2
 		{
 			if(_parent != 0)
 			{
-				// Deleting it from parent
+				_parent->del_map(this);
 			}
 		}
 		/* Adders */
@@ -55,11 +58,11 @@ namespace F2
 		// Adds a map in the map
 		/* Getters */
 		template <typename T>
-		T get(std::string const& name) // Gets an element in the map
+		T* get(std::string const& name) // Gets an element in the map
 		{
 			if(_map.find(name) != _map.end())
 			{
-				return *static_cast<T*>(_map[name]);
+				return static_cast<T*>(_map[name]);
 			}
 			throw "Nothing Found"; // @TODO : Change for an exception
 		}
@@ -82,15 +85,23 @@ namespace F2
 			return &_map;
 		}
 		/* Deleters */
-		template<typename T>
-		void del(T* element) // Deletes an element
+		template <typename T>
+		void del(T *element) // Deletes an element
 		{
-			// ...
+			std::map<std::string,void*>::iterator it = _map.begin();
+			for(;it != _map.end();)
+			{
+				
+			}
 		}
 		template<typename T>
 		void del_layer(Layer<T> *l) // Deletes a layer
 		{
-			// ...
+			del(l);
+		}
+		void del_map(Map *m) // Deletes a map
+		{
+			del(m);
 		}
 		/* Methods */
 		void connect(Map* m) // Connecting the map to its parent
@@ -160,6 +171,20 @@ namespace F2
 					case Cont:
 						static_cast<Map*>(it->second)->apply<Cast>(action);
 					break;
+				}
+				it_type++;
+			}
+		}
+		template <typename Cast>
+		void apply_to_layers(void (Layer<Cast>::*action)()) // Applies a function to layers only
+		{
+			std::map<std::string,void*>::iterator it      =  _map.begin();
+			std::map<std::string,Type>::iterator  it_type = _type.begin();
+			for(;it != _map.end();it++)
+			{
+				if(it_type->second == Lay)
+				{
+					(static_cast<Layer<Cast>*>(it->second)->*action)();
 				}
 				it_type++;
 			}

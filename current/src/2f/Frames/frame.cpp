@@ -82,7 +82,7 @@ void F2::Frame::onEvent(sf::Event *e)
 {
 	if(_event.type == sf::Event::Closed)
 	{
-		close();
+		sf::RenderWindow::close();
 	}
 }
 
@@ -107,5 +107,6 @@ void F2::Frame::run()
 			render();
 		}
 	}
-	_stuff.apply<Listener>(&F2::Listener::onClose); // Closing the frame
+	_stuff.apply<Listener>(&F2::Listener::onClose); // Closing the frame /!\ Disconnecting objects before disconnecting their layers
+	_stuff.apply_to_layers<Listener>(&F2::Layer<Listener>::disconnect); // Disconnects the layers from the map before deletion
 }

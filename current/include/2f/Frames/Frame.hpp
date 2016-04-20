@@ -43,7 +43,11 @@ namespace F2
 			_stuff.add(name,o);
 			o->onInit();
 		}
-		void add_layer(); // Adds a layer of objects
+		template <typename T>
+		void add_layer(std::string const& name, Layer<T> *o) // Adds a layer of objects
+		{
+			
+		}
 		void   add_map(); // Adds a map of layers and objects
 		/* Setters */
 		void render_on_tick(bool const& state); // if we should render on tick 

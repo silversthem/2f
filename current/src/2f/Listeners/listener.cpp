@@ -53,7 +53,7 @@ void F2::Listener::onEvent(sf::Event *e)
 
 void F2::Listener::onClose()
 {
-	
+	close();
 }
 
 /* User events */
@@ -79,6 +79,11 @@ void F2::Listener::mouseReleased(sf::Mouse::Button const& b,sf::Vector2f const& 
 }
 
 void F2::Listener::mouseMoved(sf::Vector2f const& pos)
+{
+	
+}
+
+void F2::Listener::close()
 {
 	
 }

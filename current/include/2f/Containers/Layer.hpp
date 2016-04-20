@@ -12,19 +12,27 @@
 namespace F2
 {
 	class Map; // Injection
+	class Frame; // Parent frame
 
-	template<typename ObjectType>
+	template<typename ObjectType,typename Parent = Map*>
 	class Layer
 	{
 	protected:
-		std::vector<ObjectType*> _objects; // Objects of the layer
-		Map *_map; // Layer map
+		std::vector<ObjectType*> _objects; // Objects of the layers
+		Parent _map; // Layer map
+		Frame *_frame; // Layer Frame, for connection
 	public:
 		Layer()  // Creates a layer
 		{
-			_map != 0;
+			
 		}
-		~Layer(); // Removes it from the map
+		~Layer()
+		{
+			if(_map != 0)
+			{
+				_map->del_layer(this);
+			}
+		}
 		/* Methods */
 		void add(ObjectType *o) // Adds an object in the layer
 		{
@@ -35,13 +43,18 @@ namespace F2
 		{
 			_map = m;
 		}
+		void disconnect() // Disconnects layer, usually when everything's ending
+		{
+			_map = 0;
+		}
 		std::vector<ObjectType*>* vector() // Returns the vector
 		{
 			return &_objects;
 		}
 		void del(ObjectType *o) // Deletes an element
 		{
-			
+			typename std::vector<ObjectType*>::iterator _it;
+			// ...
 		}
 		/* Container methods */
 		template<class In>
