@@ -33,7 +33,7 @@ void F2::Listener::onMouseMoved(sf::Event *e)
 
 void F2::Listener::onInit()
 {
-	
+	init();
 }
 
 void F2::Listener::onTicked(int const& tick)
@@ -84,6 +84,11 @@ void F2::Listener::mouseMoved(sf::Vector2f const& pos)
 }
 
 void F2::Listener::close()
+{
+	
+}
+
+void F2::Listener::init()
 {
 	
 }

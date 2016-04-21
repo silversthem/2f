@@ -8,6 +8,8 @@
 #define LAYER_HPP
 
 #include <vector>
+/* 2f */
+#include "../Binders/FrameBinder.hpp"
 
 namespace F2
 {
@@ -15,7 +17,7 @@ namespace F2
 	class Frame; // Parent frame
 
 	template<typename ObjectType,typename Parent = Map*>
-	class Layer
+	class Layer : public FrameBinder
 	{
 	protected:
 		std::vector<ObjectType*> _objects; // Objects of the layers
@@ -28,24 +30,14 @@ namespace F2
 		}
 		~Layer()
 		{
-			if(_map != 0)
-			{
-				_map->del_layer(this);
-			}
+			// Disconnect objects
 		}
 		/* Methods */
 		void add(ObjectType *o) // Adds an object in the layer
 		{
-			o->connect_to_layer(this);
+			o->connect(frame());
+			o->bind_to_layer(this);
 			_objects.push_back(o);
-		}
-		void connect(Map *m) // Connects layer to its map
-		{
-			_map = m;
-		}
-		void disconnect() // Disconnects layer, usually when everything's ending
-		{
-			_map = 0;
 		}
 		std::vector<ObjectType*>* vector() // Returns the vector
 		{
@@ -54,7 +46,7 @@ namespace F2
 		void del(ObjectType *o) // Deletes an element
 		{
 			typename std::vector<ObjectType*>::iterator _it;
-			// ...
+			
 		}
 		/* Container methods */
 		template<class In>

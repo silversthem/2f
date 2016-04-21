@@ -7,7 +7,6 @@
 #define MAP_HPP
 
 #include <map>
-#include <vector>
 #include <string>
 /* 2f */
 #include "Layer.hpp"
@@ -16,42 +15,34 @@ enum Type {Cont,Lay,Single}; // Element types, useful for iteration
 
 namespace F2
 {
-
-	class Frame; // Injection
-
-/* Map (container) class */
-
-	class Map
+	class Map : public FrameBinder
 	{
 	protected:
-		Map* _parent; // If the map has a parent
-		Frame* _frame; // Map frame, for connection
 		std::map<std::string,void*> _map; // The map
 		std::map<std::string,Type> _type; // Map element type
 	public:
 		Map() // Creating a map
 		{
-			_parent = 0;
+			
 		}
 		~Map() // Deleting a map
 		{
-			if(_parent != 0)
-			{
-				_parent->del_map(this);
-			}
+			// Disconnects objects & layers
 		}
 		/* Adders */
 		template <typename T>
 		void add(std::string const& name,T *element) // Adds an element in the map
 		{
-			element->connect_to_map(this);
+			element->connect(frame());
+			element->bind_to_map(this);
 			_map[name] = element; // Adding it into the map
 			_type[name] = Single;
 		}
 		template <typename T>
 		void add_layer(std::string const& name,Layer<T> *l) // Adds a layer in the map
 		{
-			l->connect_to_map(this);
+			l->connect(frame());
+			l->bind_to_map(this);
 			_map[name] = l;
 			_type[name] = Lay;
 		}
@@ -89,10 +80,7 @@ namespace F2
 		void del(T *element) // Deletes an element
 		{
 			std::map<std::string,void*>::iterator it = _map.begin();
-			for(;it != _map.end();)
-			{
-				
-			}
+			// ...
 		}
 		template<typename T>
 		void del_layer(Layer<T> *l) // Deletes a layer
@@ -102,11 +90,6 @@ namespace F2
 		void del_map(Map *m) // Deletes a map
 		{
 			del(m);
-		}
-		/* Methods */
-		void connect(Map* m) // Connecting the map to its parent
-		{
-			_parent = m;
 		}
 		/* Container methods */
 		template<class In,typename Cast>

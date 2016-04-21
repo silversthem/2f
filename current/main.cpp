@@ -40,9 +40,13 @@ int main()
 	     f.timer()->set_max_tick(1000); // Returns to 0 every 1000 ticks
 	            f.render_on_tick(true); // Only display once every tick (events are independant)
 
-	F2::Layer<Rect> l;
+	F2::Layer<Rect> l; // Creating a layer of rectangles
 
-	f.add_layer("rectangles",&l);
+	f.add_layer("rectangles",&l); // Adding the layer to the map
+
+	Rect r;
+
+	l.add(&r);
 
 	f.run(); // Runs the frame, your job is done here
 

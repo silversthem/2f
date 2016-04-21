@@ -34,6 +34,7 @@ namespace F2
 		virtual void  mouseClicked(sf::Mouse::Button const& b,sf::Vector2f const& pos); // Mouse clicked
 		virtual void mouseReleased(sf::Mouse::Button const& b,sf::Vector2f const& pos); // Mouse released
 		virtual void close(); // Called by the onClose method
+		virtual void  init(); // Called by the onInit method
 		// @TODO : onTick, onDisplay, onInit
 	};
 };
