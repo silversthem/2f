@@ -17,11 +17,11 @@
 
 namespace F2
 {
-	class Object : public ObjectListener, public FrameBinder
+	class Object : public ObjectListener, public FrameBinder<Map*,void*>
 	{
 	public:
-		Object(); // Creates an object
-		virtual ~Object(); // Deletes object from the map/layer its contained in
+		 Object(); // Creates an object
+		~Object(); // Destroys the object
 		/* Deconnection */
 		virtual void onClose(); // On close
 		virtual const sf::Vector2f& getObjectPosition() = 0; // Gets object position in plan

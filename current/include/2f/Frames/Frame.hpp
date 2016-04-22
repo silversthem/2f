@@ -54,6 +54,8 @@ namespace F2
 		/* Getters */
 		Timer* timer(); // Returns timer
 		int get_current_tick(); // Returns current tick
+		const sf::Vector2f& getBounds() const; // Returns frame's size
+		const sf::Vector2f& getMouse()  const; // Returns mouse's position
 		/* Methods */
 		void onEvent(sf::Event *e); // Frame events
 		void run(); // Runs the frame

@@ -13,16 +13,11 @@
 
 namespace F2
 {
-	class Map; // Injection
-	class Frame; // Parent frame
-
 	template<typename ObjectType,typename Parent = Map*>
-	class Layer : public FrameBinder
+	class Layer : public FrameBinder<Map*,void*>
 	{
 	protected:
 		std::vector<ObjectType*> _objects; // Objects of the layers
-		Parent _map; // Layer map
-		Frame *_frame; // Layer Frame, for connection
 	public:
 		Layer()  // Creates a layer
 		{
@@ -35,12 +30,14 @@ namespace F2
 			{
 				(*it)->unbind();
 			}
+			delete_from_bound(this);
 		}
 		/* Methods */
 		void add(ObjectType *o) // Adds an object in the layer
 		{
 			o->connect(frame());
 			o->bind_to_layer(this);
+			o->onInit();
 			_objects.push_back(o);
 		}
 		std::vector<ObjectType*>* vector() // Returns the vector
@@ -84,6 +81,13 @@ namespace F2
 			for(unsigned int i = 0;i < _objects.size();i++)
 			{
 				(_objects[i]->*action)();
+			}
+		}
+		void delete_all() // Delete all objects in the layer
+		{
+			for(unsigned int i = 0;i < _objects.size();i++)
+			{
+				delete _objects[i];
 			}
 		}
 	};

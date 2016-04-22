@@ -1,11 +1,16 @@
 #include "../../../include/2f/Containers/Map.hpp"
 
+F2::Map::Map()
+{
+	
+}
+
 F2::Map::~Map()
 {
 	std::map<std::string,void*>::iterator it = _map.begin();
 	for(;it != _map.end();it++)
 	{
-		static_cast<F2::FrameBinder*>(it->second)->unbind();
+		static_cast<F2::FrameBinder<Map*,void*>*>(it->second)->unbind();
 	}
 }
 

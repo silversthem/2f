@@ -15,16 +15,13 @@ namespace F2
 {
 	enum Type {Cont,Lay,Single}; // Element types, useful for iteration
 
-	class Map : public FrameBinder
+	class Map : public FrameBinder<Map*,void*>
 	{
 	protected:
 		std::map<std::string,void*> _map; // The map
 		std::map<std::string,Type> _type; // Map element type
 	public:
-		Map() // Creating a map
-		{
-			
-		}
+		Map(); // Creating a map
 		~Map(); // Deleting a map
 		/* Adders */
 		template <typename T>
@@ -63,24 +60,20 @@ namespace F2
 		Type get_type(std::string const& name); // Returns an element type : layer/map or single object
 		std::map<std::string,void*>*     map(); // Returns the std::map container
 		/* Deleters */
-		template <typename T>
-		void del(T *element) // Deletes an element
+		void del(void* element) // Deletes an element
 		{
 			std::map<std::string,void*>::iterator it = _map.begin();
-			for(;it != _map.end();)
+			for(;it != _map.end();it++)
 			{
 				if(element == it->second)
 				{
 					_map.erase(it);
-				}
-				else
-				{
-					it++;
+					break; // Element was deleted, no need to go further
 				}
 			}
 		}
 		template<typename T>
-		void del_layer(Layer<T> *l) // Deletes a layer
+		void del_layer(Layer<T,Map*> *l) // Deletes a layer
 		{
 			del(l);
 		}

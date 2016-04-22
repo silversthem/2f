@@ -9,7 +9,7 @@ F2::Object::Object()
 
 F2::Object::~Object()
 {
-	delete_from_bound();
+	delete_from_bound(this);
 }
 
 void F2::Object::onClose()

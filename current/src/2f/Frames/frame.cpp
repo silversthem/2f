@@ -83,6 +83,16 @@ int F2::Frame::get_current_tick()
 	return _current_tick;
 }
 
+const sf::Vector2f& F2::Frame::getBounds() const
+{
+	return _bounds;
+}
+
+const sf::Vector2f& F2::Frame::getMouse() const
+{
+	return _mouse;
+}
+
 /* Methods */
 
 void F2::Frame::onEvent(sf::Event *e)
@@ -114,6 +124,6 @@ void F2::Frame::run()
 			render();
 		}
 	}
+	onClose();
 	_stuff.apply<Listener>(&F2::Listener::onClose); // Closing the frame /!\ Disconnecting objects before disconnecting their layers
-	_stuff.apply_to_layers<Listener>(&F2::Layer<Listener>::disconnect); // Disconnects the layers from the map before deletion
 }
