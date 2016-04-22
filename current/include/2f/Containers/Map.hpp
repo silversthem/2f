@@ -11,10 +11,10 @@
 /* 2f */
 #include "Layer.hpp"
 
-enum Type {Cont,Lay,Single}; // Element types, useful for iteration
-
 namespace F2
 {
+	enum Type {Cont,Lay,Single}; // Element types, useful for iteration
+
 	class Map : public FrameBinder
 	{
 	protected:
@@ -25,10 +25,7 @@ namespace F2
 		{
 			
 		}
-		~Map() // Deleting a map
-		{
-			// Disconnects objects & layers
-		}
+		~Map(); // Deleting a map
 		/* Adders */
 		template <typename T>
 		void add(std::string const& name,T *element) // Adds an element in the map
@@ -63,34 +60,31 @@ namespace F2
 			return get<Layer<T>*>(name);
 		}
 		// Map
-		Type get_type(std::string const& name)
-		{
-			if(_type.find(name) != _type.end())
-			{
-				return _type[name];
-			}
-			throw "Nothing Found"; // @TODO : Same as get
-		}
-		std::map<std::string,void*>* map() // Returns the map
-		{
-			return &_map;
-		}
+		Type get_type(std::string const& name); // Returns an element type : layer/map or single object
+		std::map<std::string,void*>*     map(); // Returns the std::map container
 		/* Deleters */
 		template <typename T>
 		void del(T *element) // Deletes an element
 		{
 			std::map<std::string,void*>::iterator it = _map.begin();
-			// ...
+			for(;it != _map.end();)
+			{
+				if(element == it->second)
+				{
+					_map.erase(it);
+				}
+				else
+				{
+					it++;
+				}
+			}
 		}
 		template<typename T>
 		void del_layer(Layer<T> *l) // Deletes a layer
 		{
 			del(l);
 		}
-		void del_map(Map *m) // Deletes a map
-		{
-			del(m);
-		}
+		void del_map(Map *m); // Deletes a map
 		/* Container methods */
 		template<class In,typename Cast>
 		void foreach(In *c,void (In::*action)(Cast*)) // Applies a method to every map element

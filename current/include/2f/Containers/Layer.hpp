@@ -30,7 +30,11 @@ namespace F2
 		}
 		~Layer()
 		{
-			// Disconnect objects
+			typename std::vector<ObjectType*>::iterator it = _objects.begin();
+			for(;it != _objects.end();it++)
+			{
+				(*it)->unbind();
+			}
 		}
 		/* Methods */
 		void add(ObjectType *o) // Adds an object in the layer
@@ -45,8 +49,18 @@ namespace F2
 		}
 		void del(ObjectType *o) // Deletes an element
 		{
-			typename std::vector<ObjectType*>::iterator _it;
-			
+			typename std::vector<ObjectType*>::iterator it = _objects.begin();
+			for(;it != _objects.end();)
+			{
+				if(*it == o)
+				{
+					_objects.erase(it);
+				}
+				else
+				{
+					it++;
+				}
+			}
 		}
 		/* Container methods */
 		template<class In>

@@ -9,7 +9,7 @@ F2::Object::Object()
 
 F2::Object::~Object()
 {
-	// If still connected to a layer/map, deconnect from it
+	delete_from_bound();
 }
 
 void F2::Object::onClose()
