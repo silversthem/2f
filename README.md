@@ -25,5 +25,5 @@
   - [x] Movements
   - [ ] Forces
   - [ ] Structures
-  - [ ] Time and ticks handling
+  - [x] Time and ticks handling
   - [ ] Documentation

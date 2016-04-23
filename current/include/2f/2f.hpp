@@ -10,6 +10,19 @@
 #include "Math/Line.hpp"
 // Path ~> Bunch of lines that an object can follow succesively, useful in pathfinding
 
+/* Helper classes : Binders */
+
+// FrameBinder ~> Binds objects, and containers to their frame and eventual parent container
+#include "Binders/FrameBinder.hpp"
+// EventBinder ~> Binds actions to events
+#include "Binders/EventBinder.hpp"
+
+/* Helper classes : Models */
+
+// LayerManager ~> Handles objects in layers
+// MapManager   ~> Handles objects and layers in map
+// FrameManager ~> Handles map and others in frame
+
 /* Helper classes : Containers */
 
 // Map ~> Collections of layers, objects and other maps
@@ -43,10 +56,17 @@
 // Projectile ~> Object defined by a movement and easily destroyable by a condition, usually
 #include "Objects/Projectile.hpp"
 
+/* Sprites */
+
+// Tile ~> A textured rectangle
+#include "Objects/Sprites/Tile.hpp" 
+// Sprite ~> A tile with multiple display textures
+// Entity ~> A sprite whose multiple display textures can be regrouped to be animated
+
 /* Structures */
 
-// Structure ~> An object composed of tiles, that can generated complex forms such as houses or plateform, useful for pathfinding
-// Tile ~> A piece of a structure, Structures can have as many tile combinations as they want, so it's really useful
+// Structure ~> An object composed of tiles, that can be pathfinded through
+// Building  ~> A structure with entries and exits
 
 /* Widgets */
 
@@ -62,11 +82,6 @@
 // Shape ~> A shape with collision support
 // Circle ~> A circle with collision support
 #include "Objects/Shapes/Circle.hpp"
-
-/* Sprites */
-
-// Sprite ~> A sprite with texturing and collision support
-// Entity ~> Animated sprite, useful to creates good looking characters, or chests and so on...
 
 /* Movements */
 

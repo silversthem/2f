@@ -11,6 +11,9 @@
 #include "Plan.hpp"
 #include "../Time/Timer.hpp"
 
+#ifndef FRAME_HPP
+#define FRAME_HPP
+
 namespace F2
 {
 	class Frame : public F2::Plan, public F2::EventMachine, public sf::RenderWindow
@@ -61,3 +64,5 @@ namespace F2
 		void run(); // Runs the frame
 	};
 };
+
+#endif

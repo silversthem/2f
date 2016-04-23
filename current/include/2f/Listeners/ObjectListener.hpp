@@ -1,15 +1,14 @@
 /*
  * An object listener contains events specific to objects
+ * Object events are not called by the event machine, but by other objects (projectiles/structures/etc...), the frame or else
  */
 
 #ifndef OBJECTLISTENER_HPP
 #define OBJECTLISTENER_HPP
 
-#include "Listener.hpp"
-
 namespace F2
 {
-	class ObjectListener : public Listener
+	class ObjectListener
 	{
 	public:
 		// When hitting a boundary

@@ -14,10 +14,11 @@
 /* F2 */
 #include "../Listeners/ObjectListener.hpp"
 #include "../Binders/FrameBinder.hpp"
+#include "../Binders/EventBinder.hpp"
 
 namespace F2
 {
-	class Object : public ObjectListener, public FrameBinder<Map*,void*>
+	class Object : public ObjectListener, public EventBinder, public FrameBinder<Map*,void*>
 	{
 	public:
 		 Object(); // Creates an object
