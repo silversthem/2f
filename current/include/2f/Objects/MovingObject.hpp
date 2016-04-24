@@ -15,8 +15,7 @@ namespace F2
 	class MovingObject : public Object
 	{
 	protected:
-		// Movements
-		// Binders
+		// Movements & Forces
 	public:
 		
 	};

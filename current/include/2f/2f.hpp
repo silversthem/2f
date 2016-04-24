@@ -16,12 +16,18 @@
 #include "Binders/FrameBinder.hpp"
 // EventBinder ~> Binds actions to events
 #include "Binders/EventBinder.hpp"
+// ObjectBinder ~> Action executed when called by the EventBinder
+// TickBinder ~> Binds actions to a tick amount
+// MovementBinder ~> Binder for movements
+// AnimationBinder ~> Binder for animations
 
 /* Helper classes : Models */
 
 // LayerManager ~> Handles objects in layers
 // MapManager   ~> Handles objects and layers in map
 // FrameManager ~> Handles map and others in frame
+// SpriteManager ~> Handles textures for sprites
+// EntityManager ~> Handles textures & animations for entities
 
 /* Helper classes : Containers */
 
@@ -61,7 +67,9 @@
 // Tile ~> A textured rectangle
 #include "Objects/Sprites/Tile.hpp" 
 // Sprite ~> A tile with multiple display textures
+#include "Objects/Sprites/Sprite.hpp"
 // Entity ~> A sprite whose multiple display textures can be regrouped to be animated
+#include "Objects/Sprites/Entity.hpp"
 
 /* Structures */
 

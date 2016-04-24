@@ -16,6 +16,9 @@ namespace F2
 {
 	class EventBinder : public Listener
 	{
+	protected:
+		
+	public:
 		
 	};
 };

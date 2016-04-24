@@ -51,7 +51,7 @@ namespace F2
 		{
 			_stuff.add_layer<T>(name,o);
 		}
-		void add_map(); // Adds a map of layers and objects
+		void add_map(); // @TODO : Adds a map of layers and objects
 		/* Setters */
 		void render_on_tick(bool const& state); // if we should render on tick 
 		/* Getters */

@@ -8,28 +8,30 @@
 #include <string>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 /* 2f */
-#include "../Shapes/Rectangle.hpp"
+#include "../Object.hpp"
 
 namespace F2
 {
-	class Tile : public Rectangle
+	class Tile : public Object, public sf::Sprite
 	{
 	protected:
-		sf::Texture *_texture; // Tile texture
-		sf::IntRect  _rect;    // Segment of texture being displayed
-		bool _dynamic; // If the texture object was dynamically allocated, if so, deleting it when the tile is destroyed
-		bool _updated; // If we have to update the rendering
+		sf::Texture* _dynamic; // If the texture was dynamically allocated for this sprite
 	public:
-		 Tile(); // Creates a tile
+		Tile(); // Creates a tile
+		Tile(sf::Texture const& texture); // Creates a textured tile
+		Tile(sf::Texture const& texture,sf::IntRect const& rect); // Creates a sized textured tile
 		~Tile(); // Deletes the tile
 		/* Setters */
-		void set_texture(sf::Texture *texture); // Gets the tile's texture
 		void set_texture_from_file(std::string const& file); // Loads the texture from a file
-		void set_rectangle(sf::IntRect const& r); // Sets texture segment
 		/* Getters */
 		virtual const sf::Drawable& getDrawable(); // Returns the tile, ready to be drawn
-		sf::Texture* texture(bool const& update = true); // Gets the texture
+		const sf::Vector2f&   getObjectPosition(); // Gets object position in plan
+		sf::FloatRect   getObjectBounds(); // Gets object boundaries
+		/* Collision */
+		bool isIn(sf::Vector2f const& point); // If a point is in object
+		bool touches(Object *o); // If an object touches this one
 	};
 };
 

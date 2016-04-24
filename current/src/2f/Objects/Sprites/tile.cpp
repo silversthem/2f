@@ -2,46 +2,66 @@
 
 F2::Tile::Tile()
 {
-	_dynamic = false;
-	_updated = false;
-	_texture = 0;
+	_dynamic = 0;
+}
+
+F2::Tile::Tile(sf::Texture const& texture)
+{
+	_dynamic = 0;
+	setTexture(texture);
+}
+
+F2::Tile::Tile(sf::Texture const& texture,sf::IntRect const& rect)
+{
+	_dynamic = 0;
+	setTexture(texture);
+	setTextureRect(rect);
 }
 
 F2::Tile::~Tile()
 {
-	if(_dynamic && _texture != 0) // If the texture was dynamically allocated and still existant
+	if(_dynamic != 0)
 	{
-		delete _texture;
+		delete _dynamic;
 	}
 }
 
 /* Setters */
 
-void F2::Tile::set_texture(sf::Texture *texture)
-{
-	
-}
-
 void F2::Tile::set_texture_from_file(std::string const& file)
 {
-	
-}
-
-void F2::Tile::set_rectangle(sf::IntRect const& r)
-{
-	
+	_dynamic = new sf::Texture;
+	if(!_dynamic->loadFromFile(file))
+		throw 1;
+	setTexture(*_dynamic);
 }
 
 /* Getters */
 
 const sf::Drawable& F2::Tile::getDrawable()
 {
-	// Configure texture if updated
 	return *this;
 }
 
-sf::Texture* F2::Tile::texture(bool const& update)
+const sf::Vector2f& F2::Tile::getObjectPosition()
 {
-	_updated = update;
-	return _texture;
+	return getPosition();
+}
+
+sf::FloatRect F2::Tile::getObjectBounds()
+{
+	return getGlobalBounds();
+}
+
+/* Collision */
+
+bool F2::Tile::isIn(sf::Vector2f const& point)
+{
+	return getObjectBounds().contains(point);
+}
+
+bool F2::Tile::touches(Object *o)
+{
+	// ...
+	return false;
 }
