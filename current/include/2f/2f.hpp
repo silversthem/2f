@@ -16,8 +16,11 @@
 #include "Binders/FrameBinder.hpp"
 // EventBinder ~> Binds actions to events
 #include "Binders/EventBinder.hpp"
-// ObjectBinder ~> Action executed when called by the EventBinder
-// TickBinder ~> Binds actions to a tick amount
+// ActionBinder ~> Action executed when called by the EventBinder
+#include "Binders/ActionBinder.hpp"
+// ObjectBinder ~> Implementation of ActionBinder where the action is an object method
+#include "Binders/ObjectBinder.hpp"
+// TickBinder ~> Implementation of ActionBinder where the action is an object method when a certain tickcount is met
 // MovementBinder ~> Binder for movements
 // AnimationBinder ~> Binder for animations
 

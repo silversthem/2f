@@ -19,7 +19,7 @@ namespace F2
 	protected:
 		sf::Event _event; // The event the machine will listen to
 		/* Event handling */
-		void handle();                // Creates the callstack
+		void handle(); // Creates the callstack
 	public:
 		EventMachine(); // Creates an event machine
 		void applyEvent(Listener *l); // Applies the callstack to an object
