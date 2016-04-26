@@ -79,8 +79,8 @@ namespace F2
 		}
 		void del_map(Map *m); // Deletes a map
 		/* Container methods */
-		template<class In,typename Cast>
-		void foreach(In *c,void (In::*action)(Cast*)) // Applies a method to every map element
+		template <typename Cast> // applies a function through the map
+		void walk(std::function<void (Cast*)> const& f,bool const& toObjects = true,bool const& toLayers = true,bool const& toMaps = true)
 		{
 			std::map<std::string,void*>::iterator it      =  _map.begin();
 			std::map<std::string,Type>::iterator  it_type = _type.begin();
@@ -89,61 +89,42 @@ namespace F2
 				switch(it_type->second)
 				{
 					case Single:
-						(c->*action)(static_cast<Cast*>(it->second));
+						if(toObjects)
+						{
+							f(static_cast<Cast*>(it->second));
+						}
 					break;
 					case Lay:
-						static_cast<Layer<Cast>*>(it->second)->foreach<In>(c,action);
+						if(toLayers)
+						{
+							static_cast<Layer<Cast>*>(it->second)->walk(f);
+						}
 					break;
 					case Cont:
-						static_cast<Map*>(it->second)->foreach<In,Cast>(c,action);
+						if(toLayers)
+						{
+							static_cast<Map*>(it->second)->walk<Cast>(f,toObjects,toLayers,toMaps);
+						}
 					break;
 				}
 				it_type++;
 			}
+		}
+		// filter ~> Returns objects in the maps and layers (if toLayers is true) that are validated by a filter function
+		template<class In,typename Cast>
+		void foreach(In *c,void (In::*action)(Cast*)) // Applies a method to every map element
+		{
+			walk<Cast>([c,action](Cast* object){(c->*action)(object);});
 		}
 		template<class Cast,typename OtherArg>
 		void apply(void (Cast::*action)(OtherArg*),OtherArg *a) // Uses a method from each object
 		{
-			std::map<std::string,void*>::iterator it      =  _map.begin();
-			std::map<std::string,Type>::iterator  it_type = _type.begin();
-			for(;it != _map.end();it++)
-			{
-				switch(it_type->second)
-				{
-					case Single:
-						(static_cast<Cast*>(it->second)->*action)(a);
-					break;
-					case Lay:
-						static_cast<Layer<Cast>*>(it->second)->foreach<OtherArg>(action,a);
-					break;
-					case Cont:
-						static_cast<Map*>(it->second)->foreach<Cast,OtherArg>(action,a);
-					break;
-				}
-				it_type++;
-			}
+			walk<Cast>([action,a](Cast* object){(object->*action)(a);});
 		}
 		template<class Cast>
 		void apply(void (Cast::*action)()) // Uses a method from each object, without argument
 		{
-			std::map<std::string,void*>::iterator it      =  _map.begin();
-			std::map<std::string,Type>::iterator  it_type = _type.begin();
-			for(;it != _map.end();it++)
-			{
-				switch(it_type->second)
-				{
-					case Single:
-						(static_cast<Cast*>(it->second)->*action)();
-					break;
-					case Lay:
-						static_cast<Layer<Cast>*>(it->second)->apply(action);
-					break;
-					case Cont:
-						static_cast<Map*>(it->second)->apply<Cast>(action);
-					break;
-				}
-				it_type++;
-			}
+			walk<Cast>([action](Cast* object){(object->*action)();});
 		}
 		template <typename Cast>
 		void apply_to_layers(void (Layer<Cast>::*action)()) // Applies a function to layers only

@@ -9,14 +9,21 @@ F2::EventBinder::EventBinder()
 
 void F2::EventBinder::go_through(sf::Event::EventType const& etype,sf::Event *e)
 {
-	
+	if(_binds.find(etype) != _binds.end()) // If there's a pile for this event
+	{
+		std::for_each(_binds[etype].begin(),_binds[etype].end(),[e](ActionBinder<sf::Event>* action){action->run(*e);});
+	}
 }
 
 /* Adders */
 
-void F2::EventBinder::bind(sf::Event::EventType const& etype,F2::ActionBinder* action)
+void F2::EventBinder::bind(sf::Event::EventType const& etype,F2::ActionBinder<sf::Event>* action)
 {
-	_bounds[etype] = action;
+	if(_binds.find(etype) == _binds.end()) // Creating a new pile
+	{
+		_binds[etype] = std::vector<F2::ActionBinder<sf::Event>*>();
+	}
+	_binds[etype].push_back(action); // Adding to the pile
 }
 
 /* Key events */

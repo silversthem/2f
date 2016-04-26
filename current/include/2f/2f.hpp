@@ -18,11 +18,9 @@
 #include "Binders/EventBinder.hpp"
 // ActionBinder ~> Action executed when called by the EventBinder
 #include "Binders/ActionBinder.hpp"
-// ObjectBinder ~> Implementation of ActionBinder where the action is an object method
+// ObjectBinder ~> Implementation of ActionBinder where the action is a lambda function, which can be filtered using another lambda
 #include "Binders/ObjectBinder.hpp"
-// TickBinder ~> Implementation of ActionBinder where the action is an object method when a certain tickcount is met
-// MovementBinder ~> Binder for movements
-// AnimationBinder ~> Binder for animations
+// TimeBinder   ~> Binders responding to certain tick amounts
 
 /* Helper classes : Models */
 
@@ -108,9 +106,8 @@
 
 /* Forces */
 
-// Constant ~> A constant force being applied, initial speed and max speed can also be defiend
-// Timed ~> A force being controlled by a ticker
-// Lambda ~> A force that takes an object method as a parameter and uses it to calculate the movement
+// Constant ~> A constant force being applied, initial speed and max speed can also be defined
+// Lambda ~> A force that takes a method/function as a parameter and uses it to calculate the movement
 
 /* Time */
 

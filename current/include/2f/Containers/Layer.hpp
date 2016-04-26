@@ -7,6 +7,7 @@
 #ifndef LAYER_HPP
 #define LAYER_HPP
 
+#include <functional>
 #include <vector>
 /* 2f */
 #include "../Binders/FrameBinder.hpp"
@@ -60,6 +61,13 @@ namespace F2
 			}
 		}
 		/* Container methods */
+		void walk(std::function<void (ObjectType*)> const& f) // Applies a function to each layer object
+		{
+			for(ObjectType* o : _objects)
+			{
+				f(o);
+			}
+		}
 		template<class In>
 		void foreach(In *c,void (In::*action)(ObjectType*)) // Applies a method to every layer element
 		{
