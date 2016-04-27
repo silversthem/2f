@@ -7,6 +7,7 @@
 #ifndef LAYER_HPP
 #define LAYER_HPP
 
+#include <algorithm>
 #include <functional>
 #include <vector>
 /* 2f */
@@ -63,40 +64,32 @@ namespace F2
 		/* Container methods */
 		void walk(std::function<void (ObjectType*)> const& f) // Applies a function to each layer object
 		{
-			for(ObjectType* o : _objects)
-			{
-				f(o);
-			}
+			std::for_each(_objects.begin(),_objects.end(),f);
+		}
+		std::vector<ObjectType*> filter(std::function<bool (ObjectType*)> const& f) // Returns ObjectType
+		{
+			std::vector<ObjectType*> v;
+			std::vector<ObjectType*>* pter = &v;
+			walk([pter,f](ObjectType *o){if(f) pter->push_back(o);});
+			return v;
 		}
 		template<class In>
 		void foreach(In *c,void (In::*action)(ObjectType*)) // Applies a method to every layer element
 		{
-			for(unsigned int i = 0;i < _objects.size();i++)
-			{
-				(c->*action)(_objects[i]);
-			}
+			walk([c,action](ObjectType *o){(c->*action)(o);});
 		}
 		template<typename OtherArg>
 		void apply(void (ObjectType::*action)(OtherArg),OtherArg *a) // Uses a method from each element
 		{
-			for(unsigned int i = 0;i < _objects.size();i++)
-			{
-				(_objects[i]->*action)(a);
-			}
+			walk([action,a](ObjectType *o){(o->*action)(a);});
 		}
 		void apply(void (ObjectType::*action)()) // Uses a method from each object, without argument
 		{
-			for(unsigned int i = 0;i < _objects.size();i++)
-			{
-				(_objects[i]->*action)();
-			}
+			walk([action](ObjectType *o){(o->*action)();});
 		}
 		void delete_all() // Delete all objects in the layer
 		{
-			for(unsigned int i = 0;i < _objects.size();i++)
-			{
-				delete _objects[i];
-			}
+			walk([](ObjectType *o){delete o;});
 		}
 	};
 };

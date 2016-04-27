@@ -20,7 +20,6 @@
 #include "Binders/ActionBinder.hpp"
 // ObjectBinder ~> Implementation of ActionBinder where the action is a lambda function, which can be filtered using another lambda
 #include "Binders/ObjectBinder.hpp"
-// TimeBinder   ~> Binders responding to certain tick amounts
 
 /* Helper classes : Models */
 

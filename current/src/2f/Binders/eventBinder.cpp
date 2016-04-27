@@ -26,6 +26,17 @@ void F2::EventBinder::bind(sf::Event::EventType const& etype,F2::ActionBinder<sf
 	_binds[etype].push_back(action); // Adding to the pile
 }
 
+void F2::EventBinder::bind(ActionBinder<int>* action)
+{
+	_time_binds.push_back(action);
+}
+
+void F2::EventBinder::key_bind(ActionBinder<sf::Event>* action)
+{
+	bind(sf::Event::KeyPressed ,action);
+	bind(sf::Event::KeyReleased,action);
+}
+
 /* Key events */
 
 void F2::EventBinder::onKeyPressed(sf::Event *e)
@@ -69,5 +80,5 @@ void F2::EventBinder::onEvent(sf::Event *e)
 
 void F2::EventBinder::onTicked(int const& tick)
 {
-	// @TODO : Timers
+	std::for_each(_time_binds.begin(),_time_binds.end(),[tick](ActionBinder<int>* a){a->run(tick);});
 }

@@ -110,7 +110,7 @@ namespace F2
 				it_type++;
 			}
 		}
-		// filter ~> Returns objects in the maps and layers (if toLayers is true) that are validated by a filter function
+		// @TODO : Filters a map
 		template<class In,typename Cast>
 		void foreach(In *c,void (In::*action)(Cast*)) // Applies a method to every map element
 		{
@@ -126,20 +126,13 @@ namespace F2
 		{
 			walk<Cast>([action](Cast* object){(object->*action)();});
 		}
+		// @TODO : Apply to objects only
 		template <typename Cast>
 		void apply_to_layers(void (Layer<Cast>::*action)()) // Applies a function to layers only
 		{
-			std::map<std::string,void*>::iterator it      =  _map.begin();
-			std::map<std::string,Type>::iterator  it_type = _type.begin();
-			for(;it != _map.end();it++)
-			{
-				if(it_type->second == Lay)
-				{
-					(static_cast<Layer<Cast>*>(it->second)->*action)();
-				}
-				it_type++;
-			}
+			walk<Cast>([action](Layer<Cast>* layer){(layer->*action)();});
 		}
+		// @TODO : Apply to map only
 	};
 };
 

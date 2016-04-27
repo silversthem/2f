@@ -26,7 +26,7 @@ namespace F2
 			{
 				if(_filter) // If there's a filter
 				{
-					if(_filter(arg,_object)) return;
+					if(!_filter(arg,_object)) return;
 				}
 				_action(arg,_object);
 			}
@@ -50,7 +50,7 @@ namespace F2
 		{
 			_action = action;
 		}
-		void set_filter(std::function<bool (const ArgumentType&,ObjectType*)> const& filter) // Sets filter
+		virtual void set_filter(std::function<bool (const ArgumentType&,ObjectType*)> const& filter) // Sets filter
 		{
 			_filter = filter;
 		}

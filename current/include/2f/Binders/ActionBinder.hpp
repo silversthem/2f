@@ -31,9 +31,9 @@ namespace F2
 		{
 			_toggle = toggle;
 		}
-		void toggle() // Toggles the action execution
+		void set_state(bool const &state) // Changes the action execution
 		{
-			_state = !_state;
+			_state = state;
 		}
 		void enable() // Enables binder
 		{
@@ -48,10 +48,6 @@ namespace F2
 		{
 			if(_enabled)
 			{
-				if(_toggle)
-				{
-					toggle();
-				}
 				if((_toggle && _state) || !_toggle)
 				{
 					action(arg);
