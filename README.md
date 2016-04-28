@@ -18,7 +18,7 @@
   - [ ] Multiframe handling
   - [ ] Auto Multithreading
   - [ ] Pathfinding
-  - [ ] Sprite class
+  - [x] Sprite class
   - [ ] Animated Sprite class
   - [ ] Projectile class
   - [x] Events
