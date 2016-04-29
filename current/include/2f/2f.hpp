@@ -16,10 +16,8 @@
 #include "Binders/FrameBinder.hpp"
 // EventBinder ~> Binds actions to events
 #include "Binders/EventBinder.hpp"
-// ActionBinder ~> Action executed when called by the EventBinder
-#include "Binders/ActionBinder.hpp"
-// ObjectBinder ~> Implementation of ActionBinder where the action is a lambda function, which can be filtered using another lambda
-#include "Binders/ObjectBinder.hpp"
+// Callable ~> A method to call in an object, arguments can be supplied
+#include "Binders/Callable.hpp"
 
 /* Helper classes : Models */
 

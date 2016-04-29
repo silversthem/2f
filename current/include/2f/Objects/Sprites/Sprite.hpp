@@ -14,7 +14,7 @@
 
 namespace F2
 {
-	typedef std::pair<sf::Texture*,sf::IntRect> SpritePair; // Easy pair for changing texture
+	typedef std::pair<sf::Texture*,sf::IntRect> SpritePair; // Easy pair to switch between textures
 
 	class Sprite : public MovingObject, public sf::Sprite
 	{
