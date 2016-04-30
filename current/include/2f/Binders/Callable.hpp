@@ -6,8 +6,6 @@
 #define CALLABLE_HPP
 
 #include <functional>
-/* 2f */
-#include "EventBinder.hpp"
 
 namespace F2
 {
@@ -16,9 +14,25 @@ namespace F2
 	{
 	protected:
 		std::function<void (ArgType)> _call; // The lambda to call
-		EventBinder* _binder; // The lambda's event binder, to disconnect when deleted
+		bool _enabled; // If the callable is enabled
 	public:
-		
+		Callable(std::function<void (ArgType)> const& func) // Creates a callable
+		{
+			_call = func;
+		}
+		/* Setters */
+		void enable(bool const& state = true) // Enable/Disable callable
+		{
+			_enabled = state;
+		}
+		/* Methods */
+		void exec(ArgType arg) // Runs the callable
+		{
+			if(_enabled && _call)
+			{
+				_call(arg);
+			}
+		}
 	};
 };
 

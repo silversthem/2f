@@ -10,12 +10,10 @@
 #include <map>
 /* 2f */
 #include "../Listeners/Listener.hpp"
+#include "Callable.hpp"
 
 namespace F2
 {
-	template<typename ArgType>
-	class Callable; // Injection
-
 	class EventBinder : public Listener
 	{
 	protected:
@@ -23,6 +21,8 @@ namespace F2
 	public:
 		EventBinder();
 		/* Adders */
+		
+		/* Deleters */
 		
 		/* Key events */
 		void  onKeyPressed(sf::Event *e); // When a key is pressed
