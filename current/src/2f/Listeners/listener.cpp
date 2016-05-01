@@ -5,35 +5,43 @@ F2::Listener::Listener()
 	
 }
 
-void F2::Listener::onKeyPressed(sf::Event *e)
+/* Protected methods */
+
+void F2::Listener::handle(sf::Event *e)
 {
-	keyPressed(e->key.code);
+	switch(e->type)
+	{
+		case sf::Event::KeyPressed: // Key pressed
+			keyPressed(e->key.code);
+		break;
+		case sf::Event::KeyReleased: // Key released
+			keyReleased(e->key.code);
+		break;
+		case sf::Event::MouseButtonPressed: // Mouse click
+			mouseClicked(e->mouseButton.button,sf::Vector2f(e->mouseButton.x,e->mouseButton.y));
+		break;
+		case sf::Event::MouseButtonReleased: // Mouse released
+			mouseReleased(e->mouseButton.button,sf::Vector2f(e->mouseButton.x,e->mouseButton.y));
+		break;
+		case sf::Event::MouseMoved: // Mouse move
+			mouseMoved(sf::Vector2f(e->mouseMove.x,e->mouseMove.y));
+		break;
+		default:
+			otherEvent(e);
+		break;
+	}
 }
 
-void F2::Listener::onKeyReleased(sf::Event *e)
-{
-	keyReleased(e->key.code);
-}
-
-
-void F2::Listener::onMouseClicked(sf::Event *e)
-{
-	mouseClicked(e->mouseButton.button,sf::Vector2f(e->mouseButton.x,e->mouseButton.y));
-}
-
-void F2::Listener::onMouseReleased(sf::Event *e)
-{
-	mouseReleased(e->mouseButton.button,sf::Vector2f(e->mouseButton.x,e->mouseButton.y));
-}
-
-void F2::Listener::onMouseMoved(sf::Event *e)
-{
-	mouseMoved(sf::Vector2f(e->mouseMove.x,e->mouseMove.y));
-}
+/* System events */
 
 void F2::Listener::onInit()
 {
 	init();
+}
+
+void F2::Listener::onClose()
+{
+	close();
 }
 
 void F2::Listener::onTicked(int const& tick)
@@ -44,16 +52,6 @@ void F2::Listener::onTicked(int const& tick)
 void F2::Listener::onDisplay()
 {
 	
-}
-
-void F2::Listener::onEvent(sf::Event *e)
-{
-	
-}
-
-void F2::Listener::onClose()
-{
-	close();
 }
 
 /* User events */
@@ -89,6 +87,11 @@ void F2::Listener::close()
 }
 
 void F2::Listener::init()
+{
+	
+}
+
+void F2::Listener::otherEvent(sf::Event *e)
 {
 	
 }

@@ -1,6 +1,6 @@
 /*
- * A listeners "listens" to call from the event machine
- * Whenever an event happens, the event machine calls a method from the listener
+ * A listeners "listens" to call from the frame.
+ * And translate event into an user function execution.
  */
 
 #ifndef LISTENER_HPP
@@ -10,24 +10,20 @@
 
 namespace F2
 {
+	class Frame; // Injection
+
 	class Listener
 	{
+	protected:
+		virtual void handle(sf::Event *e); // Handles an event ~> Calls the user event
 	public:
 		Listener(); // Creates a listener
-		/* Key events */
-		virtual void  onKeyPressed(sf::Event *e); // When a key is pressed
-		virtual void onKeyReleased(sf::Event *e); // When a key is pressed
-		/* Mouse events */
-		virtual void  onMouseClicked(sf::Event *e); // When there's a mouse click
-		virtual void onMouseReleased(sf::Event *e); // When the mouse button is released
-		virtual void    onMouseMoved(sf::Event *e); // When the mouse moves
-		/* Other events */
-		virtual void    onInit(); // Before first interaction
-		virtual void onDisplay(); // When displaying
-		virtual void   onClose(); // When display time is over
-		virtual void     onEvent(sf::Event *e); // Other type of event
-		virtual void onTicked(int const& tick); // Ticked
-		/* User events (easier to use) */
+		/* System events */
+		virtual void onInit();
+		virtual void onClose();
+		virtual void onTicked(int const& tick);
+		virtual void onDisplay();
+		/* User events */
 		virtual void  keyPressed(sf::Keyboard::Key const& key); // Key pressed
 		virtual void keyReleased(sf::Keyboard::Key const& key); // Key released
 		virtual void       mouseMoved(sf::Vector2f const& pos); // Mouse moved
@@ -35,7 +31,9 @@ namespace F2
 		virtual void mouseReleased(sf::Mouse::Button const& b,sf::Vector2f const& pos); // Mouse released
 		virtual void close(); // Called by the onClose method
 		virtual void  init(); // Called by the onInit method
-		// @TODO : onTick, onDisplay, onInit
+		virtual void otherEvent(sf::Event *e); // Called by an unhandled event
+		// @TODO : onTick, onDisplay
+		friend class Frame;
 	};
 };
 

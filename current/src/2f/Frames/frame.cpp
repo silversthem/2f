@@ -24,7 +24,6 @@ void F2::Frame::render()
 
 void F2::Frame::render_object(Object *o)
 {
-	EventMachine::applyEvent(o);
 	o->onDisplay();
 	if(_timer.is_set() && _timer.updated())
 	{
@@ -95,7 +94,7 @@ const sf::Vector2f& F2::Frame::getMouse() const
 
 /* Methods */
 
-void F2::Frame::onEvent(sf::Event *e)
+void F2::Frame::otherEvent(sf::Event *e)
 {
 	if(_event.type == sf::Event::Closed)
 	{
@@ -112,8 +111,8 @@ void F2::Frame::run()
 		calculate_mouse_pos();
 		while(pollEvent(_event))
 		{
-			handle();
-			_stuff.foreach<F2::EventMachine,F2::Listener>(this,&F2::EventMachine::applyEvent);
+			F2::Listener::handle(&_event);
+			_stuff.apply<F2::Listener,sf::Event>(&F2::Listener::handle,&_event);
 		}
 		if(_timer.is_set())
 		{

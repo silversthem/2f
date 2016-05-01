@@ -7,25 +7,26 @@
 #include <string>
 #include <SFML/Graphics/RenderWindow.hpp>
 /* F2 */
-#include "EventMachine.hpp"
 #include "Plan.hpp"
 #include "../Time/Timer.hpp"
+#include "../Listeners/Listener.hpp"
+#include "../macros.hpp"
 
 #ifndef FRAME_HPP
 #define FRAME_HPP
 
 namespace F2
 {
-	class Frame : public F2::Plan, public F2::EventMachine, public sf::RenderWindow
+	class Frame : public F2::Plan, public sf::RenderWindow, public Listener
 	{
 	protected:
+		sf::Event     _event; // Events in frame
 		sf::View    _segment; // Segment of window captured
 		Timer         _timer; // Frame timer
 		int    _current_tick; // Copy of the current tick
 		sf::Vector2f  _mouse; // Mouse position
 		sf::Vector2f _bounds; // Frame bounds = window size
 		bool _render_on_tick; // If we have to wait for the timer to update to render
-		// TODO : Events on tick
 		/* Methods */
 		void onInit(); // Initialize the frame
 		void frame(int const& width,int const& height,std::string const& name); // Displays a frame
@@ -60,7 +61,7 @@ namespace F2
 		const sf::Vector2f& getBounds() const; // Returns frame's size
 		const sf::Vector2f& getMouse()  const; // Returns mouse's position
 		/* Methods */
-		void onEvent(sf::Event *e); // Frame events
+		void otherEvent(sf::Event *e); // Frame events
 		void run(); // Runs the frame
 	};
 };

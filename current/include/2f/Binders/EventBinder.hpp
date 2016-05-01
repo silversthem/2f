@@ -17,23 +17,15 @@ namespace F2
 	class EventBinder : public Listener
 	{
 	protected:
-		
+		std::map<sf::Event::EventType,std::pair<std::string,Callable<sf::Event*> > > _binders; // Callable called at every event
+		std::map<std::string,Callable<int> >  _timers; // Callable called at every tick update
 	public:
 		EventBinder();
 		/* Adders */
 		
 		/* Deleters */
 		
-		/* Key events */
-		void  onKeyPressed(sf::Event *e); // When a key is pressed
-		void onKeyReleased(sf::Event *e); // When a key is pressed
-		/* Mouse events */
-		void  onMouseClicked(sf::Event *e); // When there's a mouse click
-		void onMouseReleased(sf::Event *e); // When the mouse button is released
-		void    onMouseMoved(sf::Event *e); // When the mouse moves
-		/* Other events */
-		void onEvent(sf::Event *e); // Non handled event
-		void onTicked(int const& tick); // On ticked
+		/* Methods */
 	};
 };
 

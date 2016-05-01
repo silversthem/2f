@@ -38,8 +38,6 @@
 
 // Plan ~> Where the objects are, also defines boundaries
 #include "Frames/Plan.hpp"
-// EventMachine ~> Handles events by calling appropriate listeners
-#include "Frames/EventMachine.hpp"
 // Frame ~> A rendered segment of a Plan, with an event machine and a timer
 #include "Frames/Frame.hpp"
 // MainFrame ~> Can contain multiple frames, handles multithreading and multiple timers, useful for games with menus and options for example
