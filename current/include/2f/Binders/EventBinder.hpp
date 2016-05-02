@@ -17,15 +17,25 @@ namespace F2
 	class EventBinder : public Listener
 	{
 	protected:
-		std::map<sf::Event::EventType,std::pair<std::string,Callable<sf::Event*> > > _binders; // Callable called at every event
-		std::map<std::string,Callable<int> >  _timers; // Callable called at every tick update
+		std::map<sf::Event::EventType,std::map<std::string,Callable<sf::Event*>*> > _binders; // Callable called at every event
+		std::map<std::string,Callable<int>*> _timers; // Callable called at every tick update
+		/* Methods */
+		virtual void handle(sf::Event *e); // Handles callables
+		virtual void onTicked(int const& tick); // Handles ticked callables
 	public:
 		EventBinder();
 		/* Adders */
-		
+		void bind(sf::Event::EventType const& t,std::string const& name,Callable<sf::Event*> *b); // Binds event to named binder
+		void bind(std::string const& name,Callable<int> *b); // Binds name binder to timer
+		void key_bind(std::string const& name,Callable<sf::Event*> *b); // Binds callable to keyPress/keyRelease events
 		/* Deleters */
-		
-		/* Methods */
+		void event_unbind(std::string const& name); // Unbinds from event binders
+		void timer_unbind(std::string const& name); // Unbinds from time binders
+		/* Getters */
+		Callable<sf::Event*>* event_binded(std::string const& name); // Returns the event binded
+		Callable<int>* timer_binded(std::string const& name); // Returns the timer binded
+
+		friend class Frame; // Friendship is magic
 	};
 };
 

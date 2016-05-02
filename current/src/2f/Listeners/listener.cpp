@@ -32,6 +32,11 @@ void F2::Listener::handle(sf::Event *e)
 	}
 }
 
+void F2::Listener::onTicked(int const& tick)
+{
+	ticked(tick);
+}
+
 /* System events */
 
 void F2::Listener::onInit()
@@ -42,11 +47,6 @@ void F2::Listener::onInit()
 void F2::Listener::onClose()
 {
 	close();
-}
-
-void F2::Listener::onTicked(int const& tick)
-{
-	
 }
 
 void F2::Listener::onDisplay()
@@ -92,6 +92,11 @@ void F2::Listener::init()
 }
 
 void F2::Listener::otherEvent(sf::Event *e)
+{
+	
+}
+
+void F2::Listener::ticked(int const& tick)
 {
 	
 }

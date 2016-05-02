@@ -16,12 +16,12 @@ namespace F2
 	{
 	protected:
 		virtual void handle(sf::Event *e); // Handles an event ~> Calls the user event
+		virtual void onTicked(int const& tick);
 	public:
 		Listener(); // Creates a listener
 		/* System events */
 		virtual void onInit();
 		virtual void onClose();
-		virtual void onTicked(int const& tick);
 		virtual void onDisplay();
 		/* User events */
 		virtual void  keyPressed(sf::Keyboard::Key const& key); // Key pressed
@@ -32,7 +32,8 @@ namespace F2
 		virtual void close(); // Called by the onClose method
 		virtual void  init(); // Called by the onInit method
 		virtual void otherEvent(sf::Event *e); // Called by an unhandled event
-		// @TODO : onTick, onDisplay
+		virtual void ticked(int const& tick); // Called by the onTicked method
+		// @TODO : onDisplay
 		friend class Frame;
 	};
 };
