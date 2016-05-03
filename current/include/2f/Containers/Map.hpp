@@ -24,7 +24,7 @@ namespace F2
 		Map(); // Creating a map
 		~Map(); // Deleting a map
 		/* Adders */
-		template <typename T>
+		template <class T>
 		void add(std::string const& name,T *element) // Adds an element in the map
 		{
 			element->connect(frame());
@@ -32,7 +32,7 @@ namespace F2
 			_map[name] = element; // Adding it into the map
 			_type[name] = Single;
 		}
-		template <typename T>
+		template <class T>
 		void add_layer(std::string const& name,Layer<T> *l) // Adds a layer in the map
 		{
 			l->connect(frame());
@@ -42,7 +42,7 @@ namespace F2
 		}
 		// Adds a map in the map
 		/* Getters */
-		template <typename T>
+		template <class T>
 		T* get(std::string const& name) // Gets an element in the map
 		{
 			if(_map.find(name) != _map.end())
@@ -51,7 +51,7 @@ namespace F2
 			}
 			throw "Nothing Found"; // @TODO : Change for an exception
 		}
-		template <typename T>
+		template <class T>
 		T get_layer(std::string const& name) // Returns a layer in the map
 		{
 			return get<Layer<T>*>(name);
@@ -72,14 +72,14 @@ namespace F2
 				}
 			}
 		}
-		template<typename T>
+		template<class T>
 		void del_layer(Layer<T,Map*> *l) // Deletes a layer
 		{
 			del(l);
 		}
 		void del_map(Map *m); // Deletes a map
 		/* Container methods */
-		template <typename Cast> // applies a function through the map
+		template <class Cast> // applies a function through the map
 		void walk(std::function<void (Cast*)> const& f,bool const& toObjects = true,bool const& toLayers = true,bool const& toMaps = true)
 		{
 			std::map<std::string,void*>::iterator it      =  _map.begin();
@@ -111,12 +111,12 @@ namespace F2
 			}
 		}
 		// @TODO : Filters a map
-		template<class In,typename Cast>
+		template<class In,class Cast>
 		void foreach(In *c,void (In::*action)(Cast*)) // Applies a method to every map element
 		{
 			walk<Cast>([c,action](Cast* object){(c->*action)(object);});
 		}
-		template<class Cast,typename OtherArg>
+		template<class Cast,class OtherArg>
 		void apply(void (Cast::*action)(OtherArg*),OtherArg *a) // Uses a method from each object
 		{
 			walk<Cast>([action,a](Cast* object){(object->*action)(a);});
@@ -127,7 +127,7 @@ namespace F2
 			walk<Cast>([action](Cast* object){(object->*action)();});
 		}
 		// @TODO : Apply to objects only
-		template <typename Cast>
+		template <class Cast>
 		void apply_to_layers(void (Layer<Cast>::*action)()) // Applies a function to layers only
 		{
 			walk<Cast>([action](Layer<Cast>* layer){(layer->*action)();});

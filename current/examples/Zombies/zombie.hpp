@@ -7,36 +7,51 @@
 
 #include "../../include/2f/2f.hpp"
 
-class Zombie : public F2::Tile
+class Zombie : public F2::Sprite
 {
-protected:
-	sf::Vector2f _size;
 public:
-	Zombie() : _size(100,100)
+	Zombie(sf::Texture &t)
 	{
-		set_texture_from_file("Ressources/sprites.jpg");
-		setPosition(0,0);
-		setTextureRect(sf::IntRect(0,0,_size.x,_size.y));
+		add_texture("right",F2::Sprite::pair(t,sf::IntRect(50,30,100,100))); // Adding the right foot up zombie sprite
+		add_texture("left",F2::Sprite::pair(t,sf::IntRect(350,180,100,100))); // Adding the right foot up zombie sprite
+		add_texture("idle",F2::Sprite::pair(t,sf::IntRect(50,170,100,100))); // Adding the idle zombie ~> doing nothing
+		setPosition(100,100);
+		setOrigin(50,50); // Origin as middle, for rotation
+		sprite("idle"); // Selecting idle texture
 	}
-	sf::Vector2f getMiddle(sf::Vector2f const& pos)
+	void keyPressed(sf::Keyboard::Key const& key)
 	{
-		return sf::Vector2f(pos.x - (_size.x/2),pos.y - (_size.y/2));
+		if(key == sf::Keyboard::D)
+		{
+			sprite("right");
+			move(F2::Line(getPosition(),frame()->getMouse()).applyLine(5));
+		}
+		else if(key == sf::Keyboard::Q)
+		{
+			sprite("left");
+		}
+		else if(key == sf::Keyboard::Space)
+		{
+			sprite("idle");
+		}
 	}
 	void mouseMoved(sf::Vector2f const& pos)
 	{
-		setTextureRect(sf::IntRect(pos.x - (_size.x/2),pos.y - (_size.y/2),_size.x,_size.y));
-		setPosition(getMiddle(pos));
+		setRotation(F2::Line(getPosition(),pos).angle());
 	}
 };
 
 void test()
 {
+	sf::Texture t;
+	t.loadFromFile("Ressources/sprites.png");
+
 	F2::Frame f(600,600,"Zombies");
 
 	F2::Layer<Zombie> zombies;
 	f.add_layer<Zombie>("Zombies",&zombies);
 
-	Zombie z; // Adding a zombie
+	Zombie z(t); // Adding a zombie
 	zombies.add(&z);
 
 	f.run();

@@ -15,7 +15,7 @@
 
 namespace F2
 {
-	template<typename ObjectType,typename Parent = Map*>
+	template<class ObjectType,class Parent = Map*>
 	class Layer : public FrameBinder<Map*,void*>
 	{
 	protected:

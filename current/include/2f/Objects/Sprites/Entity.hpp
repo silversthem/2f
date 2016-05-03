@@ -9,6 +9,7 @@
 
 #include <vector>
 /* 2f */
+#include "Sprite.hpp"
 #include "../MovingObject.hpp"
 
 namespace F2
