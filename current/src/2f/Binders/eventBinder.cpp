@@ -11,7 +11,7 @@ void F2::EventBinder::handle(sf::Event *e)
 {
 	if(_binders.find(e->type) != _binders.end())
 	{
-		std::for_each(_binders[e->type].begin(),_binders[e->type].end(),[e](std::pair<std::string,Callable<sf::Event*>*> p){
+		std::for_each(_binders[e->type].begin(),_binders[e->type].end(),[e](std::pair<std::string,F2::Callable<sf::Event*>*> p){
 			p.second->exec(e);
 		});
 	}
@@ -20,15 +20,27 @@ void F2::EventBinder::handle(sf::Event *e)
 
 void F2::EventBinder::onTicked(int const& tick)
 {
-	std::for_each(_timers.begin(),_timers.end(),[tick](std::pair<std::string,Callable<int>*> p){
+	std::for_each(_timers.begin(),_timers.end(),[tick](std::pair<std::string,F2::Callable<int>*> p){
 		p.second->exec(tick);
 	});
 	F2::Listener::onTicked(tick);
 }
 
+/* Protected Adders */
+
+void F2::EventBinder::add()
+{
+	
+}
+
+void F2::EventBinder::del()
+{
+	
+}
+
 /* Adders */
 
-void F2::EventBinder::bind(sf::Event::EventType const& t,std::string const& name,Callable<sf::Event*> *b)
+void F2::EventBinder::bind(sf::Event::EventType const& t,std::string const& name,F2::Callable<sf::Event*> *b)
 {
 	if(_binders.find(t) == _binders.end())
 	{

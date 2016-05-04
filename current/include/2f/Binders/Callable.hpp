@@ -9,17 +9,20 @@
 
 namespace F2
 {
+	class EventBinder; // Injection
+
 	template <typename ArgType>
 	class Callable
 	{
 	protected:
 		std::function<void (ArgType)> _call; // The lambda to call
 		bool _enabled; // If the callable is enabled
-	public:
+		/* Protected constructor -> Builder pattern */
 		Callable(std::function<void (ArgType)> const& func) // Creates a callable
 		{
 			_call = func;
 		}
+	public:
 		/* Setters */
 		void enable(bool const& state = true) // Enable/Disable callable
 		{
@@ -33,6 +36,7 @@ namespace F2
 				_call(arg);
 			}
 		}
+		friend class EventBinder; // EventBinder builds Callable
 	};
 };
 
