@@ -150,7 +150,7 @@ sf::Vector2f F2::Line::applyLine(float const& number)
 	sf::Vector2f coords;
 	calculateLine();
 	coords.x = std::cos(RAD(_angle)) * number; // cos(angle) = adj/hypot <=> adj = cos(angle)*hypot
-	coords.y = std::sin(RAD(_angle)) * number; // sin(angle) opp/hypot <=> opp = sin(angle)*hypot
+	coords.y = (std::sin(RAD(_angle)) * number)*(-1); // sin(angle) opp/hypot <=> opp = sin(angle)*hypot
 	return coords;
 }
 
@@ -192,7 +192,7 @@ float F2::Line::getAngle(sf::Vector2f const& point1,sf::Vector2f const& point2)
 		{
 			angle = 360 - angle;
 		}
-		return (90 - angle);
+		return angle;
 	}
 }
 

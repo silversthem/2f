@@ -28,9 +28,10 @@ void F2::EventBinder::onTicked(int const& tick)
 
 /* Protected Adders */
 
-void F2::EventBinder::add()
+F2::Callable<sf::Event*>* F2::EventBinder::add(std::function<void (sf::Event*)> &f)
 {
-	
+	_storage.push_back(Callable<sf::Event*>(f));
+	return &(*(_storage.end() - 1));
 }
 
 void F2::EventBinder::del()
@@ -40,25 +41,25 @@ void F2::EventBinder::del()
 
 /* Adders */
 
-void F2::EventBinder::bind(sf::Event::EventType const& t,std::string const& name,F2::Callable<sf::Event*> *b)
+void F2::EventBinder::bind(sf::Event::EventType const& t,std::string const& name,std::function<void (sf::Event*)> f)
 {
 	if(_binders.find(t) == _binders.end())
 	{
 		std::map<std::string,Callable<sf::Event*>*> m;
 		_binders[t] = m;
 	}
-	_binders[t][name] = b;
+	_binders[t][name] = add(f);
 }
 
-void F2::EventBinder::bind(std::string const& name,Callable<int> *b)
+void F2::EventBinder::bind(std::string const& name,std::function<void (int)> &f)
 {
-	_timers[name] = b;
+	
 }
 
-void F2::EventBinder::key_bind(std::string const& name,Callable<sf::Event*> *b)
+void F2::EventBinder::key_bind(std::string const& name,std::function<void (sf::Event*)> &f)
 {
-	 bind(sf::Event::KeyPressed,name,b);
-	bind(sf::Event::KeyReleased,name,b);
+	 bind(sf::Event::KeyPressed,name,f);
+	bind(sf::Event::KeyReleased,name,f);
 }
 
 /* Deleters */

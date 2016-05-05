@@ -5,6 +5,7 @@
 #ifndef ZOMBIE_HPP
 #define ZOMBIE_HPP
 
+/* 2f */
 #include "../../include/2f/2f.hpp"
 
 class Zombie : public F2::Sprite
@@ -18,26 +19,15 @@ public:
 		setPosition(100,100);
 		setOrigin(50,50); // Origin as middle, for rotation
 		sprite("idle"); // Selecting idle texture
+		bind(sf::Event::KeyPressed,"test",[this](sf::Event *e){this->sprite("right");});
 	}
 	void keyPressed(sf::Keyboard::Key const& key)
 	{
-		if(key == sf::Keyboard::D)
-		{
-			sprite("right");
-			move(F2::Line(getPosition(),frame()->getMouse()).applyLine(5));
-		}
-		else if(key == sf::Keyboard::Q)
-		{
-			sprite("left");
-		}
-		else if(key == sf::Keyboard::Space)
-		{
-			sprite("idle");
-		}
+		
 	}
 	void mouseMoved(sf::Vector2f const& pos)
 	{
-		setRotation(F2::Line(getPosition(),pos).angle());
+		setRotation(90 - F2::Line(getPosition(),pos).angle()); // Orienting sprite the right way
 	}
 };
 

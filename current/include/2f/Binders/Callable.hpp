@@ -18,9 +18,10 @@ namespace F2
 		std::function<void (ArgType)> _call; // The lambda to call
 		bool _enabled; // If the callable is enabled
 		/* Protected constructor -> Builder pattern */
-		Callable(std::function<void (ArgType)> const& func) // Creates a callable
+		Callable(std::function<void (ArgType)> func) // Creates a callable
 		{
 			_call = func;
+			_enabled = true;
 		}
 	public:
 		/* Setters */
@@ -31,7 +32,7 @@ namespace F2
 		/* Methods */
 		void exec(ArgType arg) // Runs the callable
 		{
-			if(_enabled && _call)
+			if(_enabled)
 			{
 				_call(arg);
 			}
