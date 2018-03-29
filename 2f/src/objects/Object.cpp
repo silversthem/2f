@@ -10,6 +10,10 @@ void Object::update(int const& newticks) {
 
 }
 
-void Object::centerAround(sf::Vector2i const& center) {
+sf::Vector2i Object::getCoords() {
+  return sf::Vector2i(0,0);
+}
+
+void Object::relativePosition(sf::Vector2i const& center) {
 
 }

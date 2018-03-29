@@ -13,4 +13,6 @@ class GUIFrame : public Frame {
 
 };
 
+}
+
 #endif

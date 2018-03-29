@@ -35,9 +35,13 @@ public:
 	virtual ~Indexed_Element() {
 
 	}
+	virtual void onConnected() {
+
+	}
 	void connectIndexer(Indexer* r,Indexer* s) {
 		root = r;
 		source = s;
+		onConnected();
 	}
 	void setExpired(bool const& e = true) {
 		expired = e;

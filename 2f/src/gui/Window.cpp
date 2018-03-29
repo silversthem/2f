@@ -15,9 +15,6 @@ void Window::setFrame(Frame &f) {
 void Window::run() {
   if(currentFrame == 0) close(); // No frame -> Nothing to do
   while(isOpen()) {
-    /* Checking Frame */
-    /* Time handling */
-    // ...
     /* Event handling */
     while(pollEvent(currentEvent)) {
       if(currentEvent.type == sf::Event::Closed) { // Window closing

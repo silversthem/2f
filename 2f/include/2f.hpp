@@ -2,6 +2,8 @@
 #include "2f/containers/Indexer.hpp"
 /* Event */
 #include "2f/event/Listener.hpp"
+/* Graphics */
+#include "2f/graphics/animations/LinearAnimation.hpp"
 /* GUI */
 #include "2f/gui/Frame.hpp"
 #include "2f/gui/Window.hpp"
@@ -14,5 +16,7 @@
 /* Objects */
 #include "2f/objects/Entity.hpp"
 #include "2f/objects/Object.hpp"
+/* Entities */
+#include "2f/objects/entities/Sprite.hpp"
 /* Time */
 #include "2f/time/Timer.hpp"
