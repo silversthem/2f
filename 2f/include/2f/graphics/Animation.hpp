@@ -8,13 +8,13 @@
 #define ANIMATION_HPP
 
 #include <utility>
-#include <SFML/Graphics/Texture.hpp>
+#include "Texture.hpp"
 
 namespace f2 {
 
-class Animation {
+class Animation : public Texture {
 public:
-  virtual std::pair<sf::Texture*,sf::IntRect> update(int const& nticks) = 0;
+  virtual void update(int const& nt) = 0;
 };
 
 };

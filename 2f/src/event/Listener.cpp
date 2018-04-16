@@ -10,6 +10,10 @@ void Listener::onClick() {
 
  }
 
+void Listener::onMouseMoved(int const& x, int const& y) {
+
+}
+
 void Listener::onKeyPressed(int const& kcode) {
 
 }

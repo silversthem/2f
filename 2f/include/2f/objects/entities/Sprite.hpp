@@ -16,7 +16,7 @@ protected:
 public:
   Sprite(); // Creates a sprite
   bool inBounds(sf::IntRect const& bounds); // rect collision by default
-  void relativePosition(sf::Vector2i const& center);
+  void relativePosition(sf::Vector2i const& center, int const& angle = 0);
   void centerOrigin(); // Sets rendering origin to middle of texture
   void render(sf::RenderTarget *t); // Renders sprite
 };

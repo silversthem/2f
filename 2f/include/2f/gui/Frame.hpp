@@ -5,11 +5,11 @@
 #ifndef FRAME_HPP
 #define FRAME_HPP
 
-#include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Window/Event.hpp>
 #include "../event/EventHandler.hpp"
 #include "../containers/Indexer.hpp"
 #include "../objects/Entity.hpp"
+#include "Background.hpp"
 
 namespace f2 {
 
@@ -18,14 +18,15 @@ protected:
   /* Attributes */
   Indexer entities; // Frame elements to display
   EventHandler eventHandler; // Frame elements interacting with events
+  Background bg;
   /* Rendering properties */
   int newticks; // New ticks to count when rendering
   sf::IntRect bounds; // Frame bounds
   Entity* center; // Center all around this entity
-  bool centerMid;
+  bool rotateCenter; // Rotates everything around centere
 public:
   Frame(); // Creating a frame
-  void centerAround(Entity *e); // Centers entities around a selected entity, (if 0 centers at coordinates)
+  void centerAround(Entity *e, bool rotate = false); // Centers entities around a selected entity, (if 0 centers at coordinates)
   void setBounds(int const& w,int const& h); // Sets bounds from a pair of ints
   /* Event as main frame */
   void handle(sf::Event const& e); // Handling event through listener
@@ -40,6 +41,7 @@ public:
   /* Pointers */
   Indexer* indexer(); // Accessing indexer
   EventHandler* handler(); // Accessing event handler
+  Background* background(); // Accessing Background
 };
 
 }

@@ -13,8 +13,9 @@ protected:
 
 public:
   /* mouse events */
-  void onClicked();
-  void onClick();
+  virtual void onClicked();
+  virtual void onClick();
+  virtual void onMouseMoved(int const& x, int const& y);
   /* key events */
   virtual void onKeyPressed(int const& kcode);
   virtual void onKeyReleased(int const& kcode);

@@ -14,6 +14,7 @@
 #ifndef INDEXER_HPP
 #define INDEXER_HPP
 
+#include <iostream>
 #include <set>
 #include <functional>
 #include <map>
@@ -64,7 +65,7 @@ public:
 	/* Indexed Element Class */
 protected:
 	/* Properties */
-	bool persistent; // Don't delete indexed elements on destruction
+	bool persistent; // Set true to avoid the deletion of indexed elements on destruction
 	/* Attributes */
 	Indexer *root;
 	Indexer* source;
@@ -73,7 +74,7 @@ protected:
 	/* Methods */
 	Indexer* create(IndexerType const& t) { // Creates child indexer
     if(persistent) {
-      // @TODO : Error, allocating memory that won't ever be deleted (memory leak)
+      // @TOCHANGE : [current] Error, allocating memory that won't ever be deleted (memory leak)
     }
 		Indexer* i = new Indexer(t);
 		i->setRoot(root,this);
@@ -232,6 +233,7 @@ public:
 					return;
 				}
 				else if(data.element->isExpired()) {
+					std::cout << "die !" << std::endl;
 					delete data.element;
 					data.element = 0;
 				} else {

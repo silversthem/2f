@@ -2,7 +2,7 @@
 
 using namespace f2;
 
-Entity::Entity() : lifetime(INFINITE_LIFETIME) {
+Entity::Entity() : lifetime(INFINITE_LIFETIME), orientation(0), coords(0,0), frame_pos(0,0) {
 
 }
 
@@ -24,14 +24,35 @@ sf::Vector2i Entity::getCoords() {
   return coords;
 }
 
-void Entity::relativePosition(sf::Vector2i const& center) {
+void Entity::relativePosition(sf::Vector2i const& center, int const& angle) {
+  frame_pos = pos(center);
+}
 
+void Entity::setOrientation(int const& orn) {
+  orientation = orn;
+}
+
+void Entity::orientate(int const& orn) {
+  orientation = (orn + orientation) % 360;
+}
+
+int Entity::getOrientation() {
+  return orientation;
 }
 
 void Entity::calc(int const& newticks) {
   /* Lifetime checking */
-  lifetime = (newticks < lifetime) ? (lifetime - newticks) : 0;
-  if(lifetime == 0) setExpired(); // End of entity
+  // lifetime = (newticks < lifetime) ? (lifetime - newticks) : 0;
+  // if(lifetime == 0) setExpired(); // End of entity
   /* Updating */
   update(newticks);
+  skeleton.update(newticks);
+}
+
+bool Entity::inBounds(sf::IntRect const& bounds) {
+  return true;
+}
+
+void Entity::render(sf::RenderTarget *t) {
+  skeleton.blit(t,frame_pos);
 }

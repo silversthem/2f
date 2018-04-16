@@ -14,6 +14,6 @@ sf::Vector2i Object::getCoords() {
   return sf::Vector2i(0,0);
 }
 
-void Object::relativePosition(sf::Vector2i const& center) {
+void Object::relativePosition(sf::Vector2i const& center, int const& angle) {
 
 }

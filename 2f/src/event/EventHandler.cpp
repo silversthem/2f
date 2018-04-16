@@ -32,6 +32,9 @@ void EventHandler::handle(sf::Event const& event) {
         case sf::Event::KeyReleased:
           (*i)->onKeyReleased(event.key.code);
         break;
+        case sf::Event::MouseMoved:
+          (*i)->onMouseMoved(event.mouseMove.x,event.mouseMove.y);
+        break;
       }
     }
   }
