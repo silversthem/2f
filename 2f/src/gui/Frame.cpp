@@ -2,8 +2,9 @@
 
 using namespace f2;
 
-Frame::Frame() : entities(Indexer::IndexerType::Hash), newticks(0), center(0), rotateCenter(false) {
-
+Frame::Frame() : newticks(0), center(0), rotateCenter(false) {
+  eventHandler.subscribe(sf::Event::KeyPressed,&keyboard);
+  eventHandler.subscribe(sf::Event::KeyReleased,&keyboard);
 }
 
 void Frame::centerAround(Entity *e, bool rotate) {
@@ -30,25 +31,34 @@ bool Frame::inBounds(sf::IntRect const& bonds) {
 
 #include <iostream>
 void Frame::render(sf::RenderTarget *target) { // Rendering as object in frame
+  /* Lambda arguments references */
   int nt = newticks;
   Entity* center = Frame::center;
-  int orientation = (rotateCenter && center != 0) ? center->getOrientation() : 0;
   sf::IntRect bounds = Frame::bounds;
-  if(center != 0) bg.render(target,bounds,center->getCoords());
+  /* Callibrating view & background */
+  float orientation = 0;
+  sf::Vector2i centerCoords = sf::Vector2i(0,0);
+  if(center != 0) {
+    centerCoords = center->getCoords();
+    if(rotateCenter) {
+      orientation = center->getOrientation();
+    }
+  }
+  view.setRotation(orientation);
+  bg.render(target,bounds,centerCoords,rotateCenter);
+  view.setCenter(bounds.width/2,bounds.height/2);
+  target->setView(view);
   /* Parcouring entities */
-  entities.foreach<Object>([target,nt,center,bounds,orientation](Object *o) {
-    /* Positioning relative to entity center */
-    if(center != 0 && o != center) {
-      o->relativePosition(center->getCoords() + sf::Vector2i(-bounds.width/2,-bounds.height/2), -orientation);
-    } else if(o == center) {
-      o->relativePosition(center->getCoords() + sf::Vector2i(-bounds.width/2,-bounds.height/2), 0);
+  entities.foreach<Object>([target,nt,center,bounds,orientation,centerCoords](Object *o) {
+    /* Positioning relative to entity center and orientation */
+    if(o == center) {
+      o->relativePosition(centerCoords, sf::Vector2i(-bounds.width/2,-bounds.height/2), 0);
     }
     else {
-      o->relativePosition(sf::Vector2i(-bounds.width/2,-bounds.height/2), 0);
+      o->relativePosition(centerCoords, sf::Vector2i(-bounds.width/2,-bounds.height/2), -orientation);
     }
     o->calc(nt); // Updating object
-    // Rendering object
-    o->render(target);
+    o->render(target); // Rendering object
   });
 }
 

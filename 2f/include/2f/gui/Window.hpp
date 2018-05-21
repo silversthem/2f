@@ -19,6 +19,8 @@ public:
   Window(sf::Vector2u const& size,std::string const& title); // Creating a window
   void setFrame(Frame &f); // Sets frame to be rendered
   void run(); // Running main loop for events/frame rendering
+  /* Empty virtual methods */
+  virtual void update(int const& nt); // Window update
 };
 
 }

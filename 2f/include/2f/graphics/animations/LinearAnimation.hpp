@@ -6,22 +6,24 @@
 #define LINEARANIMATION_HPP
 
 #include "../Animation.hpp"
+#include "../Tileset.hpp"
 
 namespace f2 {
 
 namespace Animations {
 
-class LinearAnimation : public Animation {
+class LinearAnimation : public Tileset {
 protected:
-  sf::Texture *texture;
-  sf::Vector2u box;
-  sf::Vector2u frames;
   int delta; // time between two frames, in gameticks
   int currentdelta;
   int currentframe;
 public:
+  /* Constructors */
   LinearAnimation(sf::Texture *t, int const& w, int const& h, int const& cols, int const& lines, int const& timing);
-  virtual void update(int const& nticks);
+  /* Setters */
+  void setInterval(int const& interval);
+  /* Methods */
+  virtual void update(int const& nticks, TextureStates const& sts);
 };
 
 };

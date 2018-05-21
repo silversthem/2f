@@ -2,6 +2,7 @@
 #define GAMEWINDOW_HPP
 
 #include "World.hpp"
+#include <SFML/Window/Mouse.hpp>
 
 using namespace f2;
 
@@ -14,8 +15,13 @@ public:
     player = new Player;
     world  = new World(player);
     setFrame(*world);
-    world->setBounds(800,800);
-    setFramerateLimit(60); // @TODO : ;)
+    world->setBounds(getSize().x,getSize().y);
+    world->create_scene();
+    setFramerateLimit(120); // @TODO : ;)
+    setMouseCursorVisible(false);
+  }
+  void update(int const& nt) {
+    sf::Mouse::setPosition(sf::Vector2i(getSize().x/2,getSize().y/2), *this);
   }
 };
 

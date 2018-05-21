@@ -7,14 +7,13 @@
 #ifndef ANIMATION_HPP
 #define ANIMATION_HPP
 
-#include <utility>
 #include "Texture.hpp"
 
 namespace f2 {
 
 class Animation : public Texture {
 public:
-  virtual void update(int const& nt) = 0;
+  virtual void update(int const& nt, TextureStates const& sts) = 0;
 };
 
 };

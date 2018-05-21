@@ -24,19 +24,27 @@ sf::Vector2i Entity::getCoords() {
   return coords;
 }
 
-void Entity::relativePosition(sf::Vector2i const& center, int const& angle) {
-  frame_pos = pos(center);
+void Entity::relativePosition(sf::Vector2i const& c,sf::Vector2i const& bias, float const& angle) {
+  frame_pos = pos(c);
+  // if(angle % 360 != 0) {
+  //   // int d = norme(frame_pos);
+  //   // float a = std::atan2(frame_pos.y,frame_pos.x);
+  //   // frame_pos.x = d*std::cos(rad(angle) + a);
+  //   // frame_pos.y = d*std::sin(rad(angle) + a);
+  //   // setOrientation(angle);
+  // }
+  frame_pos -= bias;
 }
 
-void Entity::setOrientation(int const& orn) {
+void Entity::setOrientation(float const& orn) {
   orientation = orn;
 }
 
-void Entity::orientate(int const& orn) {
-  orientation = (orn + orientation) % 360;
+void Entity::orientate(float const& orn) {
+  orientation = orn + orientation;
 }
 
-int Entity::getOrientation() {
+float Entity::getOrientation() {
   return orientation;
 }
 
@@ -46,7 +54,6 @@ void Entity::calc(int const& newticks) {
   // if(lifetime == 0) setExpired(); // End of entity
   /* Updating */
   update(newticks);
-  skeleton.update(newticks);
 }
 
 bool Entity::inBounds(sf::IntRect const& bounds) {

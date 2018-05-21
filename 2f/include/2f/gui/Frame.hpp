@@ -7,6 +7,7 @@
 
 #include <SFML/Window/Event.hpp>
 #include "../event/EventHandler.hpp"
+#include "../event/KeyBoard.hpp"
 #include "../containers/Indexer.hpp"
 #include "../objects/Entity.hpp"
 #include "Background.hpp"
@@ -16,14 +17,16 @@ namespace f2 {
 class Frame : public Object {
 protected:
   /* Attributes */
+  KeyBoard keyboard; // KeyBoard object for key presses/releases event
   Indexer entities; // Frame elements to display
   EventHandler eventHandler; // Frame elements interacting with events
-  Background bg;
+  Background bg; // Frame background
   /* Rendering properties */
   int newticks; // New ticks to count when rendering
   sf::IntRect bounds; // Frame bounds
   Entity* center; // Center all around this entity
   bool rotateCenter; // Rotates everything around centere
+  sf::View view; // Frame camera
 public:
   Frame(); // Creating a frame
   void centerAround(Entity *e, bool rotate = false); // Centers entities around a selected entity, (if 0 centers at coordinates)

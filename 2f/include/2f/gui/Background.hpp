@@ -19,7 +19,8 @@ public:
   Background();
   Background(sf::Texture &text);
   void loadFromFile(std::string const& file);
-  void render(sf::RenderTarget *t, sf::IntRect const& size, sf::Vector2i const& center);
+  void enableRotatingBackground();
+  void render(sf::RenderTarget *t, sf::IntRect const& size, sf::Vector2i const& center, bool const& couldRotate);
 };
 
 };

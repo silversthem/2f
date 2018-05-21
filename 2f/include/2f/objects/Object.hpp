@@ -12,14 +12,14 @@
 
 namespace f2 {
 
-class Object : public Indexed_Element {
+class Object : public IndexedElement {
 public:
   /* Event methods */
   // ...
   /* Rendering methods */
   virtual void calc(int const& newticks); // Called just before rendering
   virtual void update(int const& newticks); // Empty function for user to overload
-  virtual void relativePosition(sf::Vector2i const& center, int const& angle = 0); // Centers object position around coordinates
+  virtual void relativePosition(sf::Vector2i const& coords,sf::Vector2i const& bias, float const& angle = 0); // Centers object position around coordinates
   virtual sf::Vector2i getCoords();
   /* Abstract rendering methods */
   virtual bool inBounds(sf::IntRect const& bounds) = 0; // if the object position is inside a rectangle

@@ -23,8 +23,9 @@ public:
   void add(std::string const& name, sf::Vector2i const& pos, Texture *t);
   void setScale(float const& x, float const& y);
   void foreach(std::function<void (SkeletonPart&)> f);
+  void setRotation(float const& rot);
   /* Texture methods */
-  void update(int const& nt);
+  void update(int const& nt, TextureStates const& sts);
   void blit(sf::RenderTarget *rt,sf::Vector2i const& pos);
 };
 

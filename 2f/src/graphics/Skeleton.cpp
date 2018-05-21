@@ -13,6 +13,12 @@ void Skeleton::foreach(std::function<void (SkeletonPart&)> f) {
   }
 }
 
+void Skeleton::setRotation(float const& rot) {
+  foreach([rot](SkeletonPart& sp) {
+    sp.second->setRotation(rot);
+  });
+}
+
 void Skeleton::setScale(float const& x, float const& y) {
   foreach([x,y](SkeletonPart& sp){
     sp.second->setScale(x,y);
@@ -28,9 +34,9 @@ Texture* Skeleton::texture(std::string const& name) {
   return (r != skeleton.end()) ? r->second.second : 0;
 }
 
-void Skeleton::update(int const& nt) {
-  foreach([nt](SkeletonPart& sp) {
-    sp.second->update(nt);
+void Skeleton::update(int const& nt, TextureStates const& sts) {
+  foreach([nt,sts](SkeletonPart& sp) {
+    sp.second->update(nt,sts);
   });
 }
 

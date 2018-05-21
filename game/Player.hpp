@@ -2,89 +2,135 @@
 #define PLAYER_HPP
 
 #include <2f.hpp>
-#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
 using namespace f2;
 
+class PlayerTexture : public Animations::LinearAnimation {
+protected:
+  sf::Texture idle_knife;
+  sf::Texture move_knife;
+public:
+  PlayerTexture() : Animations::LinearAnimation(&idle_knife,320,320,4,5,2) {
+    centerOrigin();
+    idle_knife.loadFromFile("textures/player/handgun/idle.png");
+    move_knife.loadFromFile("textures/player/handgun/move.png");
+  }
+  void update(int const& nt, TextureStates const& sts) {
+    if(sts.size > 0) {
+      switch (sts.states[0]) {
+        case 0:
+          setInterval(10);
+          setTexture(idle_knife);
+        break;
+        case 4:
+          setInterval(2);
+          setTexture(move_knife);
+        break;
+      }
+    }
+    Animations::LinearAnimation::update(nt,sts);
+  }
+};
+
+class FeetTexture : public Animations::LinearAnimation {
+protected:
+  sf::Texture feet_texture;
+public:
+  FeetTexture() : Animations::LinearAnimation(&feet_texture,210,210,4,5,2) {
+    centerOrigin();
+    feet_texture.loadFromFile("textures/player/feet/walk.png");
+  }
+  void update(int const& nt, TextureStates const& sts) {
+    if(sts.size > 0) {
+      switch (sts.states[0]) {
+        case 0:
+          Animations::LinearAnimation::update(0,sts);
+        break;
+        case 4:
+          Animations::LinearAnimation::update(nt,sts);
+        break;
+      }
+    }
+  }
+};
+
 class Player : public Entity, public Listener {
   /* Entity states */
-  enum State {IDLE, WALK, RUN};
+  enum State {IDLE, WALK, STRAFE_LEFT, STRAFE_RIGHT, RUN};
   enum Equipment {FLASHLIGHT, KNIFE, WEAPON};
   /* Class constants */
   static const int walk_speed = 5;
   static const int run_speed  = 15;
 protected:
   /* Attributes */
-  int movement_dir[2];
+  sf::Vector2f movement_dir;
+  float currentRotate;
   State state;
-  Sprite *feet;
-  sf::Texture move_knife_texture;
-  sf::Texture idle_knife_texture;
-  sf::Texture move_feet_texture;
-  Animations::LinearAnimation move_knife;
-  Animations::LinearAnimation idle_knife;
-  Animations::LinearAnimation move_feet;
+  /* Textures */
+  PlayerTexture playerTexture;
+  FeetTexture feetTexture;
   /* stored values */
   sf::Vector2i lastMousePos;
 public:
-  Player() :
-    move_knife(&move_knife_texture,320,320,4,5,1),
-    idle_knife(&idle_knife_texture,320,320,4,5,3),
-    move_feet(&move_feet_texture,210,210,4,5,1)
+  /* Constructor */
+  Player() : currentRotate(0),state(IDLE),movement_dir(0,0)
   {
-    lifetime = INFINITE_LIFETIME;
     setCoords(0,0);
-    move_knife_texture.loadFromFile("textures/player/knife/move.png");
-    idle_knife_texture.loadFromFile("textures/player/knife/idle.png");
-    move_feet_texture.loadFromFile("textures/player/feet/walk.png");
-    state = IDLE;
-    movement_dir[0] = 0;movement_dir[1] = 0;
-    skeleton.add("player",sf::Vector2i(0,0),&idle_knife);
-    skeleton.add("feet",sf::Vector2i(15,-10),&move_feet);
+    setOrientation(0);
+    skeleton.add("player",sf::Vector2i(0,0),&playerTexture);
+    skeleton.add("feet",sf::Vector2i(0,0),&feetTexture);
     skeleton.setScale(0.3,0.3);
-    skeleton.foreach([](SkeletonPart& sp) {
-      sp.second->setRotation(-90);
-    });
+    skeleton.setRotation(-90);
   }
-  void update(int const& nt) {
-    if(state == RUN) {
-      Entity::move(8*movement_dir[0],8*movement_dir[1]);
-    } else if(state == IDLE) {
-
+  /* Interaction */
+  void computeMotion() {
+    movement_dir.x = 0;
+    movement_dir.y = 0;
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z)) {
+      state = RUN;
+      movement_dir.y -= 1;
     }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+      state = RUN;
+      movement_dir.y += 1;
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {
+      state = RUN;
+      movement_dir.x -= 1;
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+      state = RUN;
+      movement_dir.x += 1;
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
+      orientate(-5);
+    }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E)) {
+      orientate(5);
+    }
+    if(movement_dir.x == 0 && movement_dir.y == 0) state = IDLE;
+  }
+  /* Methods */
+  void update(int const& nt) {
+    int textStates[1] = {state};
+    computeMotion();
+    if(state == RUN) {
+      sf::Vector2f a;
+      int speed = 4;
+      a.x = speed*movement_dir.x*std::cos(rad(getOrientation())) - speed*movement_dir.y*std::sin(rad(getOrientation()));
+      a.y = speed*movement_dir.x*std::sin(rad(getOrientation())) + speed*movement_dir.y*std::cos(rad(getOrientation()));
+      Entity::move(a.x,a.y);
+    }
+    skeleton.setRotation(getOrientation() - 90);
+    skeleton.update(nt,TextureStates(state,textStates));
   }
   /* Events */
-  void onKeyPressed(int const& kcode) {
-    if(kcode == sf::Keyboard::Key::Z) {
-      state = RUN;
-      movement_dir[1] = -1;
-    } else if(kcode == sf::Keyboard::Key::S) {
-      state = RUN;
-      movement_dir[1] = 1;
-    }
-    if(kcode == sf::Keyboard::Key::Q) {
-      state = RUN;
-      movement_dir[0] = -1;
-    } else if(kcode == sf::Keyboard::Key::D) {
-      state = RUN;
-      movement_dir[0] = 1;
-    }
-  }
-  void onKeyReleased(int const& kcode) {
-    if(kcode == sf::Keyboard::Key::Z || kcode == sf::Keyboard::Key::S) {
-      movement_dir[1] = 0;
-    }
-    if(kcode == sf::Keyboard::Key::Q || kcode == sf::Keyboard::Key::D) {
-      movement_dir[0] = 0;
-    }
-    if(movement_dir[0] == 0 && movement_dir[1] == 0) state = IDLE;
-  }
   void onMouseMoved(int const& x, int const& y) {
-    // int x2 = x - getPosition().x;
-    // int y2 = y - getPosition().y;
-    // lastMousePos.x = x;
-    // lastMousePos.y = y;
+    int x2 = x - getPosition().x;
+    if(x2 > lastMousePos.x) orientate(0.5);
+    else if(x2 < lastMousePos.x) orientate(-0.5);
+    lastMousePos.x = x2;
   }
 };
 

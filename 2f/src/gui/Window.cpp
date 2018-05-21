@@ -25,8 +25,13 @@ void Window::run() {
     }
     /* Rendering */
     clear(sf::Color::Black);
+    update(1);
     currentFrame->calc(1); // Updating frame
     currentFrame->render(this); // Rendering Frame
     display();
   }
+}
+
+void Window::update(int const& nt) {
+
 }
